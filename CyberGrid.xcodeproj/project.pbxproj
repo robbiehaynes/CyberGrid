@@ -10,22 +10,9 @@
 		D4AA3DA22D22B64200DA70F3 /* CyberGrid.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CyberGrid.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
-/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
-		D4AA3DB42D22B64300DA70F3 /* Exceptions for "CyberGrid" folder in "CyberGrid" target */ = {
-			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
-			membershipExceptions = (
-				Info.plist,
-			);
-			target = D4AA3DA12D22B64200DA70F3 /* CyberGrid */;
-		};
-/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
-
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		D4AA3DA42D22B64200DA70F3 /* CyberGrid */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
-			exceptions = (
-				D4AA3DB42D22B64300DA70F3 /* Exceptions for "CyberGrid" folder in "CyberGrid" target */,
-			);
 			path = CyberGrid;
 			sourceTree = "<group>";
 		};
@@ -143,6 +130,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = CyberGrid/CyberGrid.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = SMY8BWM85J;
@@ -171,6 +159,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = CyberGrid/CyberGrid.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = SMY8BWM85J;
