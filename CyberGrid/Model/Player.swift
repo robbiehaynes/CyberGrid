@@ -7,7 +7,6 @@
 
 struct Player : Codable {
     let name: String
-    let nodeCount: Int
     let colour: String
     let movesRemaining: Int
 }
