@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="23504" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="TAM-z3-5bh">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="23504" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="xZN-v7-7gn">
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23506"/>
@@ -72,6 +72,436 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="9ia-gJ-Hk2" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1040.4580152671756" y="3.5211267605633805"/>
+        </scene>
+        <!--Game View Controller-->
+        <scene sceneID="H3v-nZ-1b2">
+            <objects>
+                <viewController id="xZN-v7-7gn" customClass="GameViewController" customModule="CyberGrid" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="2JH-Gu-SLU">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="103-fO-Mjp">
+                                <rect key="frame" x="20" y="249.66666666666663" width="353" height="353"/>
+                                <subviews>
+                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="evG-Sk-6fd">
+                                        <rect key="frame" x="0.0" y="0.0" width="353" height="55.333333333333336"/>
+                                        <subviews>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Pqb-dq-oCf">
+                                                <rect key="frame" x="0.0" y="0.0" width="55.666666666666664" height="55.333333333333336"/>
+                                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                                <state key="normal" title="Button"/>
+                                                <buttonConfiguration key="configuration" style="plain"/>
+                                                <connections>
+                                                    <action selector="nodeButtonPressed:" destination="xZN-v7-7gn" eventType="touchUpInside" id="hL4-y8-OhB"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Hpv-yC-KCk">
+                                                <rect key="frame" x="59.666666666666671" y="0.0" width="55.333333333333329" height="55.333333333333336"/>
+                                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                                <state key="normal" title="Button"/>
+                                                <buttonConfiguration key="configuration" style="plain"/>
+                                                <connections>
+                                                    <action selector="nodeButtonPressed:" destination="xZN-v7-7gn" eventType="touchUpInside" id="ZUi-Rm-IXN"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pyj-0O-Fe6">
+                                                <rect key="frame" x="119.00000000000001" y="0.0" width="55.666666666666671" height="55.333333333333336"/>
+                                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                                <state key="normal" title="Button"/>
+                                                <buttonConfiguration key="configuration" style="plain"/>
+                                                <connections>
+                                                    <action selector="nodeButtonPressed:" destination="xZN-v7-7gn" eventType="touchUpInside" id="WXf-kK-eES"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" tag="3" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hwS-m2-M14">
+                                                <rect key="frame" x="178.66666666666666" y="0.0" width="55.333333333333343" height="55.333333333333336"/>
+                                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                                <state key="normal" title="Button"/>
+                                                <buttonConfiguration key="configuration" style="plain"/>
+                                                <connections>
+                                                    <action selector="nodeButtonPressed:" destination="xZN-v7-7gn" eventType="touchUpInside" id="7k7-jA-gCa"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" tag="4" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0Da-zA-0Fr">
+                                                <rect key="frame" x="237.99999999999997" y="0.0" width="55.666666666666657" height="55.333333333333336"/>
+                                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                                <state key="normal" title="Button"/>
+                                                <buttonConfiguration key="configuration" style="plain"/>
+                                                <connections>
+                                                    <action selector="nodeButtonPressed:" destination="xZN-v7-7gn" eventType="touchUpInside" id="QcQ-QK-Rcq"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" tag="5" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iHh-bj-exy">
+                                                <rect key="frame" x="297.66666666666669" y="0.0" width="55.333333333333314" height="55.333333333333336"/>
+                                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                                <state key="normal" title="Button"/>
+                                                <buttonConfiguration key="configuration" style="plain"/>
+                                                <connections>
+                                                    <action selector="nodeButtonPressed:" destination="xZN-v7-7gn" eventType="touchUpInside" id="OXl-ii-2rV"/>
+                                                </connections>
+                                            </button>
+                                        </subviews>
+                                    </stackView>
+                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="MLh-3y-T2R">
+                                        <rect key="frame" x="0.0" y="59.333333333333343" width="353" height="55.666666666666657"/>
+                                        <subviews>
+                                            <button opaque="NO" tag="6" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5wp-dj-hJO">
+                                                <rect key="frame" x="0.0" y="0.0" width="55.666666666666664" height="55.666666666666664"/>
+                                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                                <state key="normal" title="Button"/>
+                                                <buttonConfiguration key="configuration" style="plain"/>
+                                                <connections>
+                                                    <action selector="nodeButtonPressed:" destination="xZN-v7-7gn" eventType="touchUpInside" id="VBN-ge-KGP"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" tag="7" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WMx-QW-UB8">
+                                                <rect key="frame" x="59.666666666666671" y="0.0" width="55.333333333333329" height="55.666666666666664"/>
+                                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                                <state key="normal" title="Button"/>
+                                                <buttonConfiguration key="configuration" style="plain"/>
+                                                <connections>
+                                                    <action selector="nodeButtonPressed:" destination="xZN-v7-7gn" eventType="touchUpInside" id="Jqz-o8-jWu"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" tag="8" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Vm0-42-lgl">
+                                                <rect key="frame" x="119.00000000000001" y="0.0" width="55.666666666666671" height="55.666666666666664"/>
+                                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                                <state key="normal" title="Button"/>
+                                                <buttonConfiguration key="configuration" style="plain"/>
+                                                <connections>
+                                                    <action selector="nodeButtonPressed:" destination="xZN-v7-7gn" eventType="touchUpInside" id="VrT-9n-e20"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" tag="9" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aHk-Hl-Qz0">
+                                                <rect key="frame" x="178.66666666666666" y="0.0" width="55.333333333333343" height="55.666666666666664"/>
+                                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                                <state key="normal" title="Button"/>
+                                                <buttonConfiguration key="configuration" style="plain"/>
+                                                <connections>
+                                                    <action selector="nodeButtonPressed:" destination="xZN-v7-7gn" eventType="touchUpInside" id="rEp-AX-qWJ"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" tag="10" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nP4-pe-hnT">
+                                                <rect key="frame" x="237.99999999999997" y="0.0" width="55.666666666666657" height="55.666666666666664"/>
+                                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                                <state key="normal" title="Button"/>
+                                                <buttonConfiguration key="configuration" style="plain"/>
+                                                <connections>
+                                                    <action selector="nodeButtonPressed:" destination="xZN-v7-7gn" eventType="touchUpInside" id="Ygg-f9-h1F"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" tag="11" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="viA-hK-lHU">
+                                                <rect key="frame" x="297.66666666666669" y="0.0" width="55.333333333333314" height="55.666666666666664"/>
+                                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                                <state key="normal" title="Button"/>
+                                                <buttonConfiguration key="configuration" style="plain"/>
+                                                <connections>
+                                                    <action selector="nodeButtonPressed:" destination="xZN-v7-7gn" eventType="touchUpInside" id="Mez-ds-1Ac"/>
+                                                </connections>
+                                            </button>
+                                        </subviews>
+                                    </stackView>
+                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="Twx-P0-zw9">
+                                        <rect key="frame" x="0.0" y="119.00000000000001" width="353" height="55.333333333333329"/>
+                                        <subviews>
+                                            <button opaque="NO" tag="12" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DXd-aP-qEC">
+                                                <rect key="frame" x="0.0" y="0.0" width="55.666666666666664" height="55.333333333333336"/>
+                                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                                <state key="normal" title="Button"/>
+                                                <buttonConfiguration key="configuration" style="plain"/>
+                                                <connections>
+                                                    <action selector="nodeButtonPressed:" destination="xZN-v7-7gn" eventType="touchUpInside" id="bIj-xg-84v"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" tag="13" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HBz-RA-JYZ">
+                                                <rect key="frame" x="59.666666666666671" y="0.0" width="55.333333333333329" height="55.333333333333336"/>
+                                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                                <state key="normal" title="Button"/>
+                                                <buttonConfiguration key="configuration" style="plain"/>
+                                                <connections>
+                                                    <action selector="nodeButtonPressed:" destination="xZN-v7-7gn" eventType="touchUpInside" id="9g6-ea-dV5"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" tag="14" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vw5-42-zvq">
+                                                <rect key="frame" x="119.00000000000001" y="0.0" width="55.666666666666671" height="55.333333333333336"/>
+                                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                                <state key="normal" title="Button"/>
+                                                <buttonConfiguration key="configuration" style="plain"/>
+                                                <connections>
+                                                    <action selector="nodeButtonPressed:" destination="xZN-v7-7gn" eventType="touchUpInside" id="9NC-3u-Hjz"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" tag="15" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VXI-HT-bFh">
+                                                <rect key="frame" x="178.66666666666666" y="0.0" width="55.333333333333343" height="55.333333333333336"/>
+                                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                                <state key="normal" title="Button"/>
+                                                <buttonConfiguration key="configuration" style="plain"/>
+                                                <connections>
+                                                    <action selector="nodeButtonPressed:" destination="xZN-v7-7gn" eventType="touchUpInside" id="oWu-GZ-KDU"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" tag="16" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="blS-JH-huy">
+                                                <rect key="frame" x="237.99999999999997" y="0.0" width="55.666666666666657" height="55.333333333333336"/>
+                                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                                <state key="normal" title="Button"/>
+                                                <buttonConfiguration key="configuration" style="plain"/>
+                                                <connections>
+                                                    <action selector="nodeButtonPressed:" destination="xZN-v7-7gn" eventType="touchUpInside" id="K23-IM-U9j"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" tag="17" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NLK-na-JMi">
+                                                <rect key="frame" x="297.66666666666669" y="0.0" width="55.333333333333314" height="55.333333333333336"/>
+                                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                                <state key="normal" title="Button"/>
+                                                <buttonConfiguration key="configuration" style="plain"/>
+                                                <connections>
+                                                    <action selector="nodeButtonPressed:" destination="xZN-v7-7gn" eventType="touchUpInside" id="d32-gy-oYx"/>
+                                                </connections>
+                                            </button>
+                                        </subviews>
+                                    </stackView>
+                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="8LB-Xx-6Mj">
+                                        <rect key="frame" x="0.0" y="178.33333333333334" width="353" height="55.666666666666657"/>
+                                        <subviews>
+                                            <button opaque="NO" tag="18" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gOA-7y-MLk">
+                                                <rect key="frame" x="0.0" y="0.0" width="55.666666666666664" height="55.666666666666664"/>
+                                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                                <state key="normal" title="Button"/>
+                                                <buttonConfiguration key="configuration" style="plain"/>
+                                                <connections>
+                                                    <action selector="nodeButtonPressed:" destination="xZN-v7-7gn" eventType="touchUpInside" id="5Wz-RR-WTB"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" tag="19" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HvP-sn-w2P">
+                                                <rect key="frame" x="59.666666666666671" y="0.0" width="55.333333333333329" height="55.666666666666664"/>
+                                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                                <state key="normal" title="Button"/>
+                                                <buttonConfiguration key="configuration" style="plain"/>
+                                                <connections>
+                                                    <action selector="nodeButtonPressed:" destination="xZN-v7-7gn" eventType="touchUpInside" id="KY7-hk-cle"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" tag="20" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2Ri-we-KMO">
+                                                <rect key="frame" x="119.00000000000001" y="0.0" width="55.666666666666671" height="55.666666666666664"/>
+                                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                                <state key="normal" title="Button"/>
+                                                <buttonConfiguration key="configuration" style="plain"/>
+                                                <connections>
+                                                    <action selector="nodeButtonPressed:" destination="xZN-v7-7gn" eventType="touchUpInside" id="Zbm-4P-hwZ"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" tag="21" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kSw-bC-ZPT">
+                                                <rect key="frame" x="178.66666666666666" y="0.0" width="55.333333333333343" height="55.666666666666664"/>
+                                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                                <state key="normal" title="Button"/>
+                                                <buttonConfiguration key="configuration" style="plain"/>
+                                                <connections>
+                                                    <action selector="nodeButtonPressed:" destination="xZN-v7-7gn" eventType="touchUpInside" id="rpj-8i-1eA"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" tag="22" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gGo-EV-cH8">
+                                                <rect key="frame" x="237.99999999999997" y="0.0" width="55.666666666666657" height="55.666666666666664"/>
+                                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                                <state key="normal" title="Button"/>
+                                                <buttonConfiguration key="configuration" style="plain"/>
+                                                <connections>
+                                                    <action selector="nodeButtonPressed:" destination="xZN-v7-7gn" eventType="touchUpInside" id="Pqg-qN-5AC"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" tag="23" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UXK-q5-jwt">
+                                                <rect key="frame" x="297.66666666666669" y="0.0" width="55.333333333333314" height="55.666666666666664"/>
+                                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                                <state key="normal" title="Button"/>
+                                                <buttonConfiguration key="configuration" style="plain"/>
+                                                <connections>
+                                                    <action selector="nodeButtonPressed:" destination="xZN-v7-7gn" eventType="touchUpInside" id="Uzk-qf-bHR"/>
+                                                </connections>
+                                            </button>
+                                        </subviews>
+                                    </stackView>
+                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="YOL-Dr-RSE">
+                                        <rect key="frame" x="0.0" y="238.00000000000003" width="353" height="55.333333333333343"/>
+                                        <subviews>
+                                            <button opaque="NO" tag="24" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3id-VO-KgV">
+                                                <rect key="frame" x="0.0" y="0.0" width="55.666666666666664" height="55.333333333333336"/>
+                                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                                <state key="normal" title="Button"/>
+                                                <buttonConfiguration key="configuration" style="plain"/>
+                                                <connections>
+                                                    <action selector="nodeButtonPressed:" destination="xZN-v7-7gn" eventType="touchUpInside" id="2dK-EA-Psw"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" tag="25" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Z5y-zT-VEv">
+                                                <rect key="frame" x="59.666666666666671" y="0.0" width="55.333333333333329" height="55.333333333333336"/>
+                                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                                <state key="normal" title="Button"/>
+                                                <buttonConfiguration key="configuration" style="plain"/>
+                                                <connections>
+                                                    <action selector="nodeButtonPressed:" destination="xZN-v7-7gn" eventType="touchUpInside" id="PBM-Fh-V4u"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" tag="26" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fPw-Ou-fgN">
+                                                <rect key="frame" x="119.00000000000001" y="0.0" width="55.666666666666671" height="55.333333333333336"/>
+                                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                                <state key="normal" title="Button"/>
+                                                <buttonConfiguration key="configuration" style="plain"/>
+                                                <connections>
+                                                    <action selector="nodeButtonPressed:" destination="xZN-v7-7gn" eventType="touchUpInside" id="HTE-fK-wD3"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" tag="27" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AED-6s-v1R">
+                                                <rect key="frame" x="178.66666666666666" y="0.0" width="55.333333333333343" height="55.333333333333336"/>
+                                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                                <state key="normal" title="Button"/>
+                                                <buttonConfiguration key="configuration" style="plain"/>
+                                                <connections>
+                                                    <action selector="nodeButtonPressed:" destination="xZN-v7-7gn" eventType="touchUpInside" id="yWT-En-co2"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" tag="28" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6Gg-sW-jN7">
+                                                <rect key="frame" x="237.99999999999997" y="0.0" width="55.666666666666657" height="55.333333333333336"/>
+                                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                                <state key="normal" title="Button"/>
+                                                <buttonConfiguration key="configuration" style="plain"/>
+                                                <connections>
+                                                    <action selector="nodeButtonPressed:" destination="xZN-v7-7gn" eventType="touchUpInside" id="7Ia-aB-1GN"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" tag="29" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="niq-f5-TeQ">
+                                                <rect key="frame" x="297.66666666666669" y="0.0" width="55.333333333333314" height="55.333333333333336"/>
+                                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                                <state key="normal" title="Button"/>
+                                                <buttonConfiguration key="configuration" style="plain"/>
+                                                <connections>
+                                                    <action selector="nodeButtonPressed:" destination="xZN-v7-7gn" eventType="touchUpInside" id="H6Q-xF-mhT"/>
+                                                </connections>
+                                            </button>
+                                        </subviews>
+                                    </stackView>
+                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="ZFP-WG-dGM">
+                                        <rect key="frame" x="0.0" y="297.33333333333337" width="353" height="55.666666666666686"/>
+                                        <subviews>
+                                            <button opaque="NO" tag="30" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="L6q-lr-zYn">
+                                                <rect key="frame" x="0.0" y="0.0" width="55.666666666666664" height="55.666666666666664"/>
+                                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                                <state key="normal" title="Button"/>
+                                                <buttonConfiguration key="configuration" style="plain"/>
+                                                <connections>
+                                                    <action selector="nodeButtonPressed:" destination="xZN-v7-7gn" eventType="touchUpInside" id="uig-2k-0Qc"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" tag="31" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rpA-nt-Nlk">
+                                                <rect key="frame" x="59.666666666666671" y="0.0" width="55.333333333333329" height="55.666666666666664"/>
+                                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                                <state key="normal" title="Button"/>
+                                                <buttonConfiguration key="configuration" style="plain"/>
+                                                <connections>
+                                                    <action selector="nodeButtonPressed:" destination="xZN-v7-7gn" eventType="touchUpInside" id="zxl-pl-WpH"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" tag="32" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Gz1-5M-BZr">
+                                                <rect key="frame" x="119.00000000000001" y="0.0" width="55.666666666666671" height="55.666666666666664"/>
+                                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                                <state key="normal" title="Button"/>
+                                                <buttonConfiguration key="configuration" style="plain"/>
+                                                <connections>
+                                                    <action selector="nodeButtonPressed:" destination="xZN-v7-7gn" eventType="touchUpInside" id="DIU-Uq-F89"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" tag="33" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eyk-bP-8ak">
+                                                <rect key="frame" x="178.66666666666666" y="0.0" width="55.333333333333343" height="55.666666666666664"/>
+                                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                                <state key="normal" title="Button"/>
+                                                <buttonConfiguration key="configuration" style="plain"/>
+                                                <connections>
+                                                    <action selector="nodeButtonPressed:" destination="xZN-v7-7gn" eventType="touchUpInside" id="WBa-dt-WQB"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" tag="34" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qTj-bm-X9e">
+                                                <rect key="frame" x="237.99999999999997" y="0.0" width="55.666666666666657" height="55.666666666666664"/>
+                                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                                <state key="normal" title="Button"/>
+                                                <buttonConfiguration key="configuration" style="plain"/>
+                                                <connections>
+                                                    <action selector="nodeButtonPressed:" destination="xZN-v7-7gn" eventType="touchUpInside" id="zGx-lV-ynO"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" tag="35" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TNU-2U-WNg">
+                                                <rect key="frame" x="297.66666666666669" y="0.0" width="55.333333333333314" height="55.666666666666664"/>
+                                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                                <state key="normal" title="Button"/>
+                                                <buttonConfiguration key="configuration" style="plain"/>
+                                                <connections>
+                                                    <action selector="nodeButtonPressed:" destination="xZN-v7-7gn" eventType="touchUpInside" id="gAT-MS-U7i"/>
+                                                </connections>
+                                            </button>
+                                        </subviews>
+                                    </stackView>
+                                </subviews>
+                                <color key="backgroundColor" systemColor="labelColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="103-fO-Mjp" secondAttribute="height" multiplier="1:1" id="D1F-Gx-0d1"/>
+                                </constraints>
+                            </stackView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Moves Remaining: 10" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="78C-8C-Isa">
+                                <rect key="frame" x="212.33333333333337" y="59.000000000000007" width="160.66666666666663" height="20.333333333333336"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" systemColor="systemBackgroundColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Select node to hack" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="f4B-EY-2l8">
+                                <rect key="frame" x="121" y="219.33333333333334" width="151" height="20.333333333333343"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" systemColor="systemBackgroundColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="30" translatesAutoresizingMaskIntoConstraints="NO" id="f2P-Dk-QYS">
+                                <rect key="frame" x="108.33333333333333" y="662.66666666666663" width="176.66666666666669" height="34.333333333333371"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0nO-0O-Inx">
+                                        <rect key="frame" x="0.0" y="0.0" width="73.333333333333329" height="34.333333333333336"/>
+                                        <state key="normal" title="Button"/>
+                                        <buttonConfiguration key="configuration" style="filled" title="Fortify"/>
+                                        <connections>
+                                            <action selector="fortifyButtonPressed:" destination="xZN-v7-7gn" eventType="touchUpInside" id="q54-I7-h07"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vZH-aM-Uqf">
+                                        <rect key="frame" x="103.33333333333334" y="0.0" width="73.333333333333343" height="34.333333333333336"/>
+                                        <state key="normal" title="Button"/>
+                                        <buttonConfiguration key="configuration" style="filled" title="Hack"/>
+                                        <connections>
+                                            <action selector="hackButtonPressed:" destination="xZN-v7-7gn" eventType="touchUpInside" id="2Qs-8g-tU7"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                            </stackView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="hHf-AH-NAb"/>
+                        <color key="backgroundColor" systemColor="labelColor"/>
+                        <constraints>
+                            <constraint firstItem="f4B-EY-2l8" firstAttribute="centerX" secondItem="2JH-Gu-SLU" secondAttribute="centerX" id="93F-fG-LO7"/>
+                            <constraint firstItem="78C-8C-Isa" firstAttribute="leading" secondItem="hHf-AH-NAb" secondAttribute="leading" constant="212.33333333333337" id="J40-kR-s0F"/>
+                            <constraint firstItem="78C-8C-Isa" firstAttribute="top" secondItem="hHf-AH-NAb" secondAttribute="top" id="Unx-Sp-ikF"/>
+                            <constraint firstItem="f2P-Dk-QYS" firstAttribute="centerX" secondItem="2JH-Gu-SLU" secondAttribute="centerX" id="UvF-VP-49X"/>
+                            <constraint firstItem="f2P-Dk-QYS" firstAttribute="top" secondItem="103-fO-Mjp" secondAttribute="bottom" constant="60" id="ZWg-tb-kfW"/>
+                            <constraint firstItem="103-fO-Mjp" firstAttribute="centerY" secondItem="2JH-Gu-SLU" secondAttribute="centerY" id="cJB-3a-exc"/>
+                            <constraint firstItem="hHf-AH-NAb" firstAttribute="trailing" secondItem="103-fO-Mjp" secondAttribute="trailing" constant="20" id="cbK-ZL-ioz"/>
+                            <constraint firstItem="103-fO-Mjp" firstAttribute="leading" secondItem="hHf-AH-NAb" secondAttribute="leading" constant="20" id="enw-uK-UxD"/>
+                            <constraint firstItem="103-fO-Mjp" firstAttribute="top" secondItem="f4B-EY-2l8" secondAttribute="bottom" constant="10" id="fnR-Il-doo"/>
+                            <constraint firstItem="hHf-AH-NAb" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="78C-8C-Isa" secondAttribute="trailing" id="zxk-G4-9I7"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="SmE-2F-oCR"/>
+                    <connections>
+                        <outlet property="actionLabel" destination="f4B-EY-2l8" id="BaD-PQ-pnx"/>
+                        <outlet property="movesRemainingLabel" destination="78C-8C-Isa" id="qod-sb-k9T"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="u9w-hw-pkd" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1843.5114503816794" y="3.5211267605633805"/>
         </scene>
     </scenes>
     <resources>
