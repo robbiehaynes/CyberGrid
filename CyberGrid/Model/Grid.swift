@@ -32,6 +32,11 @@ struct Node: Codable {
             health = 1
         }
     }
+    
+    mutating func updateOwner(to newOwner: Player?) {
+        self.owner = newOwner
+        self.health = 1
+    }
 }
 
 struct Grid: Codable {
@@ -43,6 +48,51 @@ struct Grid: Codable {
     
     func getNode(atRow: Int, atCol: Int) -> Node {
         return nodes[atRow][atCol]
+    }
+    
+    mutating func recalculateOwners() {
+        let directions = [
+            (0, 1),  // Right
+            (1, 0),  // Down
+            (0, -1), // Left
+            (-1, 0), // Up
+            (1, 1),  // Down-right
+            (1, -1), // Down-left
+            (-1, 1), // Up-right
+            (-1, -1) // Up-left
+        ]
+        
+        for row in 0..<nodes.count {
+            for col in 0..<nodes[row].count {
+                guard let currentOwner = nodes[row][col].owner else { continue }
+                
+                for direction in directions {
+                    var path = [(row, col)]
+                    var currentRow = row + direction.0
+                    var currentCol = col + direction.1
+                    
+                    while isValidPosition(row: currentRow, col: currentCol),
+                            let nextOwner = nodes[currentRow][currentCol].owner,
+                            nextOwner != currentOwner {
+                        path.append((currentRow, currentCol))
+                        currentRow += direction.0
+                        currentCol += direction.1
+                    }
+                    
+                    if isValidPosition(row: currentRow, col: currentCol),
+                       nodes[currentRow][currentCol].owner == currentOwner {
+                        // Flip all nodes in the path
+                        for (flipRow, flipCol) in path.dropFirst() {
+                            nodes[flipRow][flipCol].updateOwner(to: currentOwner)
+                        }
+                    }
+                }
+            }
+        }
+    }
+    
+    private func isValidPosition(row: Int, col: Int) -> Bool {
+        return row >= 0 && row < 6 && col >= 0 && col < 6
     }
     
     private func generateNodes() -> [[Node]] {

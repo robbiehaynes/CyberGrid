@@ -87,7 +87,7 @@
                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="evG-Sk-6fd">
                                         <rect key="frame" x="0.0" y="0.0" width="353" height="55.333333333333336"/>
                                         <subviews>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Pqb-dq-oCf">
+                                            <button opaque="NO" tag="36" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Pqb-dq-oCf">
                                                 <rect key="frame" x="0.0" y="0.0" width="55.666666666666664" height="55.333333333333336"/>
                                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                 <state key="normal" title="Button"/>
