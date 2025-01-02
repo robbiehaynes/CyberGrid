@@ -444,12 +444,6 @@
                                     <constraint firstAttribute="width" secondItem="103-fO-Mjp" secondAttribute="height" multiplier="1:1" id="D1F-Gx-0d1"/>
                                 </constraints>
                             </stackView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Moves Remaining: 10" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="78C-8C-Isa">
-                                <rect key="frame" x="212.33333333333337" y="59.000000000000007" width="160.66666666666663" height="20.333333333333336"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" systemColor="systemBackgroundColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Select node to hack" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="f4B-EY-2l8">
                                 <rect key="frame" x="121" y="219.33333333333334" width="151" height="20.333333333333343"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
@@ -477,26 +471,44 @@
                                     </button>
                                 </subviews>
                             </stackView>
+                            <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" translatesAutoresizingMaskIntoConstraints="NO" id="PbP-nw-Nbr">
+                                <rect key="frame" x="20" y="59.000000000000007" width="353" height="20.333333333333336"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Current Player" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XKn-uH-JIf">
+                                        <rect key="frame" x="0.0" y="0.0" width="142.66666666666666" height="20.333333333333332"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <color key="textColor" systemColor="systemBackgroundColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Moves Remaining: 10" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="78C-8C-Isa">
+                                        <rect key="frame" x="142.66666666666663" y="0.0" width="210.33333333333337" height="20.333333333333332"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <color key="textColor" systemColor="systemBackgroundColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                            </stackView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="hHf-AH-NAb"/>
                         <color key="backgroundColor" systemColor="labelColor"/>
                         <constraints>
                             <constraint firstItem="f4B-EY-2l8" firstAttribute="centerX" secondItem="2JH-Gu-SLU" secondAttribute="centerX" id="93F-fG-LO7"/>
-                            <constraint firstItem="78C-8C-Isa" firstAttribute="leading" secondItem="hHf-AH-NAb" secondAttribute="leading" constant="212.33333333333337" id="J40-kR-s0F"/>
-                            <constraint firstItem="78C-8C-Isa" firstAttribute="top" secondItem="hHf-AH-NAb" secondAttribute="top" id="Unx-Sp-ikF"/>
+                            <constraint firstItem="PbP-nw-Nbr" firstAttribute="leading" secondItem="hHf-AH-NAb" secondAttribute="leading" constant="20" id="AQB-RO-bUb"/>
+                            <constraint firstItem="hHf-AH-NAb" firstAttribute="trailing" secondItem="PbP-nw-Nbr" secondAttribute="trailing" constant="20" id="I2e-2c-jqC"/>
                             <constraint firstItem="f2P-Dk-QYS" firstAttribute="centerX" secondItem="2JH-Gu-SLU" secondAttribute="centerX" id="UvF-VP-49X"/>
                             <constraint firstItem="f2P-Dk-QYS" firstAttribute="top" secondItem="103-fO-Mjp" secondAttribute="bottom" constant="60" id="ZWg-tb-kfW"/>
+                            <constraint firstItem="PbP-nw-Nbr" firstAttribute="top" secondItem="hHf-AH-NAb" secondAttribute="top" id="cAN-zZ-WyL"/>
                             <constraint firstItem="103-fO-Mjp" firstAttribute="centerY" secondItem="2JH-Gu-SLU" secondAttribute="centerY" id="cJB-3a-exc"/>
                             <constraint firstItem="hHf-AH-NAb" firstAttribute="trailing" secondItem="103-fO-Mjp" secondAttribute="trailing" constant="20" id="cbK-ZL-ioz"/>
                             <constraint firstItem="103-fO-Mjp" firstAttribute="leading" secondItem="hHf-AH-NAb" secondAttribute="leading" constant="20" id="enw-uK-UxD"/>
                             <constraint firstItem="103-fO-Mjp" firstAttribute="top" secondItem="f4B-EY-2l8" secondAttribute="bottom" constant="10" id="fnR-Il-doo"/>
-                            <constraint firstItem="hHf-AH-NAb" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="78C-8C-Isa" secondAttribute="trailing" id="zxk-G4-9I7"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="SmE-2F-oCR"/>
                     <connections>
                         <outlet property="actionLabel" destination="f4B-EY-2l8" id="BaD-PQ-pnx"/>
                         <outlet property="movesRemainingLabel" destination="78C-8C-Isa" id="qod-sb-k9T"/>
+                        <outlet property="playerLabel" destination="XKn-uH-JIf" id="Q9u-BI-aTW"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="u9w-hw-pkd" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
