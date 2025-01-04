@@ -41,11 +41,13 @@ class GameViewController: UIViewController {
     @IBAction func hackButtonPressed(_ sender: UIButton) {
         fortifying = false
         actionLabel.text = "Hacking..."
+        updateUI()
     }
     
     @IBAction func fortifyButtonPressed(_ sender: UIButton) {
         fortifying = true
         actionLabel.text = "Fortifying..."
+        updateUI()
     }
     
     func performAction(atRow row: Int, atCol col: Int) {
@@ -63,7 +65,13 @@ class GameViewController: UIViewController {
     func updateUI() {
         guard let gameModel else { return }
         guard let currentPlayer else { return }
-        let moves = gameModel.grid.validMoves(for: currentPlayer)
+        let moves = gameModel.grid.validMoves(for: currentPlayer, fortifying)
+        
+        if moves.isEmpty && gameModel.grid.validMoves(for: currentPlayer, !fortifying).isEmpty {
+            switchPlayer()
+            updateUI()
+            return
+        }
         
         for row in 0..<6 {
             for col in 0..<6 {
