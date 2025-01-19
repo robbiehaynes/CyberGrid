@@ -58,13 +58,19 @@ class GameViewController: UIViewController {
         }
         
         gameModel!.grid.recalculateOwners(fromCoords: (row, col))
+        gameModel!.useTurn(for: currentPlayer!)
         switchPlayer()
         updateUI()
+        if let winner = gameModel?.winner {
+            print("\(winner) wins!")
+        }
     }
     
     func updateUI() {
         guard let gameModel else { return }
         guard let currentPlayer else { return }
+        
+        movesRemainingLabel.text = "Moves Remaining: \(currentPlayer.movesRemaining)"
         let moves = gameModel.grid.validMoves(for: currentPlayer, fortifying)
         
         if moves.isEmpty && gameModel.grid.validMoves(for: currentPlayer, !fortifying).isEmpty {

@@ -17,4 +17,29 @@ struct GameModel: Codable {
         self.grid = grid
         self.winner = winner
     }
+    
+    mutating func useTurn(for currentPlayer: Player) {
+        if let player = players.first(where: { $0 == currentPlayer }), player.movesRemaining > 0 {
+            player.movesRemaining -= 1
+        }
+        
+        if players.allSatisfy({ $0.movesRemaining == 0 }) {
+            winner = calculateWinner().name
+        }
+    }
+    
+    private func calculateWinner() -> Player {
+        var ownershipCount: [Player: Int] = [:]
+
+        for row in grid.nodes {
+            for node in row {
+                if let owner = node.owner {
+                    ownershipCount[owner, default: 0] += 1
+                }
+            }
+        }
+        
+        // Find the player with the maximum owned nodes
+        return ownershipCount.max { $0.value < $1.value }!.key
+    }
 }
