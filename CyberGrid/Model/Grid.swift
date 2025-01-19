@@ -5,9 +5,15 @@
 //  Created by Robert Haynes on 31/12/2024.
 //
 
+enum Powerup: Codable {
+    case virus
+    case firewall
+}
+
 struct Node: Codable {
     var owner: Player?
     var health: Int
+    var powerup: Powerup?
     var colour: String {
         if owner == nil {
             return "white"
@@ -37,6 +43,11 @@ struct Node: Codable {
         self.owner = newOwner
         self.health = 1
     }
+}
+
+struct Pair: Hashable {
+    let first: Int
+    let second: Int
 }
 
 struct Grid: Codable {
@@ -162,7 +173,49 @@ struct Grid: Codable {
     
     private func generateNodes() -> [[Node]] {
         // Return an 6x6 2D array of nodes
-        let nodes: [[Node]] = Array(repeating: Array(repeating: Node(owner: nil, health: 0), count: 6), count: 6)
+        var nodes: [[Node]] = Array(repeating: Array(repeating: Node(owner: nil, health: 0), count: 6), count: 6)
+        
+        nodes = assignRandomPowerups(toNodes: nodes)
+        
         return nodes
+    }
+    
+    private func assignRandomPowerups(toNodes nodes: [[Node]]) -> [[Node]] {
+        var updatedNodes = nodes
+        let uniquePairs = generateUniquePairs(count: 4)
+        let powerUps: [Powerup] = [.virus, .virus, .firewall, .firewall]
+        
+        for (index, pair) in uniquePairs.enumerated() {
+            let row = pair.first
+            let col = pair.second
+            
+            // Assign the power-up corresponding to the index
+            updatedNodes[row][col].powerup = powerUps[index]
+        }
+        
+        return updatedNodes
+    }
+    
+    private func generateUniquePairs(count: Int) -> [Pair] {
+        let excludedPairs: Set<Pair> = [
+            Pair(first: 2, second: 2),
+            Pair(first: 2, second: 3),
+            Pair(first: 3, second: 2),
+            Pair(first: 3, second: 3)
+        ]
+        
+        var generatedPairs: Set<Pair> = []
+        
+        while generatedPairs.count < count {
+            let first = Int.random(in: 0...5)
+            let second = Int.random(in: 0...5)
+            let pair = Pair(first: first, second: second)
+            
+            if !excludedPairs.contains(pair) && !generatedPairs.contains(pair) {
+                generatedPairs.insert(pair)
+            }
+        }
+        
+        return Array(generatedPairs)
     }
 }
