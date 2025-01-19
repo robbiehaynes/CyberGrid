@@ -83,22 +83,24 @@ class GameViewController: UIViewController {
                 if let button = view.viewWithTag(tag) as? UIButton {
                     // Update button background color based on the node owner
                     if let owner = node.owner {
-                        button.backgroundColor = UIColor(named: owner.colour)
+                        button.setBackgroundImage(UIImage(named: "\(owner.colour)_chip_\(node.health)"), for: .normal)
                     } else {
                         button.backgroundColor = .systemBackground // Default color for neutral nodes
                     }
                     
-                    // Update button title to display node health
-                    if node.health > 0 {
-                        button.setTitle("\(node.health)", for: .normal)
-                    }
+                    button.layer.cornerRadius = 2
                     
                     // Enable or disable button based on valid moves
                     if moves.contains(where: { $0 == (row, col) }) {
                         button.isEnabled = true
                         button.alpha = 1.0 // Fully visible for valid moves
+                        if node.owner == nil {
+                            button.layer.borderWidth = 3
+                            button.layer.borderColor = UIColor(named: currentPlayer.colour)?.cgColor
+                        }
                     } else {
                         button.isEnabled = false
+                        button.layer.borderWidth = 0
                         if node.owner == nil {
                             button.alpha = 0.5 // Dimmed for invalid moves
                         }
