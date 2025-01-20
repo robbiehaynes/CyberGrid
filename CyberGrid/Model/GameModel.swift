@@ -18,6 +18,10 @@ struct GameModel: Codable {
         self.winner = winner
     }
     
+    mutating func claimPowerup(at coords: (Int,Int)) {
+        grid.nodes[coords.0][coords.1].powerup = nil
+    }
+    
     mutating func useTurn(for currentPlayer: Player) {
         if let player = players.first(where: { $0 == currentPlayer }), player.movesRemaining > 0 {
             player.movesRemaining -= 1

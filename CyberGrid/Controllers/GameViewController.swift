@@ -12,12 +12,15 @@ class GameViewController: UIViewController {
     @IBOutlet weak var playerLabel: UILabel!
     @IBOutlet weak var movesRemainingLabel: UILabel!
     @IBOutlet weak var actionLabel: UILabel!
+    @IBOutlet weak var virusSwitch: UISwitch!
+    @IBOutlet weak var virusLabel: UILabel!
     
-    var playerOne = Player(name: "One", colour: "coral", movesRemaining: 10)
-    var playerTwo = Player(name: "Two", colour: "turqoise", movesRemaining: 10)
+    var playerOne = Player(name: "One", colour: "coral", movesRemaining: 6)
+    var playerTwo = Player(name: "Two", colour: "turqoise", movesRemaining: 6)
     var gameModel: GameModel?
     var currentPlayer: Player?
     var fortifying = false
+    var usingVirus = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -50,11 +53,29 @@ class GameViewController: UIViewController {
         updateUI()
     }
     
+    @IBAction func virusSwitchFlipped(_ sender: UISwitch) {
+        usingVirus = sender.isOn
+        if usingVirus {
+            actionLabel.text = "Hacking with Virus..."
+        } else {
+            actionLabel.text = "Hacking..."
+        }
+    }
+    
     func performAction(atRow row: Int, atCol col: Int) {
         if fortifying {
             gameModel!.grid.nodes[row][col].fortify()
         } else {
-            gameModel!.grid.nodes[row][col].attack(withVirus: false, player: currentPlayer!)
+            gameModel!.grid.nodes[row][col].attack(player: currentPlayer!)
+            
+            if gameModel!.grid.nodes[row][col].powerup == .firewall {
+                let alert = UIAlertController(
+                    title: "PowerUp Found",
+                    message: "You have discovered a firewall. This node starts stronger!",
+                    preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "Ok", style: .default))
+                self.present(alert, animated: true)
+            }
         }
         
         gameModel!.grid.recalculateOwners(fromCoords: (row, col))
@@ -62,7 +83,10 @@ class GameViewController: UIViewController {
         switchPlayer()
         updateUI()
         if let winner = gameModel?.winner {
-            print("\(winner) wins!")
+            // Someone won, notify user
+            let alert = UIAlertController(title: "Winner!", message: "\(winner) has won the game!", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "Ok", style: .default))
+            self.present(alert, animated: true)
         }
     }
     

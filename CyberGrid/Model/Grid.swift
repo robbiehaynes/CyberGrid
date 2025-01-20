@@ -6,7 +6,6 @@
 //
 
 enum Powerup: Codable {
-    case virus
     case firewall
 }
 
@@ -26,16 +25,16 @@ struct Node: Codable {
         health += 1
     }
     
-    mutating func attack(withVirus: Bool, player: Player) {
-        if withVirus {
-            health -= 2
-        } else {
-            health -= 1
-        }
+    mutating func attack(player: Player) {
+        health -= 1
         
         if health <= 0 {
             owner = player
-            health = 1
+            if self.powerup == .firewall {
+                health = 2
+            } else {
+                health = 1
+            }
         }
     }
     
@@ -183,7 +182,7 @@ struct Grid: Codable {
     private func assignRandomPowerups(toNodes nodes: [[Node]]) -> [[Node]] {
         var updatedNodes = nodes
         let uniquePairs = generateUniquePairs(count: 4)
-        let powerUps: [Powerup] = [.virus, .virus, .firewall, .firewall]
+        let powerUps: [Powerup] = [.firewall, .firewall, .firewall, .firewall]
         
         for (index, pair) in uniquePairs.enumerated() {
             let row = pair.first
