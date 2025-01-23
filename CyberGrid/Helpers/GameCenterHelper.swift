@@ -17,7 +17,7 @@ final class GameCenterHelper: NSObject {
     
     var currentMatchmakerVC: GKTurnBasedMatchmakerViewController?
     var viewController: UIViewController?
-    
+    var localImage: UIImage = UIImage(systemName: "person.circle.fill")!
     var currentMatch: GKTurnBasedMatch?
 
     var localAlias: String? {
@@ -46,6 +46,11 @@ final class GameCenterHelper: NSObject {
             
             if GKLocalPlayer.local.isAuthenticated {
                 GKLocalPlayer.local.register(self)
+                GKLocalPlayer.local.loadPhoto(for: .normal) { image, error in
+                    if let image = image {
+                        self.localImage = image
+                    }
+                }
             } else if let vc = gcAuthVC {
                 self.viewController?.present(vc, animated: true)
             }
@@ -65,9 +70,9 @@ final class GameCenterHelper: NSObject {
         
         let request = GKMatchRequest()
         request.minPlayers = 2
-        request.maxPlayers = 4
+        request.maxPlayers = 2
         
-        request.inviteMessage = "Would you like to play Rummikub?"
+        request.inviteMessage = "Would you like to play CyberGrid?"
         
         let vc = GKTurnBasedMatchmakerViewController(matchRequest: request)
         vc.turnBasedMatchmakerDelegate = self
@@ -137,10 +142,17 @@ final class GameCenterHelper: NSObject {
         }
     }
     
-    func getOpponentAliases() -> [String] {
-        return currentMatch?.participants
-            .filter { $0.player != GKLocalPlayer.local }
-            .compactMap { $0.player?.alias } ?? []
+    func getOpponentAlias() -> String? {
+        return currentMatch?.others.first?.player!.alias
+    }
+    
+    func getOpponentImage() -> UIImage? {
+        var returnImage: UIImage? = nil
+        currentMatch?.others.first?.player!.loadPhoto(for: .normal) { image, error in
+            if let error = error { return }
+            if let image = image { returnImage = image }
+        }
+        return returnImage
     }
 }
 

@@ -4,6 +4,7 @@
 //
 //  Created by Robert Haynes on 31/12/2024.
 //
+import UIKit
 
 class Player : Codable, Equatable, Hashable {
     static func == (lhs: Player, rhs: Player) -> Bool {
@@ -19,11 +20,13 @@ class Player : Codable, Equatable, Hashable {
     
     let name: String
     let colour: String
+    let profileImage: Data
     var movesRemaining: Int
     
-    init(name: String, colour: String, movesRemaining: Int) {
+    init(name: String, colour: String, movesRemaining: Int, profileImage: UIImage) {
         self.name = name
         self.colour = colour
         self.movesRemaining = movesRemaining
+        self.profileImage = profileImage.data!
     }
 }

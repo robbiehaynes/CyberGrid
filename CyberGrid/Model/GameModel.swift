@@ -12,10 +12,9 @@ struct GameModel: Codable {
     var grid: Grid
     var winner: String? = nil
     
-    init(players: [Player], grid: Grid = Grid(), winner: String? = nil) {
+    init(players: [Player] = [], grid: Grid = Grid()) {
         self.players = players
         self.grid = grid
-        self.winner = winner
     }
     
     mutating func claimPowerup(at coords: (Int,Int)) {

@@ -12,11 +12,8 @@ class GameViewController: UIViewController {
     @IBOutlet weak var playerLabel: UILabel!
     @IBOutlet weak var movesRemainingLabel: UILabel!
     @IBOutlet weak var actionLabel: UILabel!
-    @IBOutlet weak var virusSwitch: UISwitch!
-    @IBOutlet weak var virusLabel: UILabel!
+    @IBOutlet weak var profileImage: UIImageView!
     
-    var playerOne = Player(name: "One", colour: "coral", movesRemaining: 6)
-    var playerTwo = Player(name: "Two", colour: "turqoise", movesRemaining: 6)
     var gameModel: GameModel?
     var currentPlayer: Player?
     var fortifying = false
@@ -25,9 +22,15 @@ class GameViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        gameModel = GameModel(players: [playerOne, playerTwo])
-        gameModel!.grid.initialSetup(players: [playerOne, playerTwo])
-        currentPlayer = playerOne
+        guard let gameModel = gameModel else { return }
+        
+        self.gameModel!.grid.initialSetup(players: gameModel.players)
+        self.currentPlayer = gameModel.players[0]
+        self.profileImage.layer.cornerRadius = 25
+        self.profileImage.image = currentPlayer!.profileImage.image ?? UIImage(systemName: "person.circle.fill")
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
         playerLabel.text = currentPlayer!.name
         playerLabel.textColor = UIColor(named: currentPlayer!.colour)
         updateUI()
@@ -51,15 +54,6 @@ class GameViewController: UIViewController {
         fortifying = true
         actionLabel.text = "Fortifying..."
         updateUI()
-    }
-    
-    @IBAction func virusSwitchFlipped(_ sender: UISwitch) {
-        usingVirus = sender.isOn
-        if usingVirus {
-            actionLabel.text = "Hacking with Virus..."
-        } else {
-            actionLabel.text = "Hacking..."
-        }
     }
     
     func performAction(atRow row: Int, atCol col: Int) {
@@ -141,8 +135,11 @@ class GameViewController: UIViewController {
     }
     
     func switchPlayer() {
-        currentPlayer = (currentPlayer === playerOne) ? playerTwo : playerOne
+        guard let gameModel = gameModel else { return }
+        
+        currentPlayer = gameModel.players.first(where: { $0 != currentPlayer })
         playerLabel.text = currentPlayer!.name
         playerLabel.textColor = UIColor(named: currentPlayer!.colour)
+        profileImage.image = currentPlayer!.profileImage.image ?? UIImage(systemName: "person.circle.fill")
     }
 }
