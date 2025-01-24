@@ -13,6 +13,7 @@ class LandingViewController: UIViewController {
     @IBOutlet weak var multiplayerButton: UIButton!
     
     var gameModel: GameModel? = nil
+    var selectedGameMode: GameMode? = nil
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -37,10 +38,13 @@ class LandingViewController: UIViewController {
     }
     
     @IBAction func multiplayerPressed(_ sender: UIButton) {
+        selectedGameMode = .online
         GameCenterHelper.helper.presentMatchmaker()
     }
     
     @IBAction func localPlayPressed(_ sender: UIButton) {
+        selectedGameMode = .local
+        
         self.gameModel = GameModel()
         
         self.gameModel!.players = [
@@ -66,50 +70,17 @@ class LandingViewController: UIViewController {
     }
     
     @objc private func presentGame(_ notification: Notification) {
-        guard let match = notification.object as? GKTurnBasedMatch else { return }
+        guard let gameModel = notification.object as? GameModel else { return }
         
-        loadAndDisplay(match: match)
-    }
-    
-    //MARK: - Helpers
-    private func loadAndDisplay(match: GKTurnBasedMatch) {
-        
-        match.loadMatchData() { data, error in
-            
-            if let data {
-                if data.isEmpty {
-                    self.gameModel = GameModel()
-                } else {
-                    self.gameModel = try? PropertyListDecoder().decode(GameModel.self, from: data)
-                    guard (self.gameModel != nil) else { return }
-                }
-            } else {
-                self.gameModel = GameModel()
-            }
-            
-            GameCenterHelper.helper.currentMatch = match
-            
-            self.gameModel!.players = [
-                Player(
-                    name: GameCenterHelper.helper.localAlias ?? "",
-                    colour: "coral",
-                    movesRemaining: 6,
-                    profileImage: GameCenterHelper.helper.localImage),
-                Player(
-                    name: GameCenterHelper.helper.getOpponentAlias() ?? "",
-                    colour: "coral",
-                    movesRemaining: 6,
-                    profileImage: GameCenterHelper.helper.getOpponentImage() ?? UIImage(systemName: "person.circle.fill")!)
-            ]
-            
-            self.performSegue(withIdentifier: "goToGame", sender: self)
-        }
+        self.gameModel = gameModel
+        self.performSegue(withIdentifier: "goToGame", sender: self)
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "goToGame" {
             let gameVC = segue.destination as! GameViewController
             gameVC.gameModel = self.gameModel!
+            gameVC.gameMode = self.selectedGameMode!
         }
     }
 }

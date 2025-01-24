@@ -11,6 +11,7 @@ struct GameModel: Codable {
     var players: [Player]
     var grid: Grid
     var winner: String? = nil
+    var outcome: String? = nil
     
     init(players: [Player] = [], grid: Grid = Grid()) {
         self.players = players

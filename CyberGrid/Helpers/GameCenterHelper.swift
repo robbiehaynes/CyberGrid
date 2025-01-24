@@ -15,19 +15,13 @@ final class GameCenterHelper: NSObject {
         return GKLocalPlayer.local.isAuthenticated
     }
     
-    var currentMatchmakerVC: GKTurnBasedMatchmakerViewController?
+    var currentMatchmakerVC: GKMatchmakerViewController?
     var viewController: UIViewController?
     var localImage: UIImage = UIImage(systemName: "person.circle.fill")!
-    var currentMatch: GKTurnBasedMatch?
+    var currentMatch: GKMatch?
 
     var localAlias: String? {
         GKLocalPlayer.local.alias
-    }
-    
-    var canTakeTurnForCurrentMatch: Bool {
-        guard let match = currentMatch else { return true }
-        
-        return match.isLocalPlayersTurn
     }
     
     enum GameCenterHelperError: Error {
@@ -74,85 +68,72 @@ final class GameCenterHelper: NSObject {
         
         request.inviteMessage = "Would you like to play CyberGrid?"
         
-        let vc = GKTurnBasedMatchmakerViewController(matchRequest: request)
-        vc.turnBasedMatchmakerDelegate = self
+        let vc = GKMatchmakerViewController(matchRequest: request)
+        vc!.matchmakerDelegate = self
         currentMatchmakerVC = vc
-        viewController?.present(vc, animated: true)
-    }
-    
-    func endTurn(_ model: GameModel, completion: @escaping CompletionBlock) {
-        guard let match = currentMatch else {
-            completion(GameCenterHelperError.matchNotFound)
-            return
-        }
-        
-        do {
-            match.endTurn(
-                withNextParticipants: match.others,
-                turnTimeout: GKTurnTimeoutDefault,
-                match: try PropertyListEncoder().encode(model),
-                completionHandler: completion)
-        } catch {
-            completion(error)
-        }
-    }
-    
-    func win(completion: @escaping CompletionBlock) {
-        guard let match = currentMatch else {
-            completion(GameCenterHelperError.matchNotFound)
-            return
-        }
-        
-        match.currentParticipant?.matchOutcome = .won
-        match.others.forEach { other in
-            other.matchOutcome = .lost
-        }
-        
-        match.endMatchInTurn(
-            withMatch: match.matchData ?? Data(),
-            completionHandler: completion
-        )
-    }
-    
-    func forfeitMatch(_ model: GameModel, completion: @escaping CompletionBlock) async {
-        guard let match = currentMatch else {
-            completion(GameCenterHelperError.matchNotFound)
-            return
-        }
-        
-        do {
-            if canTakeTurnForCurrentMatch {
-                // Remove the participants who quit and the current participant.
-                let nextParticipants = match.participants.filter {
-                  ($0.status != .done) && ($0 != match.currentParticipant)
-                }
-
-                // Forfeit the match.
-                match.participantQuitInTurn(
-                    with: GKTurnBasedMatch.Outcome.quit,
-                    nextParticipants: nextParticipants,
-                    turnTimeout: GKTurnTimeoutDefault,
-                    match: try PropertyListEncoder().encode(model),
-                    completionHandler: completion)
-            } else {
-                try await match.participantQuitOutOfTurn(with: GKTurnBasedMatch.Outcome.quit)
-            }
-        } catch {
-            completion(error)
-        }
+        viewController?.present(vc!, animated: true)
     }
     
     func getOpponentAlias() -> String? {
-        return currentMatch?.others.first?.player!.alias
+        return currentMatch?.others.first?.alias
     }
     
     func getOpponentImage() -> UIImage? {
         var returnImage: UIImage? = nil
-        currentMatch?.others.first?.player!.loadPhoto(for: .normal) { image, error in
-            if let error = error { return }
+        currentMatch?.others.first?.loadPhoto(for: .normal) { image, error in
+            if error != nil { return }
             if let image = image { returnImage = image }
         }
         return returnImage
+    }
+    
+    func startMatch(match: GKMatch) {
+        currentMatch = match
+        currentMatch?.delegate = self
+        
+        var gameModel = GameModel()
+        
+        gameModel.players = [
+            Player(
+                name: localAlias ?? "",
+                colour: "coral",
+                movesRemaining: 6,
+                profileImage: localImage),
+            Player(
+                name: getOpponentAlias() ?? "",
+                colour: "coral",
+                movesRemaining: 6,
+                profileImage: getOpponentImage() ?? UIImage(systemName: "person.circle.fill")!)
+        ]
+        
+        NotificationCenter.default.post(name: .presentGame, object: gameModel)
+    }
+    
+    func sendModel(_ model: GameModel) {
+        if let winner = model.winner {
+            NotificationCenter.default.post(name: .gameEnded, object: winner)
+        }
+        
+        do {
+            let data = encode(gameModel: model)
+            try currentMatch?.sendData(toAllPlayers: data!, with: .unreliable)
+        } catch {
+            print("Error: \(error.localizedDescription).")
+        }
+    }
+    
+    func forfeitMatch(_ model: GameModel) {
+        // Notify the opponent that you forfeit the game.
+        var localModel = model
+        localModel.winner = getOpponentAlias()
+        
+        do {
+            let data = encode(gameModel: model)
+            try currentMatch?.sendData(toAllPlayers: data!, with: .unreliable)
+            NotificationCenter.default.post(name: .gameEnded, object: getOpponentAlias())
+        } catch {
+            print("Error: \(error.localizedDescription).")
+        }
     }
 }
 
@@ -162,40 +143,62 @@ extension GameCenterHelper: GKTurnBasedEventListener {
     }
 }
 
-extension GameCenterHelper: GKTurnBasedMatchmakerViewControllerDelegate {
-    func turnBasedMatchmakerViewControllerWasCancelled(_ viewController: GKTurnBasedMatchmakerViewController) {
+extension GameCenterHelper: GKMatchmakerViewControllerDelegate {
+    func matchmakerViewControllerWasCancelled(_ viewController: GKMatchmakerViewController) {
         viewController.dismiss(animated: true)
     }
     
-    func turnBasedMatchmakerViewController(_ viewController: GKTurnBasedMatchmakerViewController, didFind match: GKTurnBasedMatch) {
-        print("Dismissing TBMVC")
+    func matchmakerViewController(_ viewController: GKMatchmakerViewController, didFind match: GKMatch) {
+        print("Dismissing MVC")
+        
+        startMatch(match: match)
     }
     
-    func turnBasedMatchmakerViewController(_ viewController: GKTurnBasedMatchmakerViewController, didFailWithError error: Error) {
+    func matchmakerViewController(_ viewController: GKMatchmakerViewController, didFailWithError error: any Error) {
         print("Matchmaker vc did fail with error: \(error.localizedDescription).")
     }
 }
 
 extension GameCenterHelper: GKLocalPlayerListener {
-    func player(_ player: GKPlayer, wantsToQuitMatch match: GKTurnBasedMatch) {
-        // Remove the current participant. If the count drops below the minimum, the next participant ends the match.
-        let nextParticipants = match.participants.filter { $0 != match.currentParticipant }
-        
-        // Quit while it's the local player's turn.
-        match.participantQuitInTurn(with: GKTurnBasedMatch.Outcome.quit, nextParticipants: nextParticipants,
-                                    turnTimeout: GKTurnTimeoutDefault, match: match.matchData!)
+    
+    func player(_ player: GKPlayer, didAccept invite: GKInvite) {
+        // Present the matchmaker view controller in the invitation state.
+        if let mmViewController = GKMatchmakerViewController(invite: invite) {
+            mmViewController.matchmakerDelegate = self
+            viewController?.present(mmViewController, animated: true) { }
+        }
     }
     
-    func player(_ player: GKPlayer, receivedTurnEventFor match: GKTurnBasedMatch, didBecomeActive: Bool) {
-        
-        if currentMatchmakerVC != nil {
-            currentMatchmakerVC = nil
-            viewController?.presentedViewController?.dismiss(animated: true)
-        }
+    func player(_ player: GKPlayer, didRequestMatchWithRecipients recipientPlayers: [GKPlayer]) {
+        print("\n\nSending invites to other players.")
+    }
+}
 
-        guard didBecomeActive else { return }
+extension GameCenterHelper: GKMatchDelegate {
+    
+    func match(_ match: GKMatch, player: GKPlayer, didChange state: GKPlayerConnectionState) {
+        switch state {
+            case .connected:
+                print("\(player.displayName) Connected")
+            case .disconnected:
+                print("\(player.displayName) Disconnected")
+            default:
+                print("\(player.displayName) Connection Unknown")
+        }
+    }
+    
+    func match(_ match: GKMatch, didFailWithError error: (any Error)?) {
+        print("\n\nMatch object fails with error: \(error!.localizedDescription)")
+    }
+    
+    func match(_ match: GKMatch, shouldReinviteDisconnectedPlayer player: GKPlayer) -> Bool {
+        return true
+    }
+    
+    func match(_ match: GKMatch, didReceive data: Data, fromRemotePlayer player: GKPlayer) {
+        let gameModel = decode(matchData: data)
         
-        NotificationCenter.default.post(name: .presentGame, object: match)
+        NotificationCenter.default.post(name: .gameModelChanged, object: gameModel)
     }
 }
 
@@ -203,5 +206,7 @@ extension GameCenterHelper: GKLocalPlayerListener {
 
 extension Notification.Name {
     static let presentGame = Notification.Name(rawValue: "presentGame")
+    static let gameModelChanged = Notification.Name(rawValue: "gameModelChanged")
     static let authenticationChanged = Notification.Name(rawValue: "authenticationChanged")
+    static let gameEnded = Notification.Name(rawValue: "gameEnded")
 }

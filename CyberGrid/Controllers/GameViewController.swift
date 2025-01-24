@@ -7,6 +7,11 @@
 
 import UIKit
 
+enum GameMode {
+    case local
+    case online
+}
+
 class GameViewController: UIViewController {
 
     @IBOutlet weak var playerLabel: UILabel!
@@ -16,6 +21,7 @@ class GameViewController: UIViewController {
     
     var gameModel: GameModel?
     var currentPlayer: Player?
+    var gameMode: GameMode = .local
     var fortifying = false
     var usingVirus = false
     
@@ -28,6 +34,20 @@ class GameViewController: UIViewController {
         self.currentPlayer = gameModel.players[0]
         self.profileImage.layer.cornerRadius = 25
         self.profileImage.image = currentPlayer!.profileImage.image ?? UIImage(systemName: "person.circle.fill")
+        
+        NotificationCenter.default.addObserver(
+          self,
+          selector: #selector(gameModelChanged(_:)),
+          name: .gameModelChanged,
+          object: nil
+        )
+        
+        NotificationCenter.default.addObserver(
+          self,
+          selector: #selector(gameEnded(_:)),
+          name: .gameEnded,
+          object: nil
+        )
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -56,6 +76,36 @@ class GameViewController: UIViewController {
         updateUI()
     }
     
+    @objc private func gameModelChanged(_ notification: Notification) {
+        guard let gameModel = notification.object as? GameModel else { return }
+        
+        self.gameModel = gameModel
+        updateUI()
+        if gameModel.winner != nil {
+            NotificationCenter.default.post(name: .gameEnded, object: gameModel.winner)
+        }
+    }
+    
+    @objc private func gameEnded(_ notification: Notification) {
+        // Someone won, notify user
+        guard let winner = notification.object as? String else { return }
+        
+        if winner == GameCenterHelper.helper.localAlias {
+            let alert = UIAlertController(title: "Winner!", message: "\(winner) has won the game!", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "Ok", style: .default) { _ in
+                self.dismiss(animated: true)
+            })
+            self.present(alert, animated: true)
+        } else {
+            let alert = UIAlertController(title: "Unlucky!", message: "\(winner) has won the game.", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "Ok", style: .default) { _ in
+                self.dismiss(animated: true)
+            })
+            self.present(alert, animated: true)
+        }
+        
+    }
+    
     func performAction(atRow row: Int, atCol col: Int) {
         if fortifying {
             gameModel!.grid.nodes[row][col].fortify()
@@ -76,11 +126,11 @@ class GameViewController: UIViewController {
         gameModel!.useTurn(for: currentPlayer!)
         switchPlayer()
         updateUI()
-        if let winner = gameModel?.winner {
-            // Someone won, notify user
-            let alert = UIAlertController(title: "Winner!", message: "\(winner) has won the game!", preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: "Ok", style: .default))
-            self.present(alert, animated: true)
+        
+        if gameMode == .online {
+            GameCenterHelper.helper.sendModel(gameModel!)
+        } else if gameModel!.winner != nil {
+            NotificationCenter.default.post(name: .gameEnded, object: gameModel!.winner)
         }
     }
     
