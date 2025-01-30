@@ -23,8 +23,8 @@ struct GameModel: Codable {
     }
     
     mutating func useTurn(for currentPlayer: Player) {
-        if let player = players.first(where: { $0 == currentPlayer }), player.movesRemaining > 0 {
-            player.movesRemaining -= 1
+        if let index = players.firstIndex(where: { $0 == currentPlayer }) {
+            players[index].movesRemaining -= 1
         }
         
         if players.allSatisfy({ $0.movesRemaining == 0 }) {
@@ -43,7 +43,7 @@ struct GameModel: Codable {
             }
         }
         
-        // Find the player with the maximum owned nodes
+        // Check for draw, then find the player with the maximum owned nodes
         return ownershipCount.max { $0.value < $1.value }!.key
     }
 }

@@ -5,45 +5,6 @@
 //  Created by Robert Haynes on 31/12/2024.
 //
 
-enum Powerup: Codable {
-    case firewall
-}
-
-struct Node: Codable {
-    var owner: Player?
-    var health: Int
-    var powerup: Powerup?
-    var colour: String {
-        if owner == nil {
-            return "white"
-        } else {
-            return owner!.colour
-        }
-    }
-    
-    mutating func fortify() {
-        health += 1
-    }
-    
-    mutating func attack(player: Player) {
-        health -= 1
-        
-        if health <= 0 {
-            owner = player
-            if self.powerup == .firewall {
-                health = 2
-            } else {
-                health = 1
-            }
-        }
-    }
-    
-    mutating func updateOwner(to newOwner: Player?) {
-        self.owner = newOwner
-        self.health = 1
-    }
-}
-
 struct Pair: Hashable {
     let first: Int
     let second: Int
@@ -52,8 +13,12 @@ struct Pair: Hashable {
 struct Grid: Codable {
     var nodes: [[Node]] = []
     
-    init() {
-        self.nodes = generateNodes()
+    init(nodes: [[Node]] = []) {
+        if nodes.isEmpty {
+            self.nodes = generateNodes()
+        } else {
+            self.nodes = nodes
+        }
     }
     
     mutating func initialSetup(players: [Player]) {
@@ -75,6 +40,10 @@ struct Grid: Codable {
             (-1, 1), // Up-right
             (-1, -1) // Up-left
         ]
+        
+        if currentPlayer.movesRemaining == 0 {
+            return validMoves
+        }
         
         for row in 0..<nodes.count {
             for col in 0..<nodes[row].count {
@@ -121,6 +90,37 @@ struct Grid: Codable {
         }
         
         return validMoves
+    }
+    
+    func copy() -> Grid {
+        var newNodes: [[Node]] = []
+        
+        for row in nodes {
+            var newRow: [Node] = []
+            for node in row {
+                newRow.append(node)
+            }
+            newNodes.append(newRow)
+        }
+        
+        return Grid(nodes: newNodes)
+    }
+    
+    func getOpponent(for player: Player) -> Player {
+        for row in 0..<6 {
+            for col in 0..<6 {
+                if nodes[row][col].owner != player && nodes[row][col].owner != nil {
+                    return nodes[row][col].owner!
+                }
+            }
+        }
+        return player
+    }
+    
+    mutating func applyMove(_ move: (Int, Int), for player: Player) {
+        let (row, col) = move
+        nodes[row][col].attack(player: player)
+        recalculateOwners(fromCoords: move)
     }
     
     mutating func recalculateOwners(fromCoords coords: (Int,Int)) {
@@ -216,5 +216,32 @@ struct Grid: Codable {
         }
         
         return Array(generatedPairs)
+    }
+}
+
+extension Grid: Equatable {
+    static func == (lhs: Grid, rhs: Grid) -> Bool {
+        return lhs.nodes == rhs.nodes
+    }
+}
+
+extension Grid: Hashable {
+    func hash(into hasher: inout Hasher) {
+        for row in nodes {
+            for node in row {
+                hasher.combine(node)
+            }
+        }
+    }
+    
+    func boardHash() -> Int {
+        var hasher = Hasher()
+        for row in nodes {
+            for node in row {
+                hasher.combine(node.colour)
+                hasher.combine(node.health)
+            }
+        }
+        return hasher.finalize()
     }
 }

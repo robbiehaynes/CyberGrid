@@ -6,18 +6,7 @@
 //
 import UIKit
 
-class Player : Codable, Equatable, Hashable {
-    static func == (lhs: Player, rhs: Player) -> Bool {
-        if lhs.colour != rhs.colour { return false }
-        if lhs.name != rhs.name { return false }
-        if lhs.movesRemaining != rhs.movesRemaining { return false }
-        return true
-    }
-    
-    func hash(into hasher: inout Hasher) {
-        hasher.combine(ObjectIdentifier(self))
-    }
-    
+struct Player : Codable {
     let name: String
     let colour: String
     let profileImage: Data
@@ -28,5 +17,20 @@ class Player : Codable, Equatable, Hashable {
         self.colour = colour
         self.movesRemaining = movesRemaining
         self.profileImage = profileImage.data!
+    }
+}
+
+extension Player : Equatable {
+    static func == (lhs: Player, rhs: Player) -> Bool {
+        if lhs.colour != rhs.colour { return false }
+        if lhs.name != rhs.name { return false }
+        return true
+    }
+}
+
+extension Player : Hashable {
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(name)
+        hasher.combine(colour)
     }
 }

@@ -110,10 +110,6 @@ final class GameCenterHelper: NSObject {
     }
     
     func sendModel(_ model: GameModel) {
-        if let winner = model.winner {
-            NotificationCenter.default.post(name: .gameEnded, object: winner)
-        }
-        
         do {
             let data = encode(gameModel: model)
             try currentMatch?.sendData(toAllPlayers: data!, with: .unreliable)

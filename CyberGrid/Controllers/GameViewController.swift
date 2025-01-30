@@ -24,6 +24,7 @@ class GameViewController: UIViewController {
     var gameMode: GameMode = .local
     var fortifying = false
     var usingVirus = false
+    let agent = Agent(depth: 7)
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -125,11 +126,14 @@ class GameViewController: UIViewController {
         gameModel!.grid.recalculateOwners(fromCoords: (row, col))
         gameModel!.useTurn(for: currentPlayer!)
         switchPlayer()
-        updateUI()
         
         if gameMode == .online {
             GameCenterHelper.helper.sendModel(gameModel!)
-        } else if gameModel!.winner != nil {
+        } else {
+            performAIMove()
+        }
+        
+        if gameModel!.winner != nil {
             NotificationCenter.default.post(name: .gameEnded, object: gameModel!.winner)
         }
     }
@@ -143,7 +147,6 @@ class GameViewController: UIViewController {
         
         if moves.isEmpty && gameModel.grid.validMoves(for: currentPlayer, !fortifying).isEmpty {
             switchPlayer()
-            updateUI()
             return
         }
         
@@ -191,5 +194,53 @@ class GameViewController: UIViewController {
         playerLabel.text = currentPlayer!.name
         playerLabel.textColor = UIColor(named: currentPlayer!.colour)
         profileImage.image = currentPlayer!.profileImage.image ?? UIImage(systemName: "person.circle.fill")
+        
+        updateUI()
     }
+    
+    func performAIMove() {
+        guard let currentPlayer = currentPlayer, let gameModel = gameModel else { return }
+        
+        animateThinkingLabel()
+        
+        DispatchQueue.global(qos: .userInitiated).async { [weak self] in
+            guard let self = self else { return }
+            
+            // Compute the best move
+            if let move = self.agent.bestMove(for: currentPlayer, on: gameModel.grid) {
+                
+                DispatchQueue.main.async {
+                    // Show move decision
+                    self.actionLabel.text = "\(currentPlayer.name) chose \(move)"
+                    self.actionLabel.layer.removeAllAnimations()
+                    
+                    // Apply move and update game state
+                    self.gameModel!.grid.applyMove(move, for: currentPlayer)
+                    self.gameModel!.grid.recalculateOwners(fromCoords: move)
+                    self.gameModel!.useTurn(for: currentPlayer)
+                    
+                    if let winner = self.gameModel!.winner {
+                        self.updateUI()
+                        NotificationCenter.default.post(name: .gameEnded, object: winner)
+                    } else {
+                        self.switchPlayer()
+                    }
+                }
+            }
+        }
+    }
+    
+    func animateThinkingLabel() {
+        actionLabel.text = "\(currentPlayer!.name) is thinking"
+        actionLabel.alpha = 1.0
+        
+        let dotAnimation = CAKeyframeAnimation(keyPath: "opacity")
+        dotAnimation.values = [1.0, 0.3, 1.0]
+        dotAnimation.keyTimes = [0, 0.5, 1]
+        dotAnimation.duration = 1.2
+        dotAnimation.repeatCount = .infinity
+        
+        actionLabel.layer.add(dotAnimation, forKey: "thinkingAnimation")
+    }
+
 }
