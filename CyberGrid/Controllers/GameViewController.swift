@@ -24,7 +24,8 @@ class GameViewController: UIViewController {
     var gameMode: GameMode = .local
     var fortifying = false
     var usingVirus = false
-    let agent = Agent(depth: 7)
+    let agent = MiniAgent(depth: 8)
+    let mctsAgent = MCTSAgent(iterations: 10000)
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -94,13 +95,13 @@ class GameViewController: UIViewController {
         if winner == GameCenterHelper.helper.localAlias {
             let alert = UIAlertController(title: "Winner!", message: "\(winner) has won the game!", preferredStyle: .alert)
             alert.addAction(UIAlertAction(title: "Ok", style: .default) { _ in
-                self.dismiss(animated: true)
+//                self.dismiss(animated: true)
             })
             self.present(alert, animated: true)
         } else {
             let alert = UIAlertController(title: "Unlucky!", message: "\(winner) has won the game.", preferredStyle: .alert)
             alert.addAction(UIAlertAction(title: "Ok", style: .default) { _ in
-                self.dismiss(animated: true)
+//                self.dismiss(animated: true)
             })
             self.present(alert, animated: true)
         }
@@ -207,9 +208,9 @@ class GameViewController: UIViewController {
             guard let self = self else { return }
             
             // Compute the best move
-            if let move = self.agent.bestMove(for: currentPlayer, on: gameModel.grid) {
+            if let move = self.mctsAgent.bestMove(for: currentPlayer, on: gameModel.grid) {
                 
-                DispatchQueue.main.async {
+                DispatchQueue.main.asyncAfter(deadline: .now()) {
                     // Show move decision
                     self.actionLabel.text = "\(currentPlayer.name) chose \(move)"
                     self.actionLabel.layer.removeAllAnimations()

@@ -1,5 +1,5 @@
 //
-//  Agent.swift
+//  MiniAgent.swift
 //  CyberGrid
 //
 //  Created by Robert Haynes on 30/01/2025.
@@ -7,7 +7,7 @@
 
 import Foundation
 
-class Agent {
+class MiniAgent {
     let maxDepth: Int
     var transpositionTable: [Int: Double] = [:]
     
@@ -38,7 +38,10 @@ class Agent {
             var simulatedGrid = grid.copy()
             simulatedGrid.applyMove(move, for: player)
             
-            let score = minimax(grid: simulatedGrid, depth: maxDepth, maximising: false, player: player, alpha: -Double.infinity, beta: Double.infinity)
+            var simulatedPlayer = player
+            simulatedPlayer.movesRemaining -= 1
+            
+            let score = minimax(grid: simulatedGrid, depth: maxDepth, maximising: false, player: simulatedPlayer, alpha: -Double.infinity, beta: Double.infinity)
             
             if score > bestScore {
                 bestScore = score
@@ -102,8 +105,8 @@ class Agent {
     
     private func evaluate(grid: Grid, for player: Player) -> Double {
         let opponent = grid.getOpponent(for: player)
-        let playerNodes = grid.nodes.flatMap { $0 }.filter { $0.owner == player }.count
-        let opponentNodes = grid.nodes.flatMap { $0 }.filter { $0.owner == opponent }.count
+        let playerNodes = grid.nodeCount(for: player)
+        let opponentNodes = grid.nodeCount(for: opponent)
         
         let playerMoves = grid.validMoves(for: player).count
         let opponentMoves = grid.validMoves(for: opponent).count

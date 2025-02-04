@@ -117,6 +117,17 @@ struct Grid: Codable {
         return player
     }
     
+    func nodeCount(for player: Player) -> Int {
+        // Return the number of nodes owned by player
+        return nodes.flatMap { $0 }.filter { $0.owner == player }.count
+    }
+    
+    func applyingMove(_ move: (Int, Int), for player: Player) -> Grid {
+        var newGrid = self.copy()
+        newGrid.applyMove(move, for: player)
+        return newGrid
+    }
+    
     mutating func applyMove(_ move: (Int, Int), for player: Player) {
         let (row, col) = move
         nodes[row][col].attack(player: player)
