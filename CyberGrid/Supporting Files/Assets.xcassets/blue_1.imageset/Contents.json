@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "torqoise_chip_2.png",
+      "filename" : "blue_1.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "torqoise_chip_2@2x.png",
+      "filename" : "blue_1@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "torqoise_chip_2@3x.png",
+      "filename" : "blue_1@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     }

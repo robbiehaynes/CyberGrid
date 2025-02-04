@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "coral_chip_1.png",
+      "filename" : "blue_2.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "coral_chip_1@2x.png",
+      "filename" : "blue_2@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "coral_chip_1@3x.png",
+      "filename" : "blue_2@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     }

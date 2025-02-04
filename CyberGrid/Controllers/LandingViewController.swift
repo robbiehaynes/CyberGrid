@@ -50,12 +50,12 @@ class LandingViewController: UIViewController {
         self.gameModel!.players = [
             Player(
                 name: GameCenterHelper.helper.localAlias ?? "",
-                colour: "coral",
+                colour: "orange",
                 movesRemaining: 6,
                 profileImage: GameCenterHelper.helper.localImage),
             Player(
                 name: "Sirius",
-                colour: "turqoise",
+                colour: "blue",
                 movesRemaining: 6,
                 profileImage: UIImage(named: "robot")!)
         ]

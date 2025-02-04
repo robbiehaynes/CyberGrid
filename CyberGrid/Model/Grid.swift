@@ -28,7 +28,7 @@ struct Grid: Codable {
         self.nodes[3][3].updateOwner(to: players[1])
     }
     
-    func validMoves(for currentPlayer: Player, _ fortifying: Bool = false) -> [(Int,Int)] {
+    func validMoves(for currentPlayer: Player) -> [(Int,Int)] {
         var validMoves: [(Int, Int)] = []
         let directions = [
             (0, 1),  // Right
@@ -48,13 +48,6 @@ struct Grid: Codable {
         for row in 0..<nodes.count {
             for col in 0..<nodes[row].count {
                 // Skip if the node is already occupied
-                if fortifying {
-                    if nodes[row][col].owner == currentPlayer {
-                        validMoves.append((row, col))
-                    }
-                    continue
-                }
-                
                 if nodes[row][col].owner != nil {
                     continue
                 }
@@ -148,12 +141,12 @@ struct Grid: Codable {
         
         let row = coords.0
         let col = coords.1
-        var maxOppHealth = -1
         
         guard let currentOwner = nodes[row][col].owner else { return }
         
         for direction in directions {
             var path = [(row, col)]
+            var maxOppHealth = -1
             var currentRow = row + direction.0
             var currentCol = col + direction.1
             

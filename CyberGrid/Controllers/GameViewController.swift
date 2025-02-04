@@ -22,9 +22,8 @@ class GameViewController: UIViewController {
     var gameModel: GameModel?
     var currentPlayer: Player?
     var gameMode: GameMode = .local
-    var fortifying = false
     var usingVirus = false
-    let agent = MiniAgent(depth: 8)
+    let agent = MiniAgent(depth: 7)
     let mctsAgent = MCTSAgent(iterations: 10000)
     
     override func viewDidLoad() {
@@ -36,6 +35,10 @@ class GameViewController: UIViewController {
         self.currentPlayer = gameModel.players[0]
         self.profileImage.layer.cornerRadius = 25
         self.profileImage.image = currentPlayer!.profileImage.image ?? UIImage(systemName: "person.circle.fill")
+        
+        playerLabel.text = currentPlayer!.name
+        playerLabel.textColor = UIColor(named: currentPlayer!.colour)
+        updateUI()
         
         NotificationCenter.default.addObserver(
           self,
@@ -52,30 +55,12 @@ class GameViewController: UIViewController {
         )
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        playerLabel.text = currentPlayer!.name
-        playerLabel.textColor = UIColor(named: currentPlayer!.colour)
-        updateUI()
-    }
-    
     @IBAction func nodeButtonPressed(_ sender: UIButton) {
         var row = 0
         if sender.tag != 36 { row = sender.tag / 6 }
         let col = sender.tag % 6
         
         performAction(atRow: row, atCol: col)
-    }
-    
-    @IBAction func hackButtonPressed(_ sender: UIButton) {
-        fortifying = false
-        actionLabel.text = "Hacking..."
-        updateUI()
-    }
-    
-    @IBAction func fortifyButtonPressed(_ sender: UIButton) {
-        fortifying = true
-        actionLabel.text = "Fortifying..."
-        updateUI()
     }
     
     @objc private func gameModelChanged(_ notification: Notification) {
@@ -95,13 +80,17 @@ class GameViewController: UIViewController {
         if winner == GameCenterHelper.helper.localAlias {
             let alert = UIAlertController(title: "Winner!", message: "\(winner) has won the game!", preferredStyle: .alert)
             alert.addAction(UIAlertAction(title: "Ok", style: .default) { _ in
-//                self.dismiss(animated: true)
+                DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+                    self.dismiss(animated: true)
+                }
             })
             self.present(alert, animated: true)
         } else {
             let alert = UIAlertController(title: "Unlucky!", message: "\(winner) has won the game.", preferredStyle: .alert)
             alert.addAction(UIAlertAction(title: "Ok", style: .default) { _ in
-//                self.dismiss(animated: true)
+                DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+                    self.dismiss(animated: true)
+                }
             })
             self.present(alert, animated: true)
         }
@@ -109,19 +98,16 @@ class GameViewController: UIViewController {
     }
     
     func performAction(atRow row: Int, atCol col: Int) {
-        if fortifying {
-            gameModel!.grid.nodes[row][col].fortify()
-        } else {
-            gameModel!.grid.nodes[row][col].attack(player: currentPlayer!)
-            
-            if gameModel!.grid.nodes[row][col].powerup == .firewall {
-                let alert = UIAlertController(
-                    title: "PowerUp Found",
-                    message: "You have discovered a firewall. This node starts stronger!",
-                    preferredStyle: .alert)
-                alert.addAction(UIAlertAction(title: "Ok", style: .default))
-                self.present(alert, animated: true)
-            }
+        
+        gameModel!.grid.nodes[row][col].attack(player: currentPlayer!)
+        
+        if gameModel!.grid.nodes[row][col].powerup == .firewall {
+            let alert = UIAlertController(
+                title: "PowerUp Found",
+                message: "You have discovered a firewall. This node starts stronger!",
+                preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "Ok", style: .default))
+            self.present(alert, animated: true)
         }
         
         gameModel!.grid.recalculateOwners(fromCoords: (row, col))
@@ -144,9 +130,9 @@ class GameViewController: UIViewController {
         guard let currentPlayer else { return }
         
         movesRemainingLabel.text = "Moves Remaining: \(currentPlayer.movesRemaining)"
-        let moves = gameModel.grid.validMoves(for: currentPlayer, fortifying)
+        let moves = gameModel.grid.validMoves(for: currentPlayer)
         
-        if moves.isEmpty && gameModel.grid.validMoves(for: currentPlayer, !fortifying).isEmpty {
+        if moves.isEmpty && gameModel.grid.validMoves(for: currentPlayer).isEmpty {
             switchPlayer()
             return
         }
@@ -161,7 +147,9 @@ class GameViewController: UIViewController {
                 if let button = view.viewWithTag(tag) as? UIButton {
                     // Update button background color based on the node owner
                     if let owner = node.owner {
-                        button.setBackgroundImage(UIImage(named: "\(owner.colour)_chip_\(node.health)"), for: .normal)
+                        if let image = UIImage(named: "\(owner.colour)_\(node.health)") {
+                            animateButtonImageChange(button: button, newImage: image)
+                        }
                     } else {
                         button.backgroundColor = .systemBackground // Default color for neutral nodes
                     }
@@ -208,9 +196,9 @@ class GameViewController: UIViewController {
             guard let self = self else { return }
             
             // Compute the best move
-            if let move = self.mctsAgent.bestMove(for: currentPlayer, on: gameModel.grid) {
+            if let move = self.agent.bestMove(for: currentPlayer, on: gameModel.grid) {
                 
-                DispatchQueue.main.asyncAfter(deadline: .now()) {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
                     // Show move decision
                     self.actionLabel.text = "\(currentPlayer.name) chose \(move)"
                     self.actionLabel.layer.removeAllAnimations()
@@ -242,6 +230,18 @@ class GameViewController: UIViewController {
         dotAnimation.repeatCount = .infinity
         
         actionLabel.layer.add(dotAnimation, forKey: "thinkingAnimation")
+    }
+
+    func animateButtonImageChange(button: UIButton, newImage: UIImage) {
+        
+        let currentImage = button.backgroundImage(for: .normal)
+        
+        if currentImage != newImage {
+            UIView.transition(with: button, duration: 0.75, options: .transitionFlipFromLeft, animations: {
+                button.setBackgroundImage(newImage, for: .normal)
+                button.setBackgroundImage(newImage, for: .disabled)
+            }, completion: nil)
+        }
     }
 
 }
