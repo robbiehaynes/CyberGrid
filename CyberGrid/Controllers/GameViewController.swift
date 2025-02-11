@@ -33,6 +33,7 @@ class GameViewController: UIViewController {
         
         self.gameModel!.grid.initialSetup(players: gameModel.players)
         self.currentPlayer = gameModel.players[0]
+        self.gameModel!.currentPlayer = self.currentPlayer!
         self.profileImage.layer.cornerRadius = 25
         self.profileImage.image = currentPlayer!.profileImage.image ?? UIImage(systemName: "person.circle.fill")
         
@@ -53,6 +54,13 @@ class GameViewController: UIViewController {
           name: .gameEnded,
           object: nil
         )
+        
+        GameCenterHelper.helper.setAccessPointIsActive(false)
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        GameCenterHelper.helper.setAccessPointIsActive(true)
+        super.viewDidDisappear(animated)
     }
     
     @IBAction func nodeButtonPressed(_ sender: UIButton) {
@@ -67,7 +75,12 @@ class GameViewController: UIViewController {
         guard let gameModel = notification.object as? GameModel else { return }
         
         self.gameModel = gameModel
-        updateUI()
+        self.currentPlayer = gameModel.currentPlayer
+        
+        DispatchQueue.main.async {
+            self.updateUI()
+        }
+        
         if gameModel.winner != nil {
             NotificationCenter.default.post(name: .gameEnded, object: gameModel.winner)
         }
@@ -113,6 +126,7 @@ class GameViewController: UIViewController {
         gameModel!.grid.recalculateOwners(fromCoords: (row, col))
         gameModel!.useTurn(for: currentPlayer!)
         switchPlayer()
+        gameModel!.currentPlayer = currentPlayer!
         
         if gameMode == .online {
             GameCenterHelper.helper.sendModel(gameModel!)
@@ -129,13 +143,12 @@ class GameViewController: UIViewController {
         guard let gameModel else { return }
         guard let currentPlayer else { return }
         
+        playerLabel.text = currentPlayer.name
+        playerLabel.textColor = UIColor(named: currentPlayer.colour)
+        profileImage.image = currentPlayer.profileImage.image ?? UIImage(systemName: "person.circle.fill")
+        
         movesRemainingLabel.text = "Moves Remaining: \(currentPlayer.movesRemaining)"
         let moves = gameModel.grid.validMoves(for: currentPlayer)
-        
-        if moves.isEmpty && gameModel.grid.validMoves(for: currentPlayer).isEmpty {
-            switchPlayer()
-            return
-        }
         
         for row in 0..<6 {
             for col in 0..<6 {
@@ -180,11 +193,10 @@ class GameViewController: UIViewController {
         guard let gameModel = gameModel else { return }
         
         currentPlayer = gameModel.players.first(where: { $0 != currentPlayer })
-        playerLabel.text = currentPlayer!.name
-        playerLabel.textColor = UIColor(named: currentPlayer!.colour)
-        profileImage.image = currentPlayer!.profileImage.image ?? UIImage(systemName: "person.circle.fill")
         
-        updateUI()
+        DispatchQueue.main.async {
+            self.updateUI()
+        }
     }
     
     func performAIMove() {

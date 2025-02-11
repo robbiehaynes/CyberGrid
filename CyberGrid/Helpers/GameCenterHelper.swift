@@ -45,6 +45,11 @@ final class GameCenterHelper: NSObject {
                         self.localImage = image
                     }
                 }
+                
+                // Add GKAccessPoint
+                GKAccessPoint.shared.location = .topLeading
+                GKAccessPoint.shared.showHighlights = true
+                GKAccessPoint.shared.isActive = true
             } else if let vc = gcAuthVC {
                 self.viewController?.present(vc, animated: true)
             }
@@ -57,6 +62,10 @@ final class GameCenterHelper: NSObject {
                 self.viewController?.present(alert, animated: true, completion: nil)
             }
         }
+    }
+    
+    func setAccessPointIsActive(_ state: Bool) {
+        GKAccessPoint.shared.isActive = state
     }
     
     func presentMatchmaker() {
@@ -90,29 +99,68 @@ final class GameCenterHelper: NSObject {
     func startMatch(match: GKMatch) {
         currentMatch = match
         currentMatch?.delegate = self
+
+        let playerOrder = determinePlayerOrder(forMatch: match)
+        let isPlayer1 = (playerOrder.first == GKLocalPlayer.local.gamePlayerID)
+        print("Host is \(playerOrder.first ?? "Unknown")")
         
         var gameModel = GameModel()
-        
         gameModel.players = [
             Player(
-                name: localAlias ?? "",
-                colour: "coral",
+                name: isPlayer1 ? GKLocalPlayer.local.displayName : getOpponentAlias() ?? "Unknown",
+                colour: "brand_orange",
                 movesRemaining: 6,
-                profileImage: localImage),
+                profileImage: isPlayer1 ? localImage : getOpponentImage() ?? UIImage(systemName: "person.circle.fill")!),
             Player(
-                name: getOpponentAlias() ?? "",
-                colour: "coral",
+                name: isPlayer1 ? getOpponentAlias() ?? "Unknown" : GKLocalPlayer.local.displayName,
+                colour: "brand_blue",
                 movesRemaining: 6,
-                profileImage: getOpponentImage() ?? UIImage(systemName: "person.circle.fill")!)
+                profileImage: isPlayer1 ? getOpponentImage() ?? UIImage(systemName: "person.circle.fill")! : localImage)
         ]
+        
+        currentMatchmakerVC?.dismiss(animated: true)
         
         NotificationCenter.default.post(name: .presentGame, object: gameModel)
     }
     
+    func determinePlayerOrder(forMatch match: GKMatch) -> [String] {
+        return [match.players.first?.gamePlayerID ?? "", GKLocalPlayer.local.gamePlayerID].sorted()
+    }
+    
+    private func waitForPlayersToConnect(match: GKMatch, maxWaitTime: TimeInterval = 5.0) {
+        var elapsedTime: TimeInterval = 0
+        let checkInterval: TimeInterval = 1.0  // Check every second
+
+        let timer = Timer.scheduledTimer(withTimeInterval: checkInterval, repeats: true) { timer in
+            if match.expectedPlayerCount == 0 {
+                print("All players connected! Starting match.")
+                timer.invalidate()
+                self.startMatch(match: match)
+            } else {
+                elapsedTime += checkInterval
+                print("Waiting for players... (\(elapsedTime)s elapsed)")
+
+                if elapsedTime >= maxWaitTime {
+                    print("Timeout: Not all players connected.")
+                    timer.invalidate()  // ✅ Stop checking after 5 seconds
+                    // Handle timeout scenario here (e.g., cancel match, retry, etc.)
+                    match.disconnect()
+                    self.currentMatchmakerVC?.dismiss(animated: true)
+                }
+            }
+        }
+
+        RunLoop.main.add(timer, forMode: .common)
+    }
+
+    
     func sendModel(_ model: GameModel) {
         do {
-            let data = encode(gameModel: model)
-            try currentMatch?.sendData(toAllPlayers: data!, with: .unreliable)
+            if let data = encode(gameModel: model) {
+                try currentMatch?.sendData(toAllPlayers: data, with: .reliable)
+            } else {
+                print("Error encoding data")
+            }
         } catch {
             print("Error: \(error.localizedDescription).")
         }
@@ -124,8 +172,8 @@ final class GameCenterHelper: NSObject {
         localModel.winner = getOpponentAlias()
         
         do {
-            let data = encode(gameModel: model)
-            try currentMatch?.sendData(toAllPlayers: data!, with: .unreliable)
+            let data = encode(gameModel: localModel)
+            try currentMatch?.sendData(toAllPlayers: data!, with: .reliable)
             NotificationCenter.default.post(name: .gameEnded, object: getOpponentAlias())
         } catch {
             print("Error: \(error.localizedDescription).")
@@ -147,7 +195,7 @@ extension GameCenterHelper: GKMatchmakerViewControllerDelegate {
     func matchmakerViewController(_ viewController: GKMatchmakerViewController, didFind match: GKMatch) {
         print("Dismissing MVC")
         
-        startMatch(match: match)
+        waitForPlayersToConnect(match: match)
     }
     
     func matchmakerViewController(_ viewController: GKMatchmakerViewController, didFailWithError error: any Error) {

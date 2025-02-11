@@ -8,7 +8,7 @@ import UIKit
 
 extension UIImage {
     var data: Data? {
-        if let data = self.pngData() {
+        if let data = self.jpegData(compressionQuality: 0.0) {
             return data
         } else {
             return nil
