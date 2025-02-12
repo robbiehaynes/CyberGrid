@@ -101,8 +101,7 @@ final class GameCenterHelper: NSObject {
         currentMatch?.delegate = self
 
         let playerOrder = determinePlayerOrder(forMatch: match)
-        let isPlayer1 = (playerOrder.first == GKLocalPlayer.local.gamePlayerID)
-        print("Host is \(playerOrder.first ?? "Unknown")")
+        let isPlayer1 = playerOrder.first == GKLocalPlayer.local.gamePlayerID
         
         var gameModel = GameModel()
         gameModel.players = [
@@ -142,8 +141,7 @@ final class GameCenterHelper: NSObject {
 
                 if elapsedTime >= maxWaitTime {
                     print("Timeout: Not all players connected.")
-                    timer.invalidate()  // ✅ Stop checking after 5 seconds
-                    // Handle timeout scenario here (e.g., cancel match, retry, etc.)
+                    timer.invalidate()
                     match.disconnect()
                     self.currentMatchmakerVC?.dismiss(animated: true)
                 }
@@ -152,19 +150,28 @@ final class GameCenterHelper: NSObject {
 
         RunLoop.main.add(timer, forMode: .common)
     }
-
     
-    func sendModel(_ model: GameModel) {
+    func sendMove(_ move: (Int,Int)) {
         do {
-            if let data = encode(gameModel: model) {
-                try currentMatch?.sendData(toAllPlayers: data, with: .reliable)
-            } else {
-                print("Error encoding data")
-            }
+            let moveData = Move(player: GKLocalPlayer.local.displayName, coords: move)
+            let data = try JSONEncoder().encode(moveData)
+            try currentMatch?.sendData(toAllPlayers: data, with: .reliable)
         } catch {
             print("Error: \(error.localizedDescription).")
         }
     }
+    
+//    func sendModel(_ model: GameModel) {
+//        do {
+//            if let data = encode(gameModel: model) {
+//                try currentMatch?.sendData(toAllPlayers: data, with: .reliable)
+//            } else {
+//                print("Error encoding data")
+//            }
+//        } catch {
+//            print("Error: \(error.localizedDescription).")
+//        }
+//    }
     
     func forfeitMatch(_ model: GameModel) {
         // Notify the opponent that you forfeit the game.
@@ -178,12 +185,6 @@ final class GameCenterHelper: NSObject {
         } catch {
             print("Error: \(error.localizedDescription).")
         }
-    }
-}
-
-extension GameCenterHelper: GKTurnBasedEventListener {
-    func player(_ player: GKPlayer, matchEnded match: GKTurnBasedMatch) {
-        GameCenterHelper.helper.currentMatch = nil
     }
 }
 
@@ -240,9 +241,10 @@ extension GameCenterHelper: GKMatchDelegate {
     }
     
     func match(_ match: GKMatch, didReceive data: Data, fromRemotePlayer player: GKPlayer) {
-        let gameModel = decode(matchData: data)
+//        let gameModel = decode(matchData: data)
+        let move = try! JSONDecoder().decode(Move.self, from: data)
         
-        NotificationCenter.default.post(name: .gameModelChanged, object: gameModel)
+        NotificationCenter.default.post(name: .moveReceived, object: move)
     }
 }
 
@@ -250,7 +252,7 @@ extension GameCenterHelper: GKMatchDelegate {
 
 extension Notification.Name {
     static let presentGame = Notification.Name(rawValue: "presentGame")
-    static let gameModelChanged = Notification.Name(rawValue: "gameModelChanged")
+    static let moveReceived = Notification.Name(rawValue: "moveReceived")
     static let authenticationChanged = Notification.Name(rawValue: "authenticationChanged")
     static let gameEnded = Notification.Name(rawValue: "gameEnded")
 }

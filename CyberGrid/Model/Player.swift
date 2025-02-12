@@ -6,6 +6,18 @@
 //
 import UIKit
 
+struct Move: Codable {
+    let player: String
+    let row: Int
+    let column: Int
+    
+    init(player: String, coords: (Int, Int)) {
+        self.player = player
+        self.row = coords.0
+        self.column = coords.1
+    }
+}
+
 struct Player : Codable {
     let name: String
     let colour: String
@@ -17,6 +29,10 @@ struct Player : Codable {
         self.colour = colour
         self.movesRemaining = movesRemaining
         self.profileImage = profileImage.data!
+    }
+    
+    func isLocal() -> Bool {
+        return name == GameCenterHelper.helper.localAlias
     }
 }
 

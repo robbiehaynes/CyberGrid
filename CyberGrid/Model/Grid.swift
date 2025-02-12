@@ -183,6 +183,37 @@ struct Grid: Codable {
         return nodes
     }
     
+    mutating func reassignPowerups(locations: [Pair]) {
+        removePowerups()
+        let powerUps: [Powerup] = [.firewall, .firewall, .firewall, .firewall]
+        
+        for (index, pair) in locations.enumerated() {
+            nodes[pair.first][pair.second].powerup = powerUps[index]
+        }
+    }
+    
+    func getPowerupLocations() -> [Pair] {
+        var locations: [Pair] = []
+        
+        for i in 0..<6 {
+            for j in 0..<6 {
+                if let _ = nodes[i][j].powerup {
+                    locations.append(Pair(first: i, second: j))
+                }
+            }
+        }
+        
+        return locations
+    }
+    
+    private mutating func removePowerups() {
+        for i in 0..<6 {
+            for j in 0..<6 {
+                nodes[i][j].powerup = nil
+            }
+        }
+    }
+    
     private func assignRandomPowerups(toNodes nodes: [[Node]]) -> [[Node]] {
         var updatedNodes = nodes
         let uniquePairs = generateUniquePairs(count: 4)

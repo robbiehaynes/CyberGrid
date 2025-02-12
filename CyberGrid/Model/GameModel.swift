@@ -32,6 +32,10 @@ struct GameModel: Codable {
         }
     }
     
+    func getPlayerByName(_ name: String) -> Player? {
+        return players.first(where: { $0.name == name })
+    }
+    
     private func calculateWinner() -> Player {
         var ownershipCount: [Player: Int] = [:]
 

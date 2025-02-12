@@ -43,8 +43,8 @@ class GameViewController: UIViewController {
         
         NotificationCenter.default.addObserver(
           self,
-          selector: #selector(gameModelChanged(_:)),
-          name: .gameModelChanged,
+          selector: #selector(moveReceived(_:)),
+          name: .moveReceived,
           object: nil
         )
         
@@ -55,6 +55,9 @@ class GameViewController: UIViewController {
           object: nil
         )
         
+        if !currentPlayer!.isLocal() {
+            opponentIsThinking(true)
+        }
         GameCenterHelper.helper.setAccessPointIsActive(false)
     }
     
@@ -71,18 +74,22 @@ class GameViewController: UIViewController {
         performAction(atRow: row, atCol: col)
     }
     
-    @objc private func gameModelChanged(_ notification: Notification) {
-        guard let gameModel = notification.object as? GameModel else { return }
+    @objc private func moveReceived(_ notification: Notification) {
+        guard let move = notification.object as? Move else { return }
         
-        self.gameModel = gameModel
-        self.currentPlayer = gameModel.currentPlayer
+        let moveCoords = (move.row, move.column)
+        let player = gameModel?.getPlayerByName(move.player)
         
-        DispatchQueue.main.async {
-            self.updateUI()
-        }
+        // Apply move and update game state
+        gameModel!.grid.applyMove(moveCoords, for: player!)
+        gameModel!.useTurn(for: player!)
+        opponentIsThinking(false)
         
-        if gameModel.winner != nil {
-            NotificationCenter.default.post(name: .gameEnded, object: gameModel.winner)
+        if let winner = gameModel!.winner {
+            updateUI()
+            NotificationCenter.default.post(name: .gameEnded, object: winner)
+        } else {
+            switchPlayer()
         }
     }
     
@@ -91,17 +98,21 @@ class GameViewController: UIViewController {
         guard let winner = notification.object as? String else { return }
         
         if winner == GameCenterHelper.helper.localAlias {
+            actionLabel.text = "You win! Going back to menu..."
             let alert = UIAlertController(title: "Winner!", message: "\(winner) has won the game!", preferredStyle: .alert)
             alert.addAction(UIAlertAction(title: "Ok", style: .default) { _ in
                 DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+                    if self.gameMode == .online { GameCenterHelper.helper.currentMatch?.disconnect() }
                     self.dismiss(animated: true)
                 }
             })
             self.present(alert, animated: true)
         } else {
+            actionLabel.text = "You lose! Going back to menu..."
             let alert = UIAlertController(title: "Unlucky!", message: "\(winner) has won the game.", preferredStyle: .alert)
             alert.addAction(UIAlertAction(title: "Ok", style: .default) { _ in
                 DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+                    if self.gameMode == .online { GameCenterHelper.helper.currentMatch?.disconnect() }
                     self.dismiss(animated: true)
                 }
             })
@@ -126,10 +137,10 @@ class GameViewController: UIViewController {
         gameModel!.grid.recalculateOwners(fromCoords: (row, col))
         gameModel!.useTurn(for: currentPlayer!)
         switchPlayer()
-        gameModel!.currentPlayer = currentPlayer!
         
         if gameMode == .online {
-            GameCenterHelper.helper.sendModel(gameModel!)
+            GameCenterHelper.helper.sendMove((row, col))
+            opponentIsThinking(true)
         } else {
             performAIMove()
         }
@@ -202,7 +213,7 @@ class GameViewController: UIViewController {
     func performAIMove() {
         guard let currentPlayer = currentPlayer, let gameModel = gameModel else { return }
         
-        animateThinkingLabel()
+        opponentIsThinking(true)
         
         DispatchQueue.global(qos: .userInitiated).async { [weak self] in
             guard let self = self else { return }
@@ -212,12 +223,10 @@ class GameViewController: UIViewController {
                 
                 DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
                     // Show move decision
-                    self.actionLabel.text = "\(currentPlayer.name) chose \(move)"
-                    self.actionLabel.layer.removeAllAnimations()
+                    self.opponentIsThinking(false)
                     
                     // Apply move and update game state
                     self.gameModel!.grid.applyMove(move, for: currentPlayer)
-                    self.gameModel!.grid.recalculateOwners(fromCoords: move)
                     self.gameModel!.useTurn(for: currentPlayer)
                     
                     if let winner = self.gameModel!.winner {
@@ -231,7 +240,32 @@ class GameViewController: UIViewController {
         }
     }
     
-    func animateThinkingLabel() {
+    func setButtonStates(to enabled: Bool) {
+        for row in 0..<6 {
+            for col in 0..<6 {
+                var tag = row * 6 + col // Calculate the tag for each button
+                if row == 0 && col == 0 {
+                    tag = 36
+                }
+                if let button = view.viewWithTag(tag) as? UIButton {
+                    DispatchQueue.main.async {
+                        button.isEnabled = enabled
+                        button.alpha = enabled ? 1.0 : 0.5
+                    }
+                }
+            }
+        }
+    }
+    
+    func opponentIsThinking(_ thinking: Bool) {
+        if !thinking {
+            actionLabel.layer.removeAllAnimations()
+            actionLabel.text = "Your turn, make a decision..."
+            setButtonStates(to: true)
+            return
+        }
+        
+        setButtonStates(to: false)
         actionLabel.text = "\(currentPlayer!.name) is thinking"
         actionLabel.alpha = 1.0
         
