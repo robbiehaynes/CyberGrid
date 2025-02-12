@@ -19,6 +19,10 @@ final class GameCenterHelper: NSObject {
     var viewController: UIViewController?
     var localImage: UIImage = UIImage(systemName: "person.circle.fill")!
     var currentMatch: GKMatch?
+    
+    var currentOpponent: GKPlayer? {
+        currentMatch?.players.first
+    }
 
     var localAlias: String? {
         GKLocalPlayer.local.alias
@@ -84,14 +88,14 @@ final class GameCenterHelper: NSObject {
     }
     
     func getOpponentAlias() -> String? {
-        return currentMatch?.others.first?.alias
+        return currentOpponent?.alias
     }
     
     func getOpponentImage() -> UIImage? {
         var returnImage: UIImage? = nil
-        currentMatch?.others.first?.loadPhoto(for: .normal) { image, error in
+        currentOpponent?.loadPhoto(for: .normal) { image, error in
             if error != nil { return }
-            if let image = image { returnImage = image }
+            if image != nil { returnImage = image }
         }
         return returnImage
     }

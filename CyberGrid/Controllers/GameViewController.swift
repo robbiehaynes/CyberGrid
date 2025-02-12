@@ -109,27 +109,23 @@ class GameViewController: UIViewController {
     @objc private func gameEnded(_ notification: Notification) {
         // Someone won, notify user
         guard let winner = notification.object as? String else { return }
+        let didWin = winner == GameCenterHelper.helper.localAlias
         
-        if winner == GameCenterHelper.helper.localAlias {
-            actionLabel.text = "You win! Going back to menu..."
-            let alert = UIAlertController(title: "Winner!", message: "\(winner) has won the game!", preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: "Ok", style: .default) { _ in
-                DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
-                    self.dismiss(animated: true)
-                }
-            })
-            self.present(alert, animated: true)
+        if gameMode == .online {
+            LeaderboardManager.shared.onlineGameCompleted(against: GameCenterHelper.helper.currentOpponent!, didWin: didWin)
         } else {
-            actionLabel.text = "You lose! Going back to menu..."
-            let alert = UIAlertController(title: "Unlucky!", message: "\(winner) has won the game.", preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: "Ok", style: .default) { _ in
-                DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
-                    self.dismiss(animated: true)
-                }
-            })
-            self.present(alert, animated: true)
+            LeaderboardManager.shared.localGameCompleted(withDifficulty: .hard, didWin: didWin)
         }
         
+        actionLabel.text = didWin ? "You win! Going back to menu..." : "You lose! Going back to menu..."
+        let alert = UIAlertController(title: didWin ? "Winner!" : "Unlucky!",
+                                      message: gameMode == .local ? "\(winner) has won the game!" : "\(winner) has won the game!, your new Elo is \(LeaderboardManager.shared.getElo())", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Ok", style: .default) { _ in
+            DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+                self.dismiss(animated: true)
+            }
+        })
+        self.present(alert, animated: true)
     }
     
     func performAction(atRow row: Int, atCol col: Int) {
