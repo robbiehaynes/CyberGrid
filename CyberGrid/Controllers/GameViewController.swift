@@ -66,6 +66,19 @@ class GameViewController: UIViewController {
         super.viewDidDisappear(animated)
     }
     
+    @IBAction func exitButtonPressed(_ sender: Any) {
+        let alert = UIAlertController(title: "", message: "Would like to forfeit?", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Yes", style: .default) { _ in
+            if self.gameMode == .online {
+                GameCenterHelper.helper.currentMatch?.disconnect()
+            }
+            self.dismiss(animated: true)
+        })
+        alert.addAction(UIAlertAction(title: "No", style: .cancel))
+        
+        self.present(alert, animated: true)
+    }
+    
     @IBAction func nodeButtonPressed(_ sender: UIButton) {
         var row = 0
         if sender.tag != 36 { row = sender.tag / 6 }
@@ -102,7 +115,6 @@ class GameViewController: UIViewController {
             let alert = UIAlertController(title: "Winner!", message: "\(winner) has won the game!", preferredStyle: .alert)
             alert.addAction(UIAlertAction(title: "Ok", style: .default) { _ in
                 DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
-                    if self.gameMode == .online { GameCenterHelper.helper.currentMatch?.disconnect() }
                     self.dismiss(animated: true)
                 }
             })
@@ -112,7 +124,6 @@ class GameViewController: UIViewController {
             let alert = UIAlertController(title: "Unlucky!", message: "\(winner) has won the game.", preferredStyle: .alert)
             alert.addAction(UIAlertAction(title: "Ok", style: .default) { _ in
                 DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
-                    if self.gameMode == .online { GameCenterHelper.helper.currentMatch?.disconnect() }
                     self.dismiss(animated: true)
                 }
             })

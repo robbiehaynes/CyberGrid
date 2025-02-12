@@ -45,7 +45,7 @@ class LandingViewController: UIViewController {
     @IBAction func localPlayPressed(_ sender: UIButton) {
         selectedGameMode = .local
         
-        self.gameModel = GameModel()
+        self.gameModel = GameModel(gridSeed: Int.max)
         
         self.gameModel!.players = [
             Player(

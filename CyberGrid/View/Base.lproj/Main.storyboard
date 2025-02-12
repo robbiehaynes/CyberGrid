@@ -483,6 +483,20 @@
                                     </label>
                                 </subviews>
                             </stackView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7mb-vb-taH">
+                                <rect key="frame" x="351" y="20" width="22" height="22"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="22" id="FlP-cw-g13"/>
+                                    <constraint firstAttribute="height" constant="22" id="S4k-hg-obd"/>
+                                </constraints>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" image="xmark" catalog="system">
+                                    <color key="baseForegroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </buttonConfiguration>
+                                <connections>
+                                    <action selector="exitButtonPressed:" destination="xZN-v7-7gn" eventType="touchUpInside" id="aMR-Go-kXi"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="hHf-AH-NAb"/>
                         <color key="backgroundColor" systemColor="labelColor"/>
@@ -493,7 +507,9 @@
                             <constraint firstItem="103-fO-Mjp" firstAttribute="centerY" secondItem="2JH-Gu-SLU" secondAttribute="centerY" constant="-20" id="Ban-41-xs9"/>
                             <constraint firstItem="H3p-HX-fAr" firstAttribute="top" secondItem="2JH-Gu-SLU" secondAttribute="top" id="GZz-Dx-Lgv"/>
                             <constraint firstAttribute="trailing" secondItem="103-fO-Mjp" secondAttribute="trailing" constant="20" id="KWL-pj-n6p"/>
+                            <constraint firstItem="hHf-AH-NAb" firstAttribute="trailing" secondItem="7mb-vb-taH" secondAttribute="trailing" constant="20" id="axY-hh-O1L"/>
                             <constraint firstAttribute="bottom" secondItem="H3p-HX-fAr" secondAttribute="bottom" id="cHc-Ee-MiI"/>
+                            <constraint firstItem="7mb-vb-taH" firstAttribute="top" secondItem="hHf-AH-NAb" secondAttribute="top" constant="20" id="dkP-8T-8mC"/>
                             <constraint firstItem="hHf-AH-NAb" firstAttribute="trailing" secondItem="9aA-yH-i69" secondAttribute="trailing" constant="20" id="n7l-It-VoN"/>
                             <constraint firstItem="9aA-yH-i69" firstAttribute="leading" secondItem="hHf-AH-NAb" secondAttribute="leading" constant="20" id="oKh-cS-7jR"/>
                             <constraint firstItem="103-fO-Mjp" firstAttribute="leading" secondItem="2JH-Gu-SLU" secondAttribute="leading" constant="20" id="uqD-k4-UM2"/>
@@ -515,6 +531,7 @@
     <resources>
         <image name="background" width="393" height="688"/>
         <image name="button-bg" width="150" height="43"/>
+        <image name="xmark" catalog="system" width="128" height="113"/>
         <systemColor name="labelColor">
             <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
