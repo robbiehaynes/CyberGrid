@@ -13,9 +13,9 @@ struct GameModel: Codable {
     var grid: Grid
     var winner: String? = nil
     
-    init(players: [Player] = [], grid: Grid = Grid()) {
+    init(players: [Player] = [], gridSeed: Int) {
         self.players = players
-        self.grid = grid
+        self.grid = Grid(seed: gridSeed)
     }
     
     mutating func claimPowerup(at coords: (Int,Int)) {

@@ -12,8 +12,11 @@ struct Pair: Hashable {
 
 struct Grid: Codable {
     var nodes: [[Node]] = []
+    let seed: Int
     
-    init(nodes: [[Node]] = []) {
+    init(nodes: [[Node]] = [], seed: Int) {
+        self.seed = seed
+        
         if nodes.isEmpty {
             self.nodes = generateNodes()
         } else {
@@ -96,7 +99,7 @@ struct Grid: Codable {
             newNodes.append(newRow)
         }
         
-        return Grid(nodes: newNodes)
+        return Grid(nodes: newNodes, seed: seed)
     }
     
     func getOpponent(for player: Player) -> Player {
@@ -183,29 +186,6 @@ struct Grid: Codable {
         return nodes
     }
     
-    mutating func reassignPowerups(locations: [Pair]) {
-        removePowerups()
-        let powerUps: [Powerup] = [.firewall, .firewall, .firewall, .firewall]
-        
-        for (index, pair) in locations.enumerated() {
-            nodes[pair.first][pair.second].powerup = powerUps[index]
-        }
-    }
-    
-    func getPowerupLocations() -> [Pair] {
-        var locations: [Pair] = []
-        
-        for i in 0..<6 {
-            for j in 0..<6 {
-                if let _ = nodes[i][j].powerup {
-                    locations.append(Pair(first: i, second: j))
-                }
-            }
-        }
-        
-        return locations
-    }
-    
     private mutating func removePowerups() {
         for i in 0..<6 {
             for j in 0..<6 {
@@ -240,9 +220,11 @@ struct Grid: Codable {
         
         var generatedPairs: Set<Pair> = []
         
+        var rng = SeededGenerator(seed: seed)
+        
         while generatedPairs.count < count {
-            let first = Int.random(in: 0...5)
-            let second = Int.random(in: 0...5)
+            let first = Int.random(in: 0...5, using: &rng)
+            let second = Int.random(in: 0...5, using: &rng)
             let pair = Pair(first: first, second: second)
             
             if !excludedPairs.contains(pair) && !generatedPairs.contains(pair) {
