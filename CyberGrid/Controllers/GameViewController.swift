@@ -119,7 +119,9 @@ class GameViewController: UIViewController {
         
         actionLabel.text = didWin ? "You win! Going back to menu..." : "You lose! Going back to menu..."
         let alert = UIAlertController(title: didWin ? "Winner!" : "Unlucky!",
-                                      message: gameMode == .local ? "\(winner) has won the game!" : "\(winner) has won the game!, your new Elo is \(LeaderboardManager.shared.getElo())", preferredStyle: .alert)
+                                      message: gameMode == .local
+                                      ? "\(winner) has won the game! Your new score is: \(LeaderboardManager.shared.getSPScore())"
+                                      : "\(winner) has won the game! Your new Elo is \(LeaderboardManager.shared.getElo())", preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "Ok", style: .default) { _ in
             DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
                 self.dismiss(animated: true)

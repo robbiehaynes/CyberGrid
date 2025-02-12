@@ -81,6 +81,10 @@ final class LeaderboardManager {
         }
     }
     
+    func getSPScore() -> Int {
+        return UserDefaults.standard.integer(forKey: "singlePlayerScore")
+    }
+    
     private func updateSPScore(by score: Int) {
         var currentScore = UserDefaults.standard.integer(forKey: "singlePlayerScore")
         currentScore += score
