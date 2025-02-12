@@ -102,8 +102,8 @@ final class GameCenterHelper: NSObject {
 
         let playerOrder = determinePlayerOrder(forMatch: match)
         let isPlayer1 = playerOrder.first == GKLocalPlayer.local.gamePlayerID
-        let uniqueSeed = generateSeed(player1ID: GKLocalPlayer.local.gamePlayerID,
-                                      player2ID: currentMatch!.players.first!.gamePlayerID)
+        let uniqueSeed = GridSeedGenerator.shared.generateSeed(player1ID: GKLocalPlayer.local.gamePlayerID,
+                                                               player2ID: currentMatch!.players.first!.gamePlayerID)
         
         var gameModel = GameModel(gridSeed: uniqueSeed)
         gameModel.players = [
@@ -151,12 +151,6 @@ final class GameCenterHelper: NSObject {
         }
 
         RunLoop.main.add(timer, forMode: .common)
-    }
-    
-    func generateSeed(player1ID: String, player2ID: String) -> Int {
-        let sortedIDs = [player1ID, player2ID].sorted().joined()  // Ensure order consistency
-        let minuteTimestamp = Int(Date().timeIntervalSince1970) / 60  // Round to the minute
-        return (sortedIDs.hashValue ^ minuteTimestamp) & 0x7FFFFFFF  // Ensure positive seed
     }
     
     func sendMove(_ move: (Int,Int)) {

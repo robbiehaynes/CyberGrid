@@ -45,7 +45,8 @@ class LandingViewController: UIViewController {
     @IBAction func localPlayPressed(_ sender: UIButton) {
         selectedGameMode = .local
         
-        self.gameModel = GameModel(gridSeed: Int.max)
+        let seed = GridSeedGenerator.shared.generateSeed(player1ID: GKLocalPlayer.local.gamePlayerID, player2ID: "Sirius")
+        self.gameModel = GameModel(gridSeed: seed)
         
         self.gameModel!.players = [
             Player(
