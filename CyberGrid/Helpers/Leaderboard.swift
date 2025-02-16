@@ -16,29 +16,13 @@ enum Difficulty {
 final class LeaderboardManager {
     
     static let shared = LeaderboardManager()
+    var opponentElo: Int?
     
     func onlineGameCompleted(against opponent: GKPlayer, didWin: Bool) {
-        Task.synchronous {
-            do {
-                let leaderboard = try await GKLeaderboard.loadLeaderboards(IDs: ["CyberGrid.haynoway.MultiplayerElo"]).first
-
-                if let leaderboard = leaderboard {
-                    let entries = try await leaderboard.loadEntries(for: [opponent], timeScope: .allTime)
-
-                    if let opponentEntry = entries.0 {
-                        let opponentElo = opponentEntry.score
-                        let userElo = self.calculateElo(against: opponentElo, didWin)
-                        self.setElo(userElo)
-                    } else {
-                        print("No opponent Elo found.")
-                    }
-                } else {
-                    print("Leaderboard not found.")
-                }
-            } catch {
-                print("Error loading leaderboard: \(error.localizedDescription)")
-            }
-        }
+        guard let opponentElo else { return }
+        
+        let userElo = self.calculateElo(against: opponentElo, didWin)
+        self.setElo(userElo)
     }
     
     func localGameCompleted(withDifficulty difficulty: Difficulty, didWin: Bool) {

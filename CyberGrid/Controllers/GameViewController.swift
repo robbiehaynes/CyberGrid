@@ -112,7 +112,11 @@ class GameViewController: UIViewController {
         let didWin = winner == GameCenterHelper.helper.localAlias
         
         if gameMode == .online {
-            LeaderboardManager.shared.onlineGameCompleted(against: GameCenterHelper.helper.currentOpponent!, didWin: didWin)
+            if let opponent = GameCenterHelper.helper.currentOpponent {
+                LeaderboardManager.shared.onlineGameCompleted(against: opponent, didWin: didWin)
+            } else {
+                print("No opponent found")
+            }
         } else {
             LeaderboardManager.shared.localGameCompleted(withDifficulty: .hard, didWin: didWin)
         }
@@ -123,7 +127,7 @@ class GameViewController: UIViewController {
                                       ? "\(winner) has won the game! Your new score is: \(LeaderboardManager.shared.getSPScore())"
                                       : "\(winner) has won the game! Your new Elo is \(LeaderboardManager.shared.getElo())", preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "Ok", style: .default) { _ in
-            DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
                 self.dismiss(animated: true)
             }
         })

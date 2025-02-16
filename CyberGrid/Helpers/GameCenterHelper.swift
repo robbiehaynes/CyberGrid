@@ -106,8 +106,8 @@ final class GameCenterHelper: NSObject {
 
         let playerOrder = determinePlayerOrder(forMatch: match)
         let isPlayer1 = playerOrder.first == GKLocalPlayer.local.gamePlayerID
-        let uniqueSeed = GridSeedGenerator.shared.generateSeed(player1ID: GKLocalPlayer.local.gamePlayerID,
-                                                               player2ID: currentMatch!.players.first!.gamePlayerID)
+        let uniqueSeed = GridSeedGenerator.shared.generateSeed(player1ID: GKLocalPlayer.local.displayName,
+                                                               player2ID: currentMatch!.players.first!.displayName)
         
         var gameModel = GameModel(gridSeed: uniqueSeed)
         gameModel.players = [
@@ -124,6 +124,13 @@ final class GameCenterHelper: NSObject {
         ]
         
         currentMatchmakerVC?.dismiss(animated: true)
+        
+        do {
+            try currentMatch?.sendData(toAllPlayers: JSONEncoder().encode(LeaderboardManager.shared.getElo()), with: .reliable)
+        } catch {
+            print("Failed to send Elo to players")
+        }
+        
         
         NotificationCenter.default.post(name: .presentGame, object: gameModel)
     }
@@ -222,9 +229,15 @@ extension GameCenterHelper: GKMatchDelegate {
     }
     
     func match(_ match: GKMatch, didReceive data: Data, fromRemotePlayer player: GKPlayer) {
-        let move = try! JSONDecoder().decode(Move.self, from: data)
         
-        NotificationCenter.default.post(name: .moveReceived, object: move)
+        if let move = try? JSONDecoder().decode(Move.self, from: data) {
+            NotificationCenter.default.post(name: .moveReceived, object: move)
+            return
+        }
+        
+        if let opponentElo = try? JSONDecoder().decode(Int.self, from: data) {
+            LeaderboardManager.shared.opponentElo = opponentElo
+        }
     }
 }
 

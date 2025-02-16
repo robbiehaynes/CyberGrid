@@ -5,6 +5,7 @@
 //  Created by Robert Haynes on 12/02/2025.
 //
 import Foundation
+import CryptoKit
 
 struct SeededGenerator: RandomNumberGenerator {
     private var state: UInt64
@@ -29,6 +30,11 @@ struct GridSeedGenerator {
     func generateSeed(player1ID: String, player2ID: String) -> Int {
         let sortedIDs = [player1ID, player2ID].sorted().joined()  // Ensure order consistency
         let minuteTimestamp = Int(Date().timeIntervalSince1970) / 60  // Round to the minute
-        return (sortedIDs.hashValue ^ minuteTimestamp) & 0x7FFFFFFF  // Ensure positive seed
+        
+        let data = Data(sortedIDs.utf8)
+        let hash = SHA256.hash(data: data)
+        let stableHash = hash.withUnsafeBytes { $0.load(as: UInt64.self) }
+
+        return (Int(truncatingIfNeeded: stableHash) ^ minuteTimestamp) & 0x7FFFFFFF  // Ensure positive seed
     }
 }
