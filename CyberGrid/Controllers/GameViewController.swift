@@ -23,8 +23,7 @@ class GameViewController: UIViewController {
     var currentPlayer: Player?
     var gameMode: GameMode = .local
     var usingVirus = false
-    let agent = MiniAgent(depth: 7)
-    let mctsAgent = MCTSAgent(iterations: 10000)
+    let agent = MiniAgent(difficulty: UserDefaults.standard.integer(forKey: "aiDifficulty"))
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -57,6 +56,7 @@ class GameViewController: UIViewController {
         
         if !currentPlayer!.isLocal() {
             opponentIsThinking(true)
+            if gameMode == .local { performAIMove() }
         }
         GameCenterHelper.helper.setAccessPointIsActive(false)
     }
@@ -118,7 +118,8 @@ class GameViewController: UIViewController {
                 print("No opponent found")
             }
         } else {
-            LeaderboardManager.shared.localGameCompleted(withDifficulty: .hard, didWin: didWin)
+            let aiDifficulty = UserDefaults.standard.integer(forKey: "aiDifficulty")
+            LeaderboardManager.shared.localGameCompleted(withDifficulty: aiDifficulty, didWin: didWin)
         }
         
         actionLabel.text = didWin ? "You win! Going back to menu..." : "You lose! Going back to menu..."

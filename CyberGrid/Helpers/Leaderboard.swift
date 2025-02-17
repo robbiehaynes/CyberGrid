@@ -7,12 +7,6 @@
 
 import GameKit
 
-enum Difficulty {
-    case easy
-    case medium
-    case hard
-}
-
 final class LeaderboardManager {
     
     static let shared = LeaderboardManager()
@@ -25,15 +19,15 @@ final class LeaderboardManager {
         self.setElo(userElo)
     }
     
-    func localGameCompleted(withDifficulty difficulty: Difficulty, didWin: Bool) {
+    func localGameCompleted(withDifficulty difficulty: Int, didWin: Bool) {
         if !didWin { return }
         
         switch difficulty {
-            case .easy:
+            case 0:
                 updateSPScore(by: 100)
-            case .medium:
+            case 1:
                 updateSPScore(by: 250)
-            case .hard:
+            default:
                 updateSPScore(by: 500)
         }
     }

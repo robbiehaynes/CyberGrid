@@ -11,8 +11,17 @@ class MiniAgent {
     let maxDepth: Int
     var transpositionTable: [Int: Double] = [:]
     
-    init(depth: Int = 3) {
-        self.maxDepth = depth
+    init(difficulty: Int = 1) {
+        switch difficulty {
+            case 0:
+                maxDepth = 2
+            case 1:
+                maxDepth = 4
+            default:
+                maxDepth = 7
+        }
+        
+        print("Minmax agent initialised with depth \(maxDepth)")
     }
     
     func bestMove(for player: Player, on grid: Grid) -> (Int, Int)? {

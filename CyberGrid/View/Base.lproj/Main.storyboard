@@ -74,16 +74,33 @@
                                     </stackView>
                                 </subviews>
                             </stackView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CuO-Nr-6dl">
+                                <rect key="frame" x="302.66666666666669" y="59" width="50.333333333333314" height="34.333333333333343"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="30" id="bln-ff-jem"/>
+                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="30" id="l7C-gY-Ums"/>
+                                </constraints>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" image="gearshape.fill" catalog="system">
+                                    <color key="baseForegroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </buttonConfiguration>
+                                <connections>
+                                    <action selector="settingsButtonPressed:" destination="TAM-z3-5bh" eventType="touchUpInside" id="D9K-lL-FZ1"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="ioG-DC-78K"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
+                            <constraint firstItem="CuO-Nr-6dl" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="ioG-DC-78K" secondAttribute="leading" symbolic="YES" id="2Er-Jm-Mh4"/>
                             <constraint firstItem="wGe-iX-DDU" firstAttribute="leading" secondItem="aoV-5h-rTV" secondAttribute="leading" id="4VA-gg-4WR"/>
                             <constraint firstAttribute="bottom" secondItem="wGe-iX-DDU" secondAttribute="bottom" id="4en-ZC-nqA"/>
                             <constraint firstItem="ioG-DC-78K" firstAttribute="trailing" secondItem="3z7-a5-0GR" secondAttribute="trailing" constant="50" id="PYK-l1-mJP"/>
+                            <constraint firstItem="CuO-Nr-6dl" firstAttribute="top" secondItem="ioG-DC-78K" secondAttribute="top" id="Uyc-IL-Q2H"/>
                             <constraint firstItem="3z7-a5-0GR" firstAttribute="leading" secondItem="ioG-DC-78K" secondAttribute="leading" constant="50" id="XPo-xw-dsJ"/>
                             <constraint firstItem="wGe-iX-DDU" firstAttribute="top" secondItem="aoV-5h-rTV" secondAttribute="top" id="fAT-Lt-fmb"/>
                             <constraint firstItem="3z7-a5-0GR" firstAttribute="centerY" secondItem="aoV-5h-rTV" secondAttribute="centerY" id="jVn-EM-Z15"/>
+                            <constraint firstItem="ioG-DC-78K" firstAttribute="trailing" secondItem="CuO-Nr-6dl" secondAttribute="trailing" constant="40" id="jYa-9S-F1N"/>
                             <constraint firstAttribute="trailing" secondItem="wGe-iX-DDU" secondAttribute="trailing" id="qv6-Xz-hHu"/>
                         </constraints>
                     </view>
@@ -91,11 +108,150 @@
                     <connections>
                         <outlet property="multiplayerButton" destination="qFI-ef-H8V" id="kd2-dF-oVZ"/>
                         <segue destination="xZN-v7-7gn" kind="presentation" identifier="goToGame" modalPresentationStyle="fullScreen" id="83G-zc-uZM"/>
+                        <segue destination="wui-km-7sX" kind="show" identifier="goToSettings" id="ziG-gQ-iqG"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="9ia-gJ-Hk2" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1040.4580152671756" y="3.5211267605633805"/>
+        </scene>
+        <!--Settings View Controller-->
+        <scene sceneID="8ai-5I-ZkY">
+            <objects>
+                <viewController id="wui-km-7sX" customClass="SettingsViewController" customModule="CyberGrid" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="Inb-Vb-gvJ">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="842"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Chw-Iw-KTW">
+                                <rect key="frame" x="351" y="20" width="22" height="22"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="Chw-Iw-KTW" secondAttribute="height" multiplier="1:1" id="0Yz-gY-j2s"/>
+                                    <constraint firstAttribute="height" constant="22" id="JBB-lw-efc"/>
+                                </constraints>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" image="xmark" catalog="system">
+                                    <color key="baseForegroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </buttonConfiguration>
+                                <connections>
+                                    <action selector="exitButtonPressed:" destination="wui-km-7sX" eventType="touchUpInside" id="qEj-Lp-jp6"/>
+                                </connections>
+                            </button>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="90" translatesAutoresizingMaskIntoConstraints="NO" id="Ot2-gH-sIx">
+                                <rect key="frame" x="40" y="230.66666666666663" width="313" height="381"/>
+                                <subviews>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="s47-Do-a01">
+                                        <rect key="frame" x="0.0" y="0.0" width="313" height="67"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Player moves first" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Fac-fh-6cP">
+                                                <rect key="frame" x="0.0" y="0.0" width="313" height="28"/>
+                                                <fontDescription key="fontDescription" name="Orbitron-Regular" family="Orbitron" pointSize="24"/>
+                                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="fHP-jP-RZI">
+                                                <rect key="frame" x="0.0" y="36.000000000000028" width="313" height="32"/>
+                                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <segments>
+                                                    <segment title="Yes"/>
+                                                    <segment title="No"/>
+                                                </segments>
+                                                <connections>
+                                                    <action selector="segmentSelected:" destination="wui-km-7sX" eventType="valueChanged" id="Tl4-pg-Bd7"/>
+                                                </connections>
+                                            </segmentedControl>
+                                        </subviews>
+                                    </stackView>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="qEq-5x-ige">
+                                        <rect key="frame" x="0.0" y="157.00000000000003" width="313" height="67"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Number of Moves" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gwn-os-phV">
+                                                <rect key="frame" x="0.0" y="0.0" width="313" height="28"/>
+                                                <fontDescription key="fontDescription" name="Orbitron-Regular" family="Orbitron" pointSize="24"/>
+                                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="2" translatesAutoresizingMaskIntoConstraints="NO" id="ADZ-qT-9sT">
+                                                <rect key="frame" x="0.0" y="36" width="313" height="32"/>
+                                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <segments>
+                                                    <segment title="4"/>
+                                                    <segment title="5"/>
+                                                    <segment title="6"/>
+                                                    <segment title="7"/>
+                                                    <segment title="8"/>
+                                                </segments>
+                                                <connections>
+                                                    <action selector="segmentSelected:" destination="wui-km-7sX" eventType="valueChanged" id="XKN-rZ-umI"/>
+                                                </connections>
+                                            </segmentedControl>
+                                        </subviews>
+                                    </stackView>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="HqY-Tt-j3E">
+                                        <rect key="frame" x="0.0" y="314" width="313" height="67"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="AI Difficulty" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="957-a4-E8h">
+                                                <rect key="frame" x="0.0" y="0.0" width="313" height="28"/>
+                                                <fontDescription key="fontDescription" name="Orbitron-Regular" family="Orbitron" pointSize="24"/>
+                                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="bar" selectedSegmentIndex="1" translatesAutoresizingMaskIntoConstraints="NO" id="FUn-2v-uOs">
+                                                <rect key="frame" x="0.0" y="36" width="313" height="32"/>
+                                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <segments>
+                                                    <segment title="Easy"/>
+                                                    <segment title="Medium"/>
+                                                    <segment title="Hard"/>
+                                                </segments>
+                                                <connections>
+                                                    <action selector="segmentSelected:" destination="wui-km-7sX" eventType="valueChanged" id="FED-35-jJI"/>
+                                                </connections>
+                                            </segmentedControl>
+                                        </subviews>
+                                    </stackView>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstAttribute="trailing" secondItem="HqY-Tt-j3E" secondAttribute="trailing" id="IMh-3M-S6H"/>
+                                    <constraint firstAttribute="trailing" secondItem="s47-Do-a01" secondAttribute="trailing" id="PEz-U3-GwG"/>
+                                    <constraint firstAttribute="trailing" secondItem="qEq-5x-ige" secondAttribute="trailing" id="l5A-gW-X8C"/>
+                                    <constraint firstItem="qEq-5x-ige" firstAttribute="leading" secondItem="Ot2-gH-sIx" secondAttribute="leading" id="mSn-30-c5P"/>
+                                    <constraint firstItem="HqY-Tt-j3E" firstAttribute="leading" secondItem="Ot2-gH-sIx" secondAttribute="leading" id="oAb-eN-GRw"/>
+                                    <constraint firstItem="s47-Do-a01" firstAttribute="leading" secondItem="Ot2-gH-sIx" secondAttribute="leading" id="riP-SK-oNp"/>
+                                </constraints>
+                            </stackView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Settings" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rs8-T6-0IX">
+                                <rect key="frame" x="40" y="20" width="311" height="42"/>
+                                <fontDescription key="fontDescription" name="Orbitron-Bold" family="Orbitron" pointSize="36"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="gm1-Qd-lbG"/>
+                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="Ot2-gH-sIx" firstAttribute="centerY" secondItem="Inb-Vb-gvJ" secondAttribute="centerY" id="6jP-DJ-oz0"/>
+                            <constraint firstItem="Chw-Iw-KTW" firstAttribute="top" secondItem="gm1-Qd-lbG" secondAttribute="top" constant="20" id="9n3-PW-mrL"/>
+                            <constraint firstItem="Ot2-gH-sIx" firstAttribute="centerX" secondItem="Inb-Vb-gvJ" secondAttribute="centerX" id="DB6-Iz-JWV"/>
+                            <constraint firstItem="rs8-T6-0IX" firstAttribute="leading" secondItem="gm1-Qd-lbG" secondAttribute="leading" constant="40" id="Gix-yC-Rlx"/>
+                            <constraint firstItem="gm1-Qd-lbG" firstAttribute="trailing" secondItem="Ot2-gH-sIx" secondAttribute="trailing" constant="40" id="Kad-xZ-kGp"/>
+                            <constraint firstItem="rs8-T6-0IX" firstAttribute="top" secondItem="gm1-Qd-lbG" secondAttribute="top" constant="20" id="Ns8-ry-JkE"/>
+                            <constraint firstItem="Chw-Iw-KTW" firstAttribute="leading" secondItem="gm1-Qd-lbG" secondAttribute="leading" constant="351" id="X3z-vZ-f9f"/>
+                            <constraint firstItem="Chw-Iw-KTW" firstAttribute="leading" secondItem="rs8-T6-0IX" secondAttribute="trailing" id="ZBj-jO-B2Y"/>
+                            <constraint firstItem="gm1-Qd-lbG" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="Chw-Iw-KTW" secondAttribute="trailing" id="fEO-Hp-NMn"/>
+                            <constraint firstItem="Ot2-gH-sIx" firstAttribute="leading" secondItem="gm1-Qd-lbG" secondAttribute="leading" constant="40" id="vg3-0d-SF4"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="4i2-yW-wFY"/>
+                    <connections>
+                        <outlet property="aiDifficultyControl" destination="FUn-2v-uOs" id="Fx1-cY-kOu"/>
+                        <outlet property="numOfMovesControl" destination="ADZ-qT-9sT" id="g3i-MV-9Fq"/>
+                        <outlet property="playerFirstControl" destination="fHP-jP-RZI" id="5X2-wT-Koh"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="apW-Uc-tgc" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1850" y="-655"/>
         </scene>
         <!--Game View Controller-->
         <scene sceneID="H3v-nZ-1b2">
@@ -531,6 +687,7 @@
     <resources>
         <image name="background" width="393" height="688"/>
         <image name="button-bg" width="150" height="43"/>
+        <image name="gearshape.fill" catalog="system" width="128" height="123"/>
         <image name="xmark" catalog="system" width="128" height="113"/>
         <systemColor name="labelColor">
             <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

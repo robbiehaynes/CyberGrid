@@ -37,6 +37,10 @@ class LandingViewController: UIViewController {
         )
     }
     
+    @IBAction func settingsButtonPressed(_ sender: UIButton) {
+        performSegue(withIdentifier: "goToSettings", sender: self)
+    }
+    
     @IBAction func multiplayerPressed(_ sender: UIButton) {
         selectedGameMode = .online
         GameCenterHelper.helper.presentMatchmaker()
@@ -46,18 +50,20 @@ class LandingViewController: UIViewController {
         selectedGameMode = .local
         
         let seed = GridSeedGenerator.shared.generateSeed(player1ID: GKLocalPlayer.local.gamePlayerID, player2ID: "Sirius")
+        let userFirst = UserDefaults.standard.bool(forKey: "playerFirst")
+        let numOfMoves = UserDefaults.standard.integer(forKey: "numOfMoves")
         self.gameModel = GameModel(gridSeed: seed)
         
         self.gameModel!.players = [
             Player(
-                name: GameCenterHelper.helper.localAlias ?? "",
+                name: userFirst ? GameCenterHelper.helper.localAlias ?? "" : "Sirius",
                 colour: "brand_orange",
-                movesRemaining: 6,
+                movesRemaining: numOfMoves,
                 profileImage: GameCenterHelper.helper.localImage),
             Player(
-                name: "Sirius",
+                name: userFirst ? "Sirius" : GameCenterHelper.helper.localAlias ?? "",
                 colour: "brand_blue",
-                movesRemaining: 6,
+                movesRemaining: numOfMoves,
                 profileImage: UIImage(named: "robot")!)
         ]
         

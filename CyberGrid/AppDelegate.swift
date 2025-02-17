@@ -15,6 +15,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         if LeaderboardManager.shared.getElo() == 0 { LeaderboardManager.shared.setElo(1000) }
+        if UserDefaults.standard.integer(forKey: "numOfMoves") == 0 { UserDefaults.standard.set(6, forKey: "numOfMoves") }
+        
         return true
     }
 
