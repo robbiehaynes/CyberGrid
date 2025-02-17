@@ -22,7 +22,6 @@ class GameViewController: UIViewController {
     var gameModel: GameModel?
     var currentPlayer: Player?
     var gameMode: GameMode = .local
-    var usingVirus = false
     let agent = MiniAgent(difficulty: UserDefaults.standard.integer(forKey: "aiDifficulty"))
     
     override func viewDidLoad() {
@@ -32,7 +31,6 @@ class GameViewController: UIViewController {
         
         self.gameModel!.grid.initialSetup(players: gameModel.players)
         self.currentPlayer = gameModel.players[0]
-        self.gameModel!.currentPlayer = self.currentPlayer!
         self.profileImage.layer.cornerRadius = 25
         self.profileImage.image = currentPlayer!.profileImage.image ?? UIImage(systemName: "person.circle.fill")
         
@@ -236,20 +234,13 @@ class GameViewController: UIViewController {
             if let move = self.agent.bestMove(for: currentPlayer, on: gameModel.grid) {
                 
                 DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-                    // Show move decision
-                    self.opponentIsThinking(false)
-                    
-                    // Apply move and update game state
-                    self.gameModel!.grid.applyMove(move, for: currentPlayer)
-                    self.gameModel!.useTurn(for: currentPlayer)
-                    
-                    if let winner = self.gameModel!.winner {
-                        self.updateUI()
-                        NotificationCenter.default.post(name: .gameEnded, object: winner)
-                    } else {
-                        self.switchPlayer()
-                    }
+                    // Send move
+                    NotificationCenter.default.post(name: .moveReceived,
+                                                    object: Move(player: currentPlayer.name, coords: move))
                 }
+            } else {
+                NotificationCenter.default.post(name: .gameEnded,
+                                                object: GameCenterHelper.helper.localAlias)
             }
         }
     }

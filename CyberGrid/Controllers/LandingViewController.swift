@@ -50,7 +50,7 @@ class LandingViewController: UIViewController {
         selectedGameMode = .local
         
         let seed = GridSeedGenerator.shared.generateSeed(player1ID: GKLocalPlayer.local.gamePlayerID, player2ID: "Sirius")
-        let userFirst = UserDefaults.standard.bool(forKey: "playerFirst")
+        let userFirst = !UserDefaults.standard.bool(forKey: "aiFirst")
         let numOfMoves = UserDefaults.standard.integer(forKey: "numOfMoves")
         self.gameModel = GameModel(gridSeed: seed)
         
@@ -59,12 +59,12 @@ class LandingViewController: UIViewController {
                 name: userFirst ? GameCenterHelper.helper.localAlias ?? "" : "Sirius",
                 colour: "brand_orange",
                 movesRemaining: numOfMoves,
-                profileImage: GameCenterHelper.helper.localImage),
+                profileImage: userFirst ? GameCenterHelper.helper.localImage : UIImage(named: "robot")!),
             Player(
                 name: userFirst ? "Sirius" : GameCenterHelper.helper.localAlias ?? "",
                 colour: "brand_blue",
                 movesRemaining: numOfMoves,
-                profileImage: UIImage(named: "robot")!)
+                profileImage: userFirst ? UIImage(named: "robot")! : GameCenterHelper.helper.localImage)
         ]
         
         performSegue(withIdentifier: "goToGame", sender: self)

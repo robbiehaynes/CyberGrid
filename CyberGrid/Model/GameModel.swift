@@ -27,6 +27,17 @@ struct GameModel: Codable {
             players[index].movesRemaining -= 1
         }
         
+        checkForWinners()
+    }
+    
+    mutating func checkForWinners() {
+        if grid.validMoves(for: players[0]).isEmpty {
+            winner = players[1].name
+        }
+        else if grid.validMoves(for: players[1]).isEmpty {
+            winner = players[0].name
+        }
+        
         if players.allSatisfy({ $0.movesRemaining == 0 }) {
             winner = calculateWinner().name
         }

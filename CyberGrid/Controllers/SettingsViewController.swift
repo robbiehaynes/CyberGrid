@@ -32,8 +32,8 @@ class SettingsViewController: UIViewController {
     @IBAction func segmentSelected(_ sender: UISegmentedControl) {
         switch determineSegmentType(from: sender) {
             case .playerFirst:
-                UserDefaults.standard.set(sender.titleForSegment(at: sender.selectedSegmentIndex) == "Yes",
-                                          forKey: "playerFirst")
+                UserDefaults.standard.set(sender.titleForSegment(at: sender.selectedSegmentIndex) == "No",
+                                          forKey: "aiFirst")
             case .numOfMoves:
                 let numOfMoves = Int(sender.titleForSegment(at: sender.selectedSegmentIndex) ?? "0")
                 UserDefaults.standard.set(numOfMoves, forKey: "numOfMoves")
@@ -63,11 +63,11 @@ class SettingsViewController: UIViewController {
     }
 
     func setSelectedSegments() {
-        let playerFirst: Bool = UserDefaults.standard.bool(forKey: "playerFirst")
+        let aiFirst: Bool = UserDefaults.standard.bool(forKey: "aiFirst")
         let numOfMoves: Int = UserDefaults.standard.integer(forKey: "numOfMoves")
         let aiDifficulty: Int = UserDefaults.standard.integer(forKey: "aiDifficulty")
         
-        playerFirstControl.selectedSegmentIndex = playerFirst ? 0 : 1
+        playerFirstControl.selectedSegmentIndex = aiFirst ? 1 : 0
         numOfMovesControl.selectedSegmentIndex = numOfMoves - 4
         aiDifficultyControl.selectedSegmentIndex = aiDifficulty
     }

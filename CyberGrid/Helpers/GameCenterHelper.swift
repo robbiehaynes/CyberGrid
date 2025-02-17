@@ -25,7 +25,7 @@ final class GameCenterHelper: NSObject {
     }
 
     var localAlias: String? {
-        GKLocalPlayer.local.alias
+        GameCenterHelper.isAuthenticated ? GKLocalPlayer.local.alias : "Unknown"
     }
     
     enum GameCenterHelperError: Error {

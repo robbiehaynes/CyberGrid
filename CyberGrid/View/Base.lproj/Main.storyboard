@@ -75,7 +75,7 @@
                                 </subviews>
                             </stackView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CuO-Nr-6dl">
-                                <rect key="frame" x="302.66666666666669" y="59" width="50.333333333333314" height="34.333333333333343"/>
+                                <rect key="frame" x="302.66666666666669" y="79" width="50.333333333333314" height="34.333333333333343"/>
                                 <constraints>
                                     <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="30" id="bln-ff-jem"/>
                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="30" id="l7C-gY-Ums"/>
@@ -96,7 +96,7 @@
                             <constraint firstItem="wGe-iX-DDU" firstAttribute="leading" secondItem="aoV-5h-rTV" secondAttribute="leading" id="4VA-gg-4WR"/>
                             <constraint firstAttribute="bottom" secondItem="wGe-iX-DDU" secondAttribute="bottom" id="4en-ZC-nqA"/>
                             <constraint firstItem="ioG-DC-78K" firstAttribute="trailing" secondItem="3z7-a5-0GR" secondAttribute="trailing" constant="50" id="PYK-l1-mJP"/>
-                            <constraint firstItem="CuO-Nr-6dl" firstAttribute="top" secondItem="ioG-DC-78K" secondAttribute="top" id="Uyc-IL-Q2H"/>
+                            <constraint firstItem="CuO-Nr-6dl" firstAttribute="top" secondItem="ioG-DC-78K" secondAttribute="top" constant="20" id="Uyc-IL-Q2H"/>
                             <constraint firstItem="3z7-a5-0GR" firstAttribute="leading" secondItem="ioG-DC-78K" secondAttribute="leading" constant="50" id="XPo-xw-dsJ"/>
                             <constraint firstItem="wGe-iX-DDU" firstAttribute="top" secondItem="aoV-5h-rTV" secondAttribute="top" id="fAT-Lt-fmb"/>
                             <constraint firstItem="3z7-a5-0GR" firstAttribute="centerY" secondItem="aoV-5h-rTV" secondAttribute="centerY" id="jVn-EM-Z15"/>
@@ -151,7 +151,7 @@
                                             </label>
                                             <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="fHP-jP-RZI">
                                                 <rect key="frame" x="0.0" y="36.000000000000028" width="313" height="32"/>
-                                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <color key="backgroundColor" systemColor="opaqueSeparatorColor"/>
                                                 <segments>
                                                     <segment title="Yes"/>
                                                     <segment title="No"/>
@@ -173,7 +173,7 @@
                                             </label>
                                             <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="2" translatesAutoresizingMaskIntoConstraints="NO" id="ADZ-qT-9sT">
                                                 <rect key="frame" x="0.0" y="36" width="313" height="32"/>
-                                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <color key="backgroundColor" systemColor="opaqueSeparatorColor"/>
                                                 <segments>
                                                     <segment title="4"/>
                                                     <segment title="5"/>
@@ -198,7 +198,7 @@
                                             </label>
                                             <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="bar" selectedSegmentIndex="1" translatesAutoresizingMaskIntoConstraints="NO" id="FUn-2v-uOs">
                                                 <rect key="frame" x="0.0" y="36" width="313" height="32"/>
-                                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <color key="backgroundColor" systemColor="opaqueSeparatorColor"/>
                                                 <segments>
                                                     <segment title="Easy"/>
                                                     <segment title="Medium"/>
@@ -220,12 +220,6 @@
                                     <constraint firstItem="s47-Do-a01" firstAttribute="leading" secondItem="Ot2-gH-sIx" secondAttribute="leading" id="riP-SK-oNp"/>
                                 </constraints>
                             </stackView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Settings" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rs8-T6-0IX">
-                                <rect key="frame" x="40" y="20" width="311" height="42"/>
-                                <fontDescription key="fontDescription" name="Orbitron-Bold" family="Orbitron" pointSize="36"/>
-                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="gm1-Qd-lbG"/>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -233,11 +227,8 @@
                             <constraint firstItem="Ot2-gH-sIx" firstAttribute="centerY" secondItem="Inb-Vb-gvJ" secondAttribute="centerY" id="6jP-DJ-oz0"/>
                             <constraint firstItem="Chw-Iw-KTW" firstAttribute="top" secondItem="gm1-Qd-lbG" secondAttribute="top" constant="20" id="9n3-PW-mrL"/>
                             <constraint firstItem="Ot2-gH-sIx" firstAttribute="centerX" secondItem="Inb-Vb-gvJ" secondAttribute="centerX" id="DB6-Iz-JWV"/>
-                            <constraint firstItem="rs8-T6-0IX" firstAttribute="leading" secondItem="gm1-Qd-lbG" secondAttribute="leading" constant="40" id="Gix-yC-Rlx"/>
                             <constraint firstItem="gm1-Qd-lbG" firstAttribute="trailing" secondItem="Ot2-gH-sIx" secondAttribute="trailing" constant="40" id="Kad-xZ-kGp"/>
-                            <constraint firstItem="rs8-T6-0IX" firstAttribute="top" secondItem="gm1-Qd-lbG" secondAttribute="top" constant="20" id="Ns8-ry-JkE"/>
                             <constraint firstItem="Chw-Iw-KTW" firstAttribute="leading" secondItem="gm1-Qd-lbG" secondAttribute="leading" constant="351" id="X3z-vZ-f9f"/>
-                            <constraint firstItem="Chw-Iw-KTW" firstAttribute="leading" secondItem="rs8-T6-0IX" secondAttribute="trailing" id="ZBj-jO-B2Y"/>
                             <constraint firstItem="gm1-Qd-lbG" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="Chw-Iw-KTW" secondAttribute="trailing" id="fEO-Hp-NMn"/>
                             <constraint firstItem="Ot2-gH-sIx" firstAttribute="leading" secondItem="gm1-Qd-lbG" secondAttribute="leading" constant="40" id="vg3-0d-SF4"/>
                         </constraints>
@@ -691,6 +682,9 @@
         <image name="xmark" catalog="system" width="128" height="113"/>
         <systemColor name="labelColor">
             <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="opaqueSeparatorColor">
+            <color red="0.77647058820000003" green="0.77647058820000003" blue="0.7843137255" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
