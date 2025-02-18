@@ -88,12 +88,7 @@ class GameViewController: UIViewController {
     @objc private func moveReceived(_ notification: Notification) {
         guard let move = notification.object as? Move else { return }
         
-        let moveCoords = (move.row, move.column)
-        let player = gameModel?.getPlayerByName(move.player)
-        
-        // Apply move and update game state
-        gameModel!.grid.applyMove(moveCoords, for: player!)
-        gameModel!.useTurn(for: player!)
+        gameModel!.applyMove(move)
         opponentIsThinking(false)
         
         if let winner = gameModel!.winner {
@@ -108,34 +103,46 @@ class GameViewController: UIViewController {
         // Someone won, notify user
         guard let winner = notification.object as? String else { return }
         let didWin = winner == GameCenterHelper.helper.localAlias
+        let draw = winner == "draw"
         
         if gameMode == .online {
-            if let opponent = GameCenterHelper.helper.currentOpponent {
-                LeaderboardManager.shared.onlineGameCompleted(against: opponent, didWin: didWin)
-            } else {
-                print("No opponent found")
-            }
+            if !draw { LeaderboardManager.shared.onlineGameCompleted(didWin: didWin) }
         } else {
-            let aiDifficulty = UserDefaults.standard.integer(forKey: "aiDifficulty")
-            LeaderboardManager.shared.localGameCompleted(withDifficulty: aiDifficulty, didWin: didWin)
+            if !draw {
+                let aiDifficulty = UserDefaults.standard.integer(forKey: "aiDifficulty")
+                LeaderboardManager.shared.localGameCompleted(withDifficulty: aiDifficulty, didWin: didWin)
+            }
         }
         
-        actionLabel.text = didWin ? "You win! Going back to menu..." : "You lose! Going back to menu..."
-        let alert = UIAlertController(title: didWin ? "Winner!" : "Unlucky!",
-                                      message: gameMode == .local
-                                      ? "\(winner) has won the game! Your new score is: \(LeaderboardManager.shared.getSPScore())"
-                                      : "\(winner) has won the game! Your new Elo is \(LeaderboardManager.shared.getElo())", preferredStyle: .alert)
+        let title = draw ? "Draw!" : (didWin ? "Winner!" : "Unlucky!")
+        let scoreMessage = gameMode == .local
+                ? "Your new score is: \(LeaderboardManager.shared.getSPScore())"
+                : "Your new Elo is \(LeaderboardManager.shared.getElo())"
+        let message = draw
+                ? (gameMode == .local ? "It's a draw! Your score remains: \(LeaderboardManager.shared.getSPScore())"
+                                      : "It's a draw! Your Elo remains at \(LeaderboardManager.shared.getElo())")
+                : "\(winner) has won the game! \(scoreMessage)"
+        
+        DispatchQueue.main.async {
+            self.actionLabel.text = didWin ? "You win! Going back to menu..." : "You lose! Going back to menu..."
+            self.setButtonStates(to: false)
+        }
+        
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "Ok", style: .default) { _ in
             DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
                 self.dismiss(animated: true)
             }
         })
+        
         self.present(alert, animated: true)
     }
     
     func performAction(atRow row: Int, atCol col: Int) {
         
-        gameModel!.grid.nodes[row][col].attack(player: currentPlayer!)
+        let move = Move(player: currentPlayer!.name, coords: (row, col))
+        
+        gameModel!.applyMove(move)
         
         if gameModel!.grid.nodes[row][col].powerup == .firewall {
             let alert = UIAlertController(
@@ -146,8 +153,10 @@ class GameViewController: UIViewController {
             self.present(alert, animated: true)
         }
         
-        gameModel!.grid.recalculateOwners(fromCoords: (row, col))
-        gameModel!.useTurn(for: currentPlayer!)
+        if gameModel!.winner != nil {
+            NotificationCenter.default.post(name: .gameEnded, object: gameModel!.winner)
+        }
+        
         switchPlayer()
         
         if gameMode == .online {
@@ -155,10 +164,6 @@ class GameViewController: UIViewController {
             opponentIsThinking(true)
         } else {
             performAIMove()
-        }
-        
-        if gameModel!.winner != nil {
-            NotificationCenter.default.post(name: .gameEnded, object: gameModel!.winner)
         }
     }
     

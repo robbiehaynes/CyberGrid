@@ -30,16 +30,27 @@ struct GameModel: Codable {
         checkForWinners()
     }
     
+    mutating func applyMove(_ move: Move) {
+        guard let player = getPlayerByName(move.player) else { return }
+        
+        grid.applyMove((move.row, move.column), for: player)
+        useTurn(for: player)
+    }
+    
     mutating func checkForWinners() {
-        if grid.validMoves(for: players[0]).isEmpty {
+        if grid.validMoves(for: players[0]).isEmpty && players[0].movesRemaining > 0 {
             winner = players[1].name
         }
-        else if grid.validMoves(for: players[1]).isEmpty {
+        else if grid.validMoves(for: players[1]).isEmpty && players[1].movesRemaining > 0 {
             winner = players[0].name
         }
         
         if players.allSatisfy({ $0.movesRemaining == 0 }) {
-            winner = calculateWinner().name
+            if let winner = calculateWinner() {
+                self.winner = winner.name
+            } else {
+                self.winner = "draw"
+            }
         }
     }
     
@@ -47,18 +58,17 @@ struct GameModel: Codable {
         return players.first(where: { $0.name == name })
     }
     
-    private func calculateWinner() -> Player {
+    private func calculateWinner() -> Player? {
         var ownershipCount: [Player: Int] = [:]
-
-        for row in grid.nodes {
-            for node in row {
-                if let owner = node.owner {
-                    ownershipCount[owner, default: 0] += 1
-                }
-            }
-        }
+        
+        ownershipCount[players[0]] = grid.nodeCount(for: players[0])
+        ownershipCount[players[1]] = grid.nodeCount(for: players[1])
         
         // Check for draw, then find the player with the maximum owned nodes
+        if ownershipCount[players[0]]! == ownershipCount[players[1]]! {
+            return nil
+        }
+        
         return ownershipCount.max { $0.value < $1.value }!.key
     }
 }

@@ -12,7 +12,7 @@ final class LeaderboardManager {
     static let shared = LeaderboardManager()
     var opponentElo: Int?
     
-    func onlineGameCompleted(against opponent: GKPlayer, didWin: Bool) {
+    func onlineGameCompleted(didWin: Bool) {
         guard let opponentElo else { return }
         
         let userElo = self.calculateElo(against: opponentElo, didWin)
@@ -21,16 +21,40 @@ final class LeaderboardManager {
     
     func localGameCompleted(withDifficulty difficulty: Int, didWin: Bool) {
         if !didWin { return }
+        let score = calculateScore(didWin: didWin)
         
-        switch difficulty {
-            case 0:
-                updateSPScore(by: 100)
-            case 1:
-                updateSPScore(by: 250)
-            default:
-                updateSPScore(by: 500)
-        }
+        updateSPScore(by: score)
     }
+    
+    private func calculateScore(didWin: Bool) -> Int {
+        guard didWin else { return 0 }
+        
+        let difficulty = UserDefaults.standard.integer(forKey: "aiDifficulty")
+        let gameLength = UserDefaults.standard.integer(forKey: "numOfMoves")
+        let playsFirst = !UserDefaults.standard.bool(forKey: "aiFirst")
+        
+        // Base points per difficulty
+        let basePoints: Int
+        switch difficulty {
+        case 0:
+            basePoints = 100
+        case 1:
+            basePoints = 250
+        default:
+            basePoints = 500
+        }
+
+        // Adjust for game length
+        let lengthMultiplier = 1.0 + (Double(gameLength - 4) * 0.1)
+        
+        // Playing second gives a slight bonus
+        let turnMultiplier = playsFirst ? 1.0 : 1.2
+        
+        // Final score calculation
+        let finalScore = Double(basePoints) * lengthMultiplier * turnMultiplier
+        return Int(finalScore.rounded())
+    }
+
     
     private func calculateElo(against opponentElo: Int, _ didWin: Bool) -> Int {
         let userElo = UserDefaults.standard.integer(forKey: "multiplayerElo")
