@@ -1,0 +1,15 @@
+{
+  "originHash" : "d8aeefa1352365c56a83283d0a3455e8a65504a253e3447f5ecd79d72a3cc99b",
+  "pins" : [
+    {
+      "identity" : "onboardkit",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/NikolaKirev/OnboardKit",
+      "state" : {
+        "branch" : "master",
+        "revision" : "bcf46e78fa0e41d754381cc928dcdf190f8f919c"
+      }
+    }
+  ],
+  "version" : 3
+}

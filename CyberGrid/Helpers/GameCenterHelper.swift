@@ -25,7 +25,7 @@ final class GameCenterHelper: NSObject {
     }
 
     var localAlias: String? {
-        GameCenterHelper.isAuthenticated ? GKLocalPlayer.local.alias : "Unknown"
+        GameCenterHelper.isAuthenticated ? GKLocalPlayer.local.alias : "You"
     }
     
     enum GameCenterHelperError: Error {
@@ -53,7 +53,10 @@ final class GameCenterHelper: NSObject {
                 // Add GKAccessPoint
                 GKAccessPoint.shared.location = .topLeading
                 GKAccessPoint.shared.showHighlights = true
-                GKAccessPoint.shared.isActive = true
+                
+                if UserDefaults.standard.bool(forKey: "onBoardingCompleted") {
+                    GKAccessPoint.shared.isActive = true
+                }
             } else if let vc = gcAuthVC {
                 self.viewController?.present(vc, animated: true)
             }

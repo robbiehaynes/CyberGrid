@@ -37,6 +37,16 @@ class LandingViewController: UIViewController {
         )
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        if UserDefaults.standard.bool(forKey: "onBoardingCompleted") {
+            GameCenterHelper.helper.setAccessPointIsActive(true)
+        }
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        GameCenterHelper.helper.setAccessPointIsActive(false)
+    }
+    
     @IBAction func settingsButtonPressed(_ sender: UIButton) {
         performSegue(withIdentifier: "goToSettings", sender: self)
     }

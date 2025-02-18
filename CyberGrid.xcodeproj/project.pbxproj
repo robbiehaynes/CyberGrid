@@ -6,6 +6,10 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		D435C3B72D64AF3700DE9121 /* OnboardKit in Frameworks */ = {isa = PBXBuildFile; productRef = D435C3B62D64AF3700DE9121 /* OnboardKit */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXFileReference section */
 		D4AA3DA22D22B64200DA70F3 /* CyberGrid.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CyberGrid.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -36,6 +40,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D435C3B72D64AF3700DE9121 /* OnboardKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -78,6 +83,7 @@
 			);
 			name = CyberGrid;
 			packageProductDependencies = (
+				D435C3B62D64AF3700DE9121 /* OnboardKit */,
 			);
 			productName = CyberGrid;
 			productReference = D4AA3DA22D22B64200DA70F3 /* CyberGrid.app */;
@@ -107,6 +113,9 @@
 			);
 			mainGroup = D4AA3D992D22B64200DA70F3;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				D435C3B52D64AF3700DE9121 /* XCRemoteSwiftPackageReference "OnboardKit" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = D4AA3DA32D22B64200DA70F3 /* Products */;
 			projectDirPath = "";
@@ -145,7 +154,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = CyberGrid/CyberGrid.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 9;
+				CURRENT_PROJECT_VERSION = 10;
 				DEVELOPMENT_TEAM = SMY8BWM85J;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = CyberGrid/Info.plist;
@@ -181,7 +190,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = CyberGrid/CyberGrid.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 9;
+				CURRENT_PROJECT_VERSION = 10;
 				DEVELOPMENT_TEAM = SMY8BWM85J;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = CyberGrid/Info.plist;
@@ -351,6 +360,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		D435C3B52D64AF3700DE9121 /* XCRemoteSwiftPackageReference "OnboardKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/NikolaKirev/OnboardKit";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		D435C3B62D64AF3700DE9121 /* OnboardKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D435C3B52D64AF3700DE9121 /* XCRemoteSwiftPackageReference "OnboardKit" */;
+			productName = OnboardKit;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = D4AA3D9A2D22B64200DA70F3 /* Project object */;
 }
