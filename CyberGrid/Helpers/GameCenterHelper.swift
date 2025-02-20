@@ -109,7 +109,7 @@ final class GameCenterHelper: NSObject {
 
         let uniqueSeed = GridSeedGenerator.shared.generateSeed(player1ID: GKLocalPlayer.local.displayName,
                                                                player2ID: currentMatch!.players.first!.displayName)
-        let isPlayer1 = determineFirstPlayer(usingSeed: uniqueSeed, in: match) == GKLocalPlayer.local.gamePlayerID
+        let isPlayer1 = determineFirstPlayer(usingSeed: uniqueSeed, in: match) == GKLocalPlayer.local.displayName
         
         var gameModel = GameModel(gridSeed: uniqueSeed)
         gameModel.players = [
@@ -138,7 +138,7 @@ final class GameCenterHelper: NSObject {
     }
     
     func determineFirstPlayer(usingSeed seed: Int, in match: GKMatch) -> String {
-        let players = [match.players.first?.gamePlayerID ?? "", GKLocalPlayer.local.gamePlayerID]
+        let players = [match.players.first?.displayName ?? "", GKLocalPlayer.local.displayName].sorted()
         
         var rng = SeededGenerator(seed: seed)
         
