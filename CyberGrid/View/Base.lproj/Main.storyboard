@@ -608,16 +608,10 @@
                                                     <constraint firstAttribute="width" constant="50" id="wdi-rS-pQc"/>
                                                 </constraints>
                                             </imageView>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XKn-uH-JIf">
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Current Player" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XKn-uH-JIf">
                                                 <rect key="frame" x="60.000000000000007" y="0.0" width="108.66666666666669" height="50"/>
-                                                <attributedString key="attributedText">
-                                                    <fragment content="Current Player">
-                                                        <attributes>
-                                                            <color key="NSColor" systemColor="systemBackgroundColor"/>
-                                                            <font key="NSFont" size="17" name="Orbitron-Bold"/>
-                                                        </attributes>
-                                                    </fragment>
-                                                </attributedString>
+                                                <fontDescription key="fontDescription" name="Orbitron-Bold" family="Orbitron" pointSize="17"/>
+                                                <color key="textColor" systemColor="systemBackgroundColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                         </subviews>
