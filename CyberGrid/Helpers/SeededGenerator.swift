@@ -27,9 +27,9 @@ struct GridSeedGenerator {
     
     private init() {}
     
-    func generateSeed(player1ID: String, player2ID: String) -> Int {
+    func generateSeed(player1ID: String, player2ID: String, timestamp: Int? = nil) -> Int {
         let sortedIDs = [player1ID, player2ID].sorted().joined()  // Ensure order consistency
-        let minuteTimestamp = Int(Date().timeIntervalSince1970) / 60  // Round to the minute
+        let minuteTimestamp = timestamp ?? Int(Date().timeIntervalSince1970) / 60  // Round to the minute
         
         let data = Data(sortedIDs.utf8)
         let hash = SHA256.hash(data: data)

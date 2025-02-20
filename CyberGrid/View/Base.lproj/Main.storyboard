@@ -12,7 +12,7 @@
         <!--Landing View Controller-->
         <scene sceneID="X6u-CY-2CU">
             <objects>
-                <viewController id="TAM-z3-5bh" customClass="LandingViewController" customModule="CyberGrid" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="LandingViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="TAM-z3-5bh" customClass="LandingViewController" customModule="CyberGrid" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="aoV-5h-rTV">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -118,7 +118,7 @@
         <!--Settings View Controller-->
         <scene sceneID="8ai-5I-ZkY">
             <objects>
-                <viewController id="wui-km-7sX" customClass="SettingsViewController" customModule="CyberGrid" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="SettingsViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="wui-km-7sX" customClass="SettingsViewController" customModule="CyberGrid" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Inb-Vb-gvJ">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="842"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

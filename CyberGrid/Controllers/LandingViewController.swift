@@ -38,9 +38,7 @@ class LandingViewController: UIViewController {
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        if UserDefaults.standard.bool(forKey: "onBoardingCompleted") {
-            GameCenterHelper.helper.setAccessPointIsActive(true)
-        }
+        GameCenterHelper.helper.setAccessPointIsActive(true)
     }
     
     override func viewDidDisappear(_ animated: Bool) {

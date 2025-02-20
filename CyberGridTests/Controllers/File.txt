@@ -1,0 +1,2 @@
+XCTAssertEqual(mockVC.lastPerformedMove?.0, 1, "Row should be 1")
+XCTAssertEqual(mockVC.lastPerformedMove?.1, 4, "Column should be 4")
