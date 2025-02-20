@@ -107,10 +107,9 @@ final class GameCenterHelper: NSObject {
         currentMatch = match
         currentMatch?.delegate = self
 
-        let playerOrder = determinePlayerOrder(forMatch: match)
-        let isPlayer1 = playerOrder.first == GKLocalPlayer.local.gamePlayerID
         let uniqueSeed = GridSeedGenerator.shared.generateSeed(player1ID: GKLocalPlayer.local.displayName,
                                                                player2ID: currentMatch!.players.first!.displayName)
+        let isPlayer1 = determineFirstPlayer(usingSeed: uniqueSeed, in: match) == GKLocalPlayer.local.gamePlayerID
         
         var gameModel = GameModel(gridSeed: uniqueSeed)
         gameModel.players = [
@@ -138,8 +137,12 @@ final class GameCenterHelper: NSObject {
         NotificationCenter.default.post(name: .presentGame, object: gameModel)
     }
     
-    func determinePlayerOrder(forMatch match: GKMatch) -> [String] {
-        return [match.players.first?.gamePlayerID ?? "", GKLocalPlayer.local.gamePlayerID].sorted()
+    func determineFirstPlayer(usingSeed seed: Int, in match: GKMatch) -> String {
+        let players = [match.players.first?.gamePlayerID ?? "", GKLocalPlayer.local.gamePlayerID]
+        
+        var rng = SeededGenerator(seed: seed)
+        
+        return players.randomElement(using: &rng)!
     }
     
     private func waitForPlayersToConnect(match: GKMatch, maxWaitTime: TimeInterval = 5.0) {

@@ -10,7 +10,13 @@ struct Pair: Hashable {
     let second: Int
 }
 
-struct Grid: Codable {
+protocol GridProtocol {
+    func validMoves(for player: Player) -> [(Int, Int)]
+    mutating func applyMove(_ move: (Int, Int), for player: Player)
+    func nodeCount(for player: Player) -> Int
+}
+
+struct Grid: GridProtocol {
     var nodes: [[Node]] = []
     let seed: Int
     

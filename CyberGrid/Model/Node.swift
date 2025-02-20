@@ -9,7 +9,7 @@ enum Powerup: Codable {
     case firewall
 }
 
-struct Node: Codable {
+struct Node {
     var owner: Player?
     var health: Int
     var powerup: Powerup?

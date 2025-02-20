@@ -34,7 +34,7 @@ final class Onboarder {
         onBoardingViewController.presentFrom(root, animated: true)
     }
     
-    private func getAppearance() -> OnboardViewController.AppearanceConfiguration {
+    func getAppearance() -> OnboardViewController.AppearanceConfiguration {
         return OnboardViewController.AppearanceConfiguration(tintColor: .white,
                                                                        titleColor: .white,
                                                                        textColor: .white,
@@ -44,7 +44,7 @@ final class Onboarder {
                                                                        textFont: UIFont(name: "Orbitron", size: 17.0) ?? UIFont.boldSystemFont(ofSize: 17.0))
     }
     
-    private func getPages() -> [OnboardPage] {
+    func getPages() -> [OnboardPage] {
         let pageOne = OnboardPage(title: "Welcome to CyberGrid",
                                imageName: "onboarding-1",
                                description: "A puzzle game where you hack your way to victory.")

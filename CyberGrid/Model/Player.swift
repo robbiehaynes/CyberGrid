@@ -6,7 +6,7 @@
 //
 import UIKit
 
-struct Move: Codable {
+struct Move: Codable, Equatable {
     let player: String
     let row: Int
     let column: Int
@@ -18,13 +18,13 @@ struct Move: Codable {
     }
 }
 
-struct Player : Codable {
+struct Player {
     let name: String
     let colour: String
     let profileImage: Data
     var movesRemaining: Int
     
-    init(name: String, colour: String, movesRemaining: Int, profileImage: UIImage) {
+    init(name: String, colour: String, movesRemaining: Int, profileImage: UIImage = UIImage(systemName: "person")!) {
         self.name = name
         self.colour = colour
         self.movesRemaining = movesRemaining

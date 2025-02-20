@@ -7,7 +7,7 @@
 
 import GameKit
 
-struct GameModel: Codable {
+struct GameModel {
     var players: [Player]
     var currentPlayer: Player?
     var grid: Grid

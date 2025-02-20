@@ -56,12 +56,6 @@ class GameViewController: UIViewController {
             opponentIsThinking(true)
             if gameMode == .local { performAIMove() }
         }
-        GameCenterHelper.helper.setAccessPointIsActive(false)
-    }
-    
-    override func viewDidDisappear(_ animated: Bool) {
-        GameCenterHelper.helper.setAccessPointIsActive(true)
-        super.viewDidDisappear(animated)
     }
     
     @IBAction func exitButtonPressed(_ sender: Any) {
