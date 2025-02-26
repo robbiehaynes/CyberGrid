@@ -138,15 +138,6 @@ class GameViewController: UIViewController {
         
         gameModel!.applyMove(move)
         
-        if gameModel!.grid.nodes[row][col].powerup == .firewall {
-            let alert = UIAlertController(
-                title: "PowerUp Found",
-                message: "You have discovered a firewall. This node starts stronger!",
-                preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: "Ok", style: .default))
-            self.present(alert, animated: true)
-        }
-        
         if gameModel!.winner != nil {
             NotificationCenter.default.post(name: .gameEnded, object: gameModel!.winner)
         }
@@ -183,7 +174,7 @@ class GameViewController: UIViewController {
                     // Update button background color based on the node owner
                     if let owner = node.owner {
                         if let image = UIImage(named: "\(owner.colour)_\(node.health)") {
-                            animateButtonImageChange(button: button, newImage: image)
+                            animateButtonImageChange(button: button, newImage: image, firewall: node.health > 1)
                         }
                     } else {
                         button.backgroundColor = .systemBackground // Default color for neutral nodes
@@ -282,16 +273,51 @@ class GameViewController: UIViewController {
         actionLabel.layer.add(dotAnimation, forKey: "thinkingAnimation")
     }
 
-    func animateButtonImageChange(button: UIButton, newImage: UIImage) {
+}
+
+//MARK: - Button Effects
+
+extension GameViewController {
+    func animateButtonImageChange(button: UIButton, newImage: UIImage, firewall: Bool) {
         
         let currentImage = button.backgroundImage(for: .normal)
         
         if currentImage != newImage {
-            UIView.transition(with: button, duration: 0.75, options: .transitionFlipFromLeft, animations: {
+            hackGlitchEffect(on: button, to: newImage)
+            shakeButton(button)
+            
+            if firewall {
+                let riseDuration = 0.45
+                let dropDuration = 0.15
+
+                UIView.animate(withDuration: riseDuration, delay: 0, options: .curveEaseOut, animations: {
+                    button.transform = CGAffineTransform(scaleX: 1.2, y: 1.2) // Slightly bigger (rising effect)
+                }) { _ in
+                    UIView.animate(withDuration: dropDuration, delay: 0, options: .curveEaseIn, animations: {
+                        button.transform = .identity // Back to original size (dropping effect)
+                    })
+                }
+            }
+        }
+    }
+    
+    func hackGlitchEffect(on button: UIButton, to newImage: UIImage?) {
+
+        // Final image change with a solid effect
+        DispatchQueue.main.asyncAfter(deadline: .now()) {
+            UIView.transition(with: button, duration: 0.5, options: .transitionCrossDissolve, animations: {
                 button.setBackgroundImage(newImage, for: .normal)
                 button.setBackgroundImage(newImage, for: .disabled)
             }, completion: nil)
         }
     }
-
+    
+    func shakeButton(_ button: UIButton) {
+        let animation = CAKeyframeAnimation(keyPath: "transform.translation.x")
+        animation.timingFunction = CAMediaTimingFunction(name: .linear)
+        animation.values = [-5, 5, -3, 3, -1, 1, 0] // Rapid small shakes
+        animation.duration = 0.2
+        button.layer.add(animation, forKey: "shake")
+    }
+    
 }
