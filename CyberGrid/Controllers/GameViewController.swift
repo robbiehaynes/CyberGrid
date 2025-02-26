@@ -138,15 +138,6 @@ class GameViewController: UIViewController {
         
         gameModel!.applyMove(move)
         
-        if gameModel!.grid.nodes[row][col].powerup == .firewall {
-            let alert = UIAlertController(
-                title: "PowerUp Found",
-                message: "You have discovered a firewall. This node starts stronger!",
-                preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: "Ok", style: .default))
-            self.present(alert, animated: true)
-        }
-        
         if gameModel!.winner != nil {
             NotificationCenter.default.post(name: .gameEnded, object: gameModel!.winner)
         }
@@ -183,7 +174,7 @@ class GameViewController: UIViewController {
                     // Update button background color based on the node owner
                     if let owner = node.owner {
                         if let image = UIImage(named: "\(owner.colour)_\(node.health)") {
-                            animateButtonImageChange(button: button, newImage: image)
+                            animateButtonImageChange(button: button, newImage: image, firewall: node.health > 1)
                         }
                     } else {
                         button.backgroundColor = .systemBackground // Default color for neutral nodes
@@ -287,13 +278,26 @@ class GameViewController: UIViewController {
 //MARK: - Button Effects
 
 extension GameViewController {
-    func animateButtonImageChange(button: UIButton, newImage: UIImage) {
+    func animateButtonImageChange(button: UIButton, newImage: UIImage, firewall: Bool) {
         
         let currentImage = button.backgroundImage(for: .normal)
         
         if currentImage != newImage {
             hackGlitchEffect(on: button, to: newImage)
             shakeButton(button)
+            
+            if firewall {
+                let riseDuration = 0.45
+                let dropDuration = 0.15
+
+                UIView.animate(withDuration: riseDuration, delay: 0, options: .curveEaseOut, animations: {
+                    button.transform = CGAffineTransform(scaleX: 1.2, y: 1.2) // Slightly bigger (rising effect)
+                }) { _ in
+                    UIView.animate(withDuration: dropDuration, delay: 0, options: .curveEaseIn, animations: {
+                        button.transform = .identity // Back to original size (dropping effect)
+                    })
+                }
+            }
         }
     }
     
@@ -307,7 +311,6 @@ extension GameViewController {
             }, completion: nil)
         }
     }
-
     
     func shakeButton(_ button: UIButton) {
         let animation = CAKeyframeAnimation(keyPath: "transform.translation.x")
@@ -316,5 +319,5 @@ extension GameViewController {
         animation.duration = 0.2
         button.layer.add(animation, forKey: "shake")
     }
-
+    
 }
