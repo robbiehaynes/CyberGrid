@@ -26,18 +26,18 @@
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="Umy-7Y-HkM">
                                         <rect key="frame" x="0.0" y="0.0" width="293" height="86"/>
                                         <subviews>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="1000" verticalHuggingPriority="251" horizontalCompressionResistancePriority="1000" text="CyberGrid" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HhA-q4-Fxi">
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="1000" verticalHuggingPriority="251" horizontalCompressionResistancePriority="1000" text="CyberGrid" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="24" translatesAutoresizingMaskIntoConstraints="NO" id="HhA-q4-Fxi">
                                                 <rect key="frame" x="0.0" y="0.0" width="293" height="56"/>
                                                 <fontDescription key="fontDescription" name="Orbitron-Bold" family="Orbitron" pointSize="48"/>
                                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="1000" verticalHuggingPriority="251" horizontalCompressionResistancePriority="1000" text="&quot;some tagline&quot;" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RiS-I7-wm0">
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="1000" verticalHuggingPriority="251" horizontalCompressionResistancePriority="1000" text="&quot;Tactical Hacking Showdown&quot;" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="RiS-I7-wm0">
                                                 <rect key="frame" x="0.0" y="56" width="293" height="30"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="30" id="3fx-KG-f8F"/>
                                                 </constraints>
-                                                <fontDescription key="fontDescription" name="Orbitron-SemiBold" family="Orbitron" pointSize="21"/>
+                                                <fontDescription key="fontDescription" name="Orbitron-SemiBold" family="Orbitron" pointSize="19"/>
                                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
@@ -124,10 +124,10 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Chw-Iw-KTW">
-                                <rect key="frame" x="351" y="20" width="22" height="22"/>
+                                <rect key="frame" x="331" y="20" width="22" height="22"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" secondItem="Chw-Iw-KTW" secondAttribute="height" multiplier="1:1" id="0Yz-gY-j2s"/>
                                     <constraint firstAttribute="height" constant="22" id="JBB-lw-efc"/>
+                                    <constraint firstAttribute="width" secondItem="Chw-Iw-KTW" secondAttribute="height" multiplier="1:1" id="JDw-Fq-Bs6"/>
                                 </constraints>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="plain" image="xmark" catalog="system">
@@ -228,8 +228,8 @@
                             <constraint firstItem="Chw-Iw-KTW" firstAttribute="top" secondItem="gm1-Qd-lbG" secondAttribute="top" constant="20" id="9n3-PW-mrL"/>
                             <constraint firstItem="Ot2-gH-sIx" firstAttribute="centerX" secondItem="Inb-Vb-gvJ" secondAttribute="centerX" id="DB6-Iz-JWV"/>
                             <constraint firstItem="gm1-Qd-lbG" firstAttribute="trailing" secondItem="Ot2-gH-sIx" secondAttribute="trailing" constant="40" id="Kad-xZ-kGp"/>
-                            <constraint firstItem="Chw-Iw-KTW" firstAttribute="leading" secondItem="gm1-Qd-lbG" secondAttribute="leading" constant="351" id="X3z-vZ-f9f"/>
-                            <constraint firstItem="gm1-Qd-lbG" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="Chw-Iw-KTW" secondAttribute="trailing" id="fEO-Hp-NMn"/>
+                            <constraint firstItem="Chw-Iw-KTW" firstAttribute="leading" relation="lessThanOrEqual" secondItem="gm1-Qd-lbG" secondAttribute="leading" constant="351" id="X3z-vZ-f9f"/>
+                            <constraint firstItem="gm1-Qd-lbG" firstAttribute="trailing" secondItem="Chw-Iw-KTW" secondAttribute="trailing" constant="40" id="fEO-Hp-NMn"/>
                             <constraint firstItem="Ot2-gH-sIx" firstAttribute="leading" secondItem="gm1-Qd-lbG" secondAttribute="leading" constant="40" id="vg3-0d-SF4"/>
                         </constraints>
                     </view>
@@ -627,8 +627,8 @@
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7mb-vb-taH">
                                 <rect key="frame" x="351" y="20" width="22" height="22"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="22" id="FlP-cw-g13"/>
                                     <constraint firstAttribute="height" constant="22" id="S4k-hg-obd"/>
+                                    <constraint firstAttribute="width" secondItem="7mb-vb-taH" secondAttribute="height" multiplier="1:1" id="e2f-o8-JpE"/>
                                 </constraints>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="plain" image="xmark" catalog="system">
@@ -653,6 +653,7 @@
                             <constraint firstItem="7mb-vb-taH" firstAttribute="top" secondItem="hHf-AH-NAb" secondAttribute="top" constant="20" id="dkP-8T-8mC"/>
                             <constraint firstItem="hHf-AH-NAb" firstAttribute="trailing" secondItem="9aA-yH-i69" secondAttribute="trailing" constant="20" id="n7l-It-VoN"/>
                             <constraint firstItem="9aA-yH-i69" firstAttribute="leading" secondItem="hHf-AH-NAb" secondAttribute="leading" constant="20" id="oKh-cS-7jR"/>
+                            <constraint firstItem="7mb-vb-taH" firstAttribute="leading" relation="lessThanOrEqual" secondItem="hHf-AH-NAb" secondAttribute="leading" constant="351" id="qI4-1K-S9b"/>
                             <constraint firstItem="103-fO-Mjp" firstAttribute="leading" secondItem="2JH-Gu-SLU" secondAttribute="leading" constant="20" id="uqD-k4-UM2"/>
                         </constraints>
                     </view>
