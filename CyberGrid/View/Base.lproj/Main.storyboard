@@ -269,17 +269,6 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="apW-Uc-tgc" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" id="hyR-j5-eOu">
-                    <rect key="frame" x="0.0" y="0.0" width="313" height="34.333333333333336"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <state key="normal" title="Button"/>
-                    <buttonConfiguration key="configuration" style="gray" title="Remove Ads">
-                        <color key="baseForegroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                    </buttonConfiguration>
-                    <connections>
-                        <action selector="removeAdsPressed:" destination="wui-km-7sX" eventType="touchUpInside" id="bjN-VL-w7k"/>
-                    </connections>
-                </button>
             </objects>
             <point key="canvasLocation" x="1850" y="-655"/>
         </scene>

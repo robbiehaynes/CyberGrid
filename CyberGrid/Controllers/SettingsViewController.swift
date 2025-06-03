@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import StoreKit
 
 class SettingsViewController: UIViewController {
     
@@ -20,7 +21,7 @@ class SettingsViewController: UIViewController {
     @IBOutlet weak var aiDifficultyControl: UISegmentedControl!
     @IBOutlet weak var removeAdsButton: UIButton!
     
-    let product = Store.shared.products[0]
+    var product: Product?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -29,7 +30,9 @@ class SettingsViewController: UIViewController {
         
         removeAdsButton.isEnabled = !(Store.shared.purchasedProducts.count > 0)
         removeAdsButton.setTitle("Ads Successfully Removed", for: .disabled)
-        removeAdsButton.setTitle("\(product.displayName) for \(product.displayPrice)", for: .normal)
+        if let product {
+            removeAdsButton.setTitle("\(product.displayName) for \(product.displayPrice)", for: .normal)
+        }
     }
     
     @IBAction func exitButtonPressed(_ sender: UIButton) {
@@ -81,8 +84,10 @@ class SettingsViewController: UIViewController {
     
     @IBAction func removeAdsPressed(_ sender: UIButton) {
         Task {
-            let _ = try await Store.shared.purchaseProduct(product)
-            removeAdsButton.isEnabled = !(Store.shared.purchasedProducts.count > 0)
+            if let product {
+                let _ = try await Store.shared.purchaseProduct(product)
+                removeAdsButton.isEnabled = !(Store.shared.purchasedProducts.count > 0)
+            }
         }
     }
     
