@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import StoreKit
 
 class SettingsViewController: UIViewController {
     
@@ -18,11 +19,20 @@ class SettingsViewController: UIViewController {
     @IBOutlet weak var playerFirstControl: UISegmentedControl!
     @IBOutlet weak var numOfMovesControl: UISegmentedControl!
     @IBOutlet weak var aiDifficultyControl: UISegmentedControl!
+    @IBOutlet weak var removeAdsButton: UIButton!
+    
+    var product: Product?
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
         setSelectedSegments()
+        
+        removeAdsButton.isEnabled = !(Store.shared.purchasedProducts.count > 0)
+        removeAdsButton.setTitle("Ads Successfully Removed", for: .disabled)
+        if let product {
+            removeAdsButton.setTitle("\(product.displayName) for \(product.displayPrice)", for: .normal)
+        }
     }
     
     @IBAction func exitButtonPressed(_ sender: UIButton) {
@@ -70,5 +80,25 @@ class SettingsViewController: UIViewController {
         playerFirstControl.selectedSegmentIndex = aiFirst ? 1 : 0
         numOfMovesControl.selectedSegmentIndex = numOfMoves - 4
         aiDifficultyControl.selectedSegmentIndex = aiDifficulty
+    }
+    
+    @IBAction func removeAdsPressed(_ sender: UIButton) {
+        Task {
+            if let product {
+                let _ = try await Store.shared.purchaseProduct(product)
+                removeAdsButton.isEnabled = !(Store.shared.purchasedProducts.count > 0)
+            }
+        }
+    }
+    
+    @IBAction func restorePurchasesPressed(_ sender: UIButton) {
+        Task {
+            do {
+                try await Store.shared.restorePurchases()
+                removeAdsButton.isEnabled = !(Store.shared.purchasedProducts.count > 0)
+            } catch {
+                print("Error restoring purchases: \(error)")
+            }
+        }
     }
 }
