@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		D435C3B72D64AF3700DE9121 /* OnboardKit in Frameworks */ = {isa = PBXBuildFile; productRef = D435C3B62D64AF3700DE9121 /* OnboardKit */; };
 		D47F62F52DEF3A6F005C1716 /* GoogleMobileAds in Frameworks */ = {isa = PBXBuildFile; productRef = D47F62F42DEF3A6F005C1716 /* GoogleMobileAds */; };
+		D47F62F82DEF4B20005C1716 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D47F62F72DEF4B20005C1716 /* StoreKit.framework */; };
+		D4F1E4BA2DEF5B0E000ED23A /* SyncedProducts.storekit in Resources */ = {isa = PBXBuildFile; fileRef = D4F1E4B92DEF5B0E000ED23A /* SyncedProducts.storekit */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -22,8 +24,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		D47F62F72DEF4B20005C1716 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		D486EDC02D6619B4003877EA /* CyberGridTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CyberGridTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		D4AA3DA22D22B64200DA70F3 /* CyberGrid.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CyberGrid.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		D4F1E4B92DEF5B0E000ED23A /* SyncedProducts.storekit */ = {isa = PBXFileReference; lastKnownFileType = text; path = SyncedProducts.storekit; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -64,6 +68,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D47F62F82DEF4B20005C1716 /* StoreKit.framework in Frameworks */,
 				D47F62F52DEF3A6F005C1716 /* GoogleMobileAds in Frameworks */,
 				D435C3B72D64AF3700DE9121 /* OnboardKit in Frameworks */,
 			);
@@ -72,11 +77,21 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		D47F62F62DEF4B20005C1716 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				D47F62F72DEF4B20005C1716 /* StoreKit.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		D4AA3D992D22B64200DA70F3 = {
 			isa = PBXGroup;
 			children = (
+				D4F1E4B92DEF5B0E000ED23A /* SyncedProducts.storekit */,
 				D4AA3DA42D22B64200DA70F3 /* CyberGrid */,
 				D486EDC12D6619B4003877EA /* CyberGridTests */,
+				D47F62F62DEF4B20005C1716 /* Frameworks */,
 				D4AA3DA32D22B64200DA70F3 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -195,6 +210,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D4F1E4BA2DEF5B0E000ED23A /* SyncedProducts.storekit in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

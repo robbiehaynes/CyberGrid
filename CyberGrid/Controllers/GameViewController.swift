@@ -33,7 +33,9 @@ class GameViewController: UIViewController {
         
         DispatchQueue.main.async {
             Task {
-                await self.loadInterstitial()
+                if !Store.shared.purchasedProducts.contains(where: { $0.displayName == "Remove Ads"}) {
+                    await self.loadInterstitial()
+                }
             }
         }
         
@@ -132,7 +134,7 @@ class GameViewController: UIViewController {
         
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "Ok", style: .default) { _ in
-            if let ad = self.interstitial {
+            if !Store.shared.purchasedProducts.contains(where: { $0.displayName == "Remove Ads"}), let ad = self.interstitial {
                 ad.present(from: self)
             } else {
                 print("Ad not ready")
