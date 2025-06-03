@@ -33,6 +33,14 @@ class Store {
         }
     }
     
+    func getProduct() -> Product? {
+        if !products.isEmpty {
+            return products[0]
+        } else {
+            return nil
+        }
+    }
+    
     func purchaseProduct(_ product: Product) async throws -> Transaction? {
         let result = try await product.purchase()
         switch result {

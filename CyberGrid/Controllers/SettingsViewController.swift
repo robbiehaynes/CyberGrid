@@ -21,7 +21,7 @@ class SettingsViewController: UIViewController {
     @IBOutlet weak var aiDifficultyControl: UISegmentedControl!
     @IBOutlet weak var removeAdsButton: UIButton!
     
-    var product: Product?
+    var product = Store.shared.getProduct()
     
     override func viewDidLoad() {
         super.viewDidLoad()
