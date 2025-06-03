@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import GoogleMobileAds
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -16,6 +17,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Override point for customization after application launch.
         if LeaderboardManager.shared.getElo() == 0 { LeaderboardManager.shared.setElo(1000) }
         if UserDefaults.standard.integer(forKey: "numOfMoves") == 0 { UserDefaults.standard.set(6, forKey: "numOfMoves") }
+        
+        MobileAds.shared.start(completionHandler: nil)
         
         return true
     }

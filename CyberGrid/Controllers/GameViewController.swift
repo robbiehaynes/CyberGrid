@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import GoogleMobileAds
 
 enum GameMode {
     case local
@@ -23,11 +24,18 @@ class GameViewController: UIViewController {
     var currentPlayer: Player?
     var gameMode: GameMode = .local
     let agent = MiniAgent(difficulty: UserDefaults.standard.integer(forKey: "aiDifficulty"))
+    var interstitial: InterstitialAd?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         guard let gameModel = gameModel else { return }
+        
+        DispatchQueue.main.async {
+            Task {
+                await self.loadInterstitial()
+            }
+        }
         
         self.gameModel!.grid.initialSetup(players: gameModel.players)
         self.currentPlayer = gameModel.players[0]
@@ -124,8 +132,13 @@ class GameViewController: UIViewController {
         
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "Ok", style: .default) { _ in
-            DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
-                self.dismiss(animated: true)
+            if let ad = self.interstitial {
+                ad.present(from: self)
+            } else {
+                print("Ad not ready")
+                DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                    self.dismiss(animated: true)
+                }
             }
         })
         
@@ -273,6 +286,47 @@ class GameViewController: UIViewController {
         actionLabel.layer.add(dotAnimation, forKey: "thinkingAnimation")
     }
 
+}
+
+extension GameViewController: FullScreenContentDelegate {
+    fileprivate func loadInterstitial() async {
+      do {
+          let adId = ProcessInfo.processInfo.environment["ADMOB_ID"] ?? ""
+          interstitial = try await InterstitialAd.load(with: adId, request: Request())
+          interstitial?.fullScreenContentDelegate = self
+      } catch {
+          print("Failed to load interstitial ad with error: \(error.localizedDescription)")
+      }
+    }
+    
+    func adDidRecordImpression(_ ad: FullScreenPresentingAd) {
+        print("\(#function) called")
+    }
+    
+    func adDidRecordClick(_ ad: FullScreenPresentingAd) {
+        print("\(#function) called")
+    }
+    
+    func ad(_ ad: FullScreenPresentingAd, didFailToPresentFullScreenContentWithError error: Error) {
+        print("\(#function) called with error: \(error.localizedDescription)")
+        // Clear the interstitial ad.
+        interstitial = nil
+    }
+    
+    func adWillPresentFullScreenContent(_ ad: FullScreenPresentingAd) {
+        print("\(#function) called")
+    }
+    
+    func adWillDismissFullScreenContent(_ ad: FullScreenPresentingAd) {
+        print("\(#function) called")
+    }
+    
+    func adDidDismissFullScreenContent(_ ad: FullScreenPresentingAd) {
+        print("\(#function) called")
+        // Clear the interstitial ad.
+        interstitial = nil
+        self.dismiss(animated: true)
+    }
 }
 
 //MARK: - Button Effects
