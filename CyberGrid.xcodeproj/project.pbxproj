@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		D435C3B72D64AF3700DE9121 /* OnboardKit in Frameworks */ = {isa = PBXBuildFile; productRef = D435C3B62D64AF3700DE9121 /* OnboardKit */; };
+		D47F62F52DEF3A6F005C1716 /* GoogleMobileAds in Frameworks */ = {isa = PBXBuildFile; productRef = D47F62F42DEF3A6F005C1716 /* GoogleMobileAds */; };
+		D47F62F82DEF4B20005C1716 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D47F62F72DEF4B20005C1716 /* StoreKit.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -21,6 +23,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		D47F62F72DEF4B20005C1716 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		D486EDC02D6619B4003877EA /* CyberGridTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CyberGridTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		D4AA3DA22D22B64200DA70F3 /* CyberGrid.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CyberGrid.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -63,6 +66,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D47F62F82DEF4B20005C1716 /* StoreKit.framework in Frameworks */,
+				D47F62F52DEF3A6F005C1716 /* GoogleMobileAds in Frameworks */,
 				D435C3B72D64AF3700DE9121 /* OnboardKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -70,11 +75,20 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		D47F62F62DEF4B20005C1716 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				D47F62F72DEF4B20005C1716 /* StoreKit.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		D4AA3D992D22B64200DA70F3 = {
 			isa = PBXGroup;
 			children = (
 				D4AA3DA42D22B64200DA70F3 /* CyberGrid */,
 				D486EDC12D6619B4003877EA /* CyberGridTests */,
+				D47F62F62DEF4B20005C1716 /* Frameworks */,
 				D4AA3DA32D22B64200DA70F3 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -132,6 +146,7 @@
 			name = CyberGrid;
 			packageProductDependencies = (
 				D435C3B62D64AF3700DE9121 /* OnboardKit */,
+				D47F62F42DEF3A6F005C1716 /* GoogleMobileAds */,
 			);
 			productName = CyberGrid;
 			productReference = D4AA3DA22D22B64200DA70F3 /* CyberGrid.app */;
@@ -167,6 +182,7 @@
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
 				D435C3B52D64AF3700DE9121 /* XCRemoteSwiftPackageReference "OnboardKit" */,
+				D47F62F32DEF3A6F005C1716 /* XCRemoteSwiftPackageReference "swift-package-manager-google-mobile-ads" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = D4AA3DA32D22B64200DA70F3 /* Products */;
@@ -490,6 +506,14 @@
 				kind = branch;
 			};
 		};
+		D47F62F32DEF3A6F005C1716 /* XCRemoteSwiftPackageReference "swift-package-manager-google-mobile-ads" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/googleads/swift-package-manager-google-mobile-ads.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 12.5.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -497,6 +521,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = D435C3B52D64AF3700DE9121 /* XCRemoteSwiftPackageReference "OnboardKit" */;
 			productName = OnboardKit;
+		};
+		D47F62F42DEF3A6F005C1716 /* GoogleMobileAds */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D47F62F32DEF3A6F005C1716 /* XCRemoteSwiftPackageReference "swift-package-manager-google-mobile-ads" */;
+			productName = GoogleMobileAds;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

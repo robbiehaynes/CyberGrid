@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="23504" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="TAM-z3-5bh">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="23727" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="TAM-z3-5bh">
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23506"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23721"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -75,7 +75,7 @@
                                 </subviews>
                             </stackView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CuO-Nr-6dl">
-                                <rect key="frame" x="302.66666666666669" y="79" width="50.333333333333314" height="34.333333333333343"/>
+                                <rect key="frame" x="302.66666666666669" y="138" width="50.333333333333314" height="34.333333333333343"/>
                                 <constraints>
                                     <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="30" id="bln-ff-jem"/>
                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="30" id="l7C-gY-Ums"/>
@@ -120,11 +120,11 @@
             <objects>
                 <viewController storyboardIdentifier="SettingsViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="wui-km-7sX" customClass="SettingsViewController" customModule="CyberGrid" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Inb-Vb-gvJ">
-                        <rect key="frame" x="0.0" y="0.0" width="393" height="842"/>
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="783"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Chw-Iw-KTW">
-                                <rect key="frame" x="331" y="20" width="22" height="22"/>
+                                <rect key="frame" x="331" y="79" width="22" height="22"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="22" id="JBB-lw-efc"/>
                                     <constraint firstAttribute="width" secondItem="Chw-Iw-KTW" secondAttribute="height" multiplier="1:1" id="JDw-Fq-Bs6"/>
@@ -138,7 +138,7 @@
                                 </connections>
                             </button>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="90" translatesAutoresizingMaskIntoConstraints="NO" id="Ot2-gH-sIx">
-                                <rect key="frame" x="40" y="230.66666666666663" width="313" height="381"/>
+                                <rect key="frame" x="40" y="116.66666666666669" width="313" height="549.66666666666652"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="s47-Do-a01">
                                         <rect key="frame" x="0.0" y="0.0" width="313" height="67"/>
@@ -150,7 +150,7 @@
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="fHP-jP-RZI">
-                                                <rect key="frame" x="0.0" y="36.000000000000028" width="313" height="32"/>
+                                                <rect key="frame" x="0.0" y="35.999999999999986" width="313" height="32"/>
                                                 <color key="backgroundColor" systemColor="opaqueSeparatorColor"/>
                                                 <segments>
                                                     <segment title="Yes"/>
@@ -163,7 +163,7 @@
                                         </subviews>
                                     </stackView>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="qEq-5x-ige">
-                                        <rect key="frame" x="0.0" y="157.00000000000003" width="313" height="67"/>
+                                        <rect key="frame" x="0.0" y="157" width="313" height="67"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Number of Moves" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gwn-os-phV">
                                                 <rect key="frame" x="0.0" y="0.0" width="313" height="28"/>
@@ -210,13 +210,40 @@
                                             </segmentedControl>
                                         </subviews>
                                     </stackView>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="jUY-hX-DUX">
+                                        <rect key="frame" x="0.0" y="470.99999999999994" width="313" height="78.666666666666686"/>
+                                        <subviews>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pZr-d2-ypN">
+                                                <rect key="frame" x="0.0" y="0.0" width="313" height="34.333333333333336"/>
+                                                <state key="normal" title="Button"/>
+                                                <buttonConfiguration key="configuration" style="gray" title="Remove Ads">
+                                                    <color key="baseForegroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                </buttonConfiguration>
+                                                <connections>
+                                                    <action selector="removeAdsPressed:" destination="wui-km-7sX" eventType="touchUpInside" id="WfO-Tw-VJI"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uc4-VZ-nkZ">
+                                                <rect key="frame" x="0.0" y="44.333333333333371" width="313" height="34.333333333333343"/>
+                                                <state key="normal" title="Button"/>
+                                                <buttonConfiguration key="configuration" style="gray" title="Restore Purchases">
+                                                    <color key="baseForegroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                </buttonConfiguration>
+                                                <connections>
+                                                    <action selector="restorePurchasesPressed:" destination="wui-km-7sX" eventType="touchUpInside" id="bfU-L5-WuM"/>
+                                                </connections>
+                                            </button>
+                                        </subviews>
+                                    </stackView>
                                 </subviews>
                                 <constraints>
                                     <constraint firstAttribute="trailing" secondItem="HqY-Tt-j3E" secondAttribute="trailing" id="IMh-3M-S6H"/>
                                     <constraint firstAttribute="trailing" secondItem="s47-Do-a01" secondAttribute="trailing" id="PEz-U3-GwG"/>
+                                    <constraint firstItem="jUY-hX-DUX" firstAttribute="leading" secondItem="Ot2-gH-sIx" secondAttribute="leading" id="PzC-Ry-WK2"/>
                                     <constraint firstAttribute="trailing" secondItem="qEq-5x-ige" secondAttribute="trailing" id="l5A-gW-X8C"/>
                                     <constraint firstItem="qEq-5x-ige" firstAttribute="leading" secondItem="Ot2-gH-sIx" secondAttribute="leading" id="mSn-30-c5P"/>
                                     <constraint firstItem="HqY-Tt-j3E" firstAttribute="leading" secondItem="Ot2-gH-sIx" secondAttribute="leading" id="oAb-eN-GRw"/>
+                                    <constraint firstAttribute="trailing" secondItem="jUY-hX-DUX" secondAttribute="trailing" id="pNM-ZL-QRq"/>
                                     <constraint firstItem="s47-Do-a01" firstAttribute="leading" secondItem="Ot2-gH-sIx" secondAttribute="leading" id="riP-SK-oNp"/>
                                 </constraints>
                             </stackView>
@@ -238,6 +265,7 @@
                         <outlet property="aiDifficultyControl" destination="FUn-2v-uOs" id="Fx1-cY-kOu"/>
                         <outlet property="numOfMovesControl" destination="ADZ-qT-9sT" id="g3i-MV-9Fq"/>
                         <outlet property="playerFirstControl" destination="fHP-jP-RZI" id="5X2-wT-Koh"/>
+                        <outlet property="removeAdsButton" destination="pZr-d2-ypN" id="BmL-N5-2XP"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="apW-Uc-tgc" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -596,7 +624,7 @@
                                 </subviews>
                             </stackView>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="9" translatesAutoresizingMaskIntoConstraints="NO" id="9aA-yH-i69">
-                                <rect key="frame" x="20" y="20" width="353" height="79"/>
+                                <rect key="frame" x="20" y="79" width="353" height="79"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="PbP-nw-Nbr">
                                         <rect key="frame" x="92.333333333333329" y="0.0" width="168.66666666666669" height="50"/>
@@ -625,7 +653,7 @@
                                 </subviews>
                             </stackView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7mb-vb-taH">
-                                <rect key="frame" x="351" y="20" width="22" height="22"/>
+                                <rect key="frame" x="351" y="79" width="22" height="22"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="22" id="S4k-hg-obd"/>
                                     <constraint firstAttribute="width" secondItem="7mb-vb-taH" secondAttribute="height" multiplier="1:1" id="e2f-o8-JpE"/>
