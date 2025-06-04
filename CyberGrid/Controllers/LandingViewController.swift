@@ -7,6 +7,7 @@
 
 import UIKit
 import GameKit
+import GoogleMobileAds
 
 class LandingViewController: UIViewController {
 
@@ -14,6 +15,7 @@ class LandingViewController: UIViewController {
     
     var gameModel: GameModel? = nil
     var selectedGameMode: GameMode? = nil
+    private var isMobileAdsStartCalled = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -35,6 +37,27 @@ class LandingViewController: UIViewController {
           name: .presentGame,
           object: nil
         )
+        
+        GoogleMobileAdsConsentManager.shared.gatherConsent(from: self) { [weak self] consentError in
+            guard let self else { return }
+            
+            if let consentError {
+                // Consent gathering failed.
+                print("Error: \(consentError.localizedDescription)")
+            }
+            
+            if GoogleMobileAdsConsentManager.shared.canRequestAds {
+                self.startGoogleMobileAdsSDK()
+            }
+            
+//            self.privacySettingsButton.isEnabled =
+//            GoogleMobileAdsConsentManager.shared.isPrivacyOptionsRequired
+        }
+        
+        // This sample attempts to load ads using consent obtained in the previous session.
+        if GoogleMobileAdsConsentManager.shared.canRequestAds {
+            startGoogleMobileAdsSDK()
+        }
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -77,6 +100,17 @@ class LandingViewController: UIViewController {
         
         performSegue(withIdentifier: "goToGame", sender: self)
     }
+    
+    private func startGoogleMobileAdsSDK() {
+        DispatchQueue.main.async {
+          guard !self.isMobileAdsStartCalled else { return }
+
+          self.isMobileAdsStartCalled = true
+
+          // Initialize the Google Mobile Ads SDK.
+          MobileAds.shared.start()
+        }
+      }
     
     // MARK: - Notifications
 
