@@ -16,28 +16,16 @@ class Store {
     var purchasedProducts: Set<Product> = []
     var transactionListener: Task<Void, Error>?
     
-    private var productsLoaded = false
-    
     init() {
         transactionListener = listenForTransactions()
     }
     
     func loadProducts() async {
-        guard !productsLoaded else { return }
         do {
             products = try await Product.products(for: productIDs)
-            productsLoaded = true
             await updateCurrentEntitlements()
         } catch {
             print("Error fetching product: \(error.localizedDescription)")
-        }
-    }
-    
-    func getProduct() -> Product? {
-        if !products.isEmpty {
-            return products[0]
-        } else {
-            return nil
         }
     }
     
