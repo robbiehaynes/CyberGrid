@@ -18,7 +18,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         if LeaderboardManager.shared.getElo() == 0 { LeaderboardManager.shared.setElo(1000) }
         if UserDefaults.standard.integer(forKey: "numOfMoves") == 0 { UserDefaults.standard.set(6, forKey: "numOfMoves") }
         
-        MobileAds.shared.start(completionHandler: nil)
         Task {
             await Store.shared.loadProducts()
             print("Products Downloaded: \(Store.shared.products)")

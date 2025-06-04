@@ -10,6 +10,8 @@
 		D435C3B72D64AF3700DE9121 /* OnboardKit in Frameworks */ = {isa = PBXBuildFile; productRef = D435C3B62D64AF3700DE9121 /* OnboardKit */; };
 		D47F62F52DEF3A6F005C1716 /* GoogleMobileAds in Frameworks */ = {isa = PBXBuildFile; productRef = D47F62F42DEF3A6F005C1716 /* GoogleMobileAds */; };
 		D47F62F82DEF4B20005C1716 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D47F62F72DEF4B20005C1716 /* StoreKit.framework */; };
+		D49428C62DF0BAEF00C94BDA /* AppTrackingTransparency.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D49428C52DF0BAEF00C94BDA /* AppTrackingTransparency.framework */; };
+		D49428C92DF0BE8800C94BDA /* GoogleUserMessagingPlatform in Frameworks */ = {isa = PBXBuildFile; productRef = D49428C82DF0BE8800C94BDA /* GoogleUserMessagingPlatform */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -25,6 +27,7 @@
 /* Begin PBXFileReference section */
 		D47F62F72DEF4B20005C1716 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		D486EDC02D6619B4003877EA /* CyberGridTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CyberGridTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		D49428C52DF0BAEF00C94BDA /* AppTrackingTransparency.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppTrackingTransparency.framework; path = System/Library/Frameworks/AppTrackingTransparency.framework; sourceTree = SDKROOT; };
 		D4AA3DA22D22B64200DA70F3 /* CyberGrid.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CyberGrid.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -67,6 +70,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				D47F62F82DEF4B20005C1716 /* StoreKit.framework in Frameworks */,
+				D49428C92DF0BE8800C94BDA /* GoogleUserMessagingPlatform in Frameworks */,
+				D49428C62DF0BAEF00C94BDA /* AppTrackingTransparency.framework in Frameworks */,
 				D47F62F52DEF3A6F005C1716 /* GoogleMobileAds in Frameworks */,
 				D435C3B72D64AF3700DE9121 /* OnboardKit in Frameworks */,
 			);
@@ -78,6 +83,7 @@
 		D47F62F62DEF4B20005C1716 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				D49428C52DF0BAEF00C94BDA /* AppTrackingTransparency.framework */,
 				D47F62F72DEF4B20005C1716 /* StoreKit.framework */,
 			);
 			name = Frameworks;
@@ -147,6 +153,7 @@
 			packageProductDependencies = (
 				D435C3B62D64AF3700DE9121 /* OnboardKit */,
 				D47F62F42DEF3A6F005C1716 /* GoogleMobileAds */,
+				D49428C82DF0BE8800C94BDA /* GoogleUserMessagingPlatform */,
 			);
 			productName = CyberGrid;
 			productReference = D4AA3DA22D22B64200DA70F3 /* CyberGrid.app */;
@@ -183,6 +190,7 @@
 			packageReferences = (
 				D435C3B52D64AF3700DE9121 /* XCRemoteSwiftPackageReference "OnboardKit" */,
 				D47F62F32DEF3A6F005C1716 /* XCRemoteSwiftPackageReference "swift-package-manager-google-mobile-ads" */,
+				D49428C72DF0BE8800C94BDA /* XCRemoteSwiftPackageReference "swift-package-manager-google-user-messaging-platform" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = D4AA3DA32D22B64200DA70F3 /* Products */;
@@ -514,6 +522,14 @@
 				minimumVersion = 12.5.0;
 			};
 		};
+		D49428C72DF0BE8800C94BDA /* XCRemoteSwiftPackageReference "swift-package-manager-google-user-messaging-platform" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/googleads/swift-package-manager-google-user-messaging-platform.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 3.0.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -526,6 +542,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = D47F62F32DEF3A6F005C1716 /* XCRemoteSwiftPackageReference "swift-package-manager-google-mobile-ads" */;
 			productName = GoogleMobileAds;
+		};
+		D49428C82DF0BE8800C94BDA /* GoogleUserMessagingPlatform */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D49428C72DF0BE8800C94BDA /* XCRemoteSwiftPackageReference "swift-package-manager-google-user-messaging-platform" */;
+			productName = GoogleUserMessagingPlatform;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

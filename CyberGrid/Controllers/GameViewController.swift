@@ -294,6 +294,7 @@ class GameViewController: UIViewController {
 extension GameViewController: FullScreenContentDelegate {
     fileprivate func loadInterstitial() async {
       do {
+          guard GoogleMobileAdsConsentManager.shared.canRequestAds else { return }
           let adId = ProcessInfo.processInfo.environment["ADMOB_ID"] ?? ""
           interstitial = try await InterstitialAd.load(with: adId, request: Request())
           interstitial?.fullScreenContentDelegate = self
