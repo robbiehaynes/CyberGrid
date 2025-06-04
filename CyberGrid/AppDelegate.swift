@@ -19,7 +19,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         if UserDefaults.standard.integer(forKey: "numOfMoves") == 0 { UserDefaults.standard.set(6, forKey: "numOfMoves") }
         
         MobileAds.shared.start(completionHandler: nil)
-        Task { await Store.shared.loadProducts() }
+        Task {
+            await Store.shared.loadProducts()
+            print("Products Downloaded: \(Store.shared.products)")
+        }
         
         return true
     }

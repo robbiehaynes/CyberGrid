@@ -33,7 +33,8 @@ class GameViewController: UIViewController {
         
         DispatchQueue.main.async {
             Task {
-                if !Store.shared.purchasedProducts.contains(where: { $0.displayName == "Remove Ads"}) {
+                if Store.shared.products.isEmpty ||
+                   !Store.shared.purchasedProducts.contains(where: { $0.id == "com.haynoways.CyberGrid.removeAds"}) {
                     await self.loadInterstitial()
                 }
             }

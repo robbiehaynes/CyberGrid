@@ -21,8 +21,6 @@ class SettingsViewController: UIViewController {
     @IBOutlet weak var aiDifficultyControl: UISegmentedControl!
     @IBOutlet weak var removeAdsButton: UIButton!
     
-    var product = Store.shared.getProduct()
-    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -30,8 +28,20 @@ class SettingsViewController: UIViewController {
         
         removeAdsButton.isEnabled = !(Store.shared.purchasedProducts.count > 0)
         removeAdsButton.setTitle("Ads Successfully Removed", for: .disabled)
-        if let product {
-            removeAdsButton.setTitle("\(product.displayName) for \(product.displayPrice)", for: .normal)
+        
+        if Store.shared.products.isEmpty {
+            Task {
+                await Store.shared.loadProducts()
+                
+                DispatchQueue.main.async {
+                    if let product = Store.shared.products.first {
+                        self.removeAdsButton.setTitle("\(product.displayName) for \(product.displayPrice)", for: .normal)
+                    }
+                }
+            }
+        } else {
+            let product = Store.shared.products.first!
+            self.removeAdsButton.setTitle("\(product.displayName) for \(product.displayPrice)", for: .normal)
         }
     }
     
@@ -83,8 +93,14 @@ class SettingsViewController: UIViewController {
     }
     
     @IBAction func removeAdsPressed(_ sender: UIButton) {
+        if Store.shared.products.isEmpty {
+            Task {
+                await Store.shared.loadProducts()
+            }
+        }
+        
         Task {
-            if let product {
+            if let product = Store.shared.products.first {
                 let _ = try await Store.shared.purchaseProduct(product)
                 removeAdsButton.isEnabled = !(Store.shared.purchasedProducts.count > 0)
             }
